@@ -1,20 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { HiOutlineHome } from "react-icons/hi";
-import { TbFileInvoice, TbReportAnalytics } from "react-icons/tb";
-import { PiHandCoinsBold } from "react-icons/pi";
-import { MdOutlineInventory2, MdSettings } from "react-icons/md";
+import SharedContext from "../contexts/SharedContext";
+
 
 const Sidebar = () => {
-  const sidebarMenu = [
-    { title: "Dashboard", icon: <HiOutlineHome className="w-8 h-8 sm:w-4 sm:h-4 text-white" /> },
-    { title: "Sales", icon: <TbFileInvoice className="w-8 h-8 sm:w-4 sm:h-4 text-white" /> },
-    { title: "Purchases", icon: <PiHandCoinsBold className="w-8 h-8 sm:w-4 sm:h-4 text-white" /> },
-    { title: "Inventory", icon: <MdOutlineInventory2 className="w-8 h-8 sm:w-4 sm:h-4 text-white" /> },
-    { title: "Reports", icon: <TbReportAnalytics className="w-8 h-8 sm:w-4 sm:h-4 text-white" /> },
-    { title: "Settings", icon: <MdSettings className="w-8 h-8 sm:w-4 sm:h-4 text-white" /> },
-  ];
 
+  const { sidebarMenu } = useContext(SharedContext);
+  
   return (
     <div className="fixed flex flex-col top-0 left-0 w-2/12 bg-[#1D5B79] h-full border-r">
       <div className="items-center hidden sm:block justify-center p-1 border-b mb-1">

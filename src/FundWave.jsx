@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route,Navigate } from "react-router-dom";
 import Sidebar from "./pages/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Inventory from "./pages/Inventory";
@@ -18,7 +18,8 @@ const FundWave = () => {
       
       <div className="flex flex-col flex-auto flex-shrink-0 w-10/12 antialiased bg-gray-500 text-gray-800 self-end	">
       <Routes>
-        <Route path="/" element={<Dashboard/>} />
+        <Route path="/" element={<Navigate to="/dashboard" />} />
+        <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/sales" element={<Sales/>} />
         <Route path="/inventory" element={<Inventory/>} />
         <Route path="/purchases" element={<Purchases/>} />
@@ -28,8 +29,6 @@ const FundWave = () => {
       </Routes>
       </div>
     </div>
-      
-    
   );
 };
 

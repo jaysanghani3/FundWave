@@ -1,12 +1,13 @@
 import FundWave from "./FundWave";
 import { BrowserRouter } from "react-router-dom";
+import { SharedContextProvider } from "./contexts/SharedContext";
 
 export default function App() {
   return (
-  <div>
-    <BrowserRouter>
-      <FundWave />
-    </BrowserRouter>
-  </div>
-  )
+    <SharedContextProvider>
+      <BrowserRouter>
+        <FundWave />
+      </BrowserRouter>
+    </SharedContextProvider>
+  );
 }
