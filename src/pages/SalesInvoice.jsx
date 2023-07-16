@@ -60,7 +60,7 @@ const SalesInvoice = () => {
         </div>
 
         <div className="overflow-x-auto border mx-2">
-          <table className="table-auto w-full ">
+          <table className="table-auto w-full text-sm">
             <thead className=" bg-[#1d5e7e] text-white">
               <tr>
                 {/* {
@@ -95,7 +95,7 @@ const SalesInvoice = () => {
                 <td className="text-blue-400 text-sm text-center">
                   <MdEdit />
                 </td>
-                <td className=" text-left">
+                <td className="text-left">
                   <input type="text" name="product" id="product" autoComplete="given-name" className="border ms-auto w-full" />
                 </td>
                 <td className=" text-left">
