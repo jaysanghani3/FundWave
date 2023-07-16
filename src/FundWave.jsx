@@ -8,6 +8,7 @@ import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import Sales from "./pages/Sales";
 import SalesInvoice from "./pages/SalesInvoice";
+import CreateItem from "./pages/CreateItem";
 
 const FundWave = () => {
   return (
@@ -19,7 +20,7 @@ const FundWave = () => {
 
         <div className="flex-auto py-1 px-3">
           <Routes>
-            <Route path="/" element={<SalesInvoice />} />
+            <Route path="/" element={<CreateItem />} />
             <Route path="/sales" element={<Sales />} />
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/purchases" element={<Purchases />} />
