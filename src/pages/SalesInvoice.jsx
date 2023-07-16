@@ -137,66 +137,7 @@ const SalesInvoice = () => {
           </div>
         </div>
 
-        <div className="">
-          <div className="flex flex-row gap-x-10 mx-2">
-            <div className="flex flex-col w-9/12 gap-y-2">
-              <div className="flex flex-row">
-                <label className="w-2/12 text-xs font-medium text-gray-700">Remarks</label>
-                <textarea name="remarks" id="remarks" autoComplete="given-name" className="border ml-3 w-10/12 " />
-              </div>
-
-              <div className="flex flex-row">
-                <label className="w-2/12 text-xs font-medium text-gray-700">Terms & Conditions</label>
-                <textarea name="terms" id="terms" autoComplete="given-name" className="border ml-3 w-10/12 " />
-              </div>
-            </div>
-
-            <div className="flex flex-col w-3/12 gap-y-1">
-              <div className="flex flex-row">
-                <label className="text-xs font-medium text-gray-700">Sub Total</label>
-                <input type="text" name="subTotal" id="subTotal" autoComplete="given-name" className="border ms-auto w-6/12 text-right h-5 text-xs pr-2" />
-              </div>
-
-              <div className="flex flex-row">
-                <label className="text-xs font-medium text-gray-700">Discount</label>
-                <input type="text" name="discount" id="discount" autoComplete="given-name" className="border ms-auto w-6/12 text-right h-5 text-xs pr-2" />
-              </div>
-
-              <div className="flex flex-row">
-                <label className="text-xs font-medium text-gray-700">Taxable Value</label>
-                <input type="text" name="taxableValue" id="taxableValue" autoComplete="given-name" className="border ms-auto w-6/12 text-right h-5 text-xs pr-2" />
-              </div>
-
-              <div className="flex flex-row">
-                <label className="text-xs font-medium text-gray-700">CGST</label>
-                <input type="text" name="cgst" id="cgst" autoComplete="given-name" className="border ms-auto w-6/12 text-right h-5 text-xs pr-2" />
-              </div>
-
-              <div className="flex flex-row">
-                <label className="text-xs font-medium text-gray-700">SGST</label>
-                <input type="text" name="sgst" id="sgst" autoComplete="given-name" className="border ms-auto w-6/12 text-right h-5 text-xs pr-2" />
-              </div>
-
-              <div className="flex flex-row">
-                <label className="text-xs font-medium text-gray-700">IGST</label>
-                <input type="text" name="igst" id="igst" autoComplete="given-name" className="border ms-auto w-6/12 text-right h-5 text-xs pr-2" />
-              </div>
-
-              <div className="flex flex-row">
-                <label className="text-xs font-medium text-gray-700">Total</label>
-                <input type="text" name="total" id="total" autoComplete="given-name" className="border ms-auto w-6/12 text-right h-5 text-xs pr-2" />
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-row justify-end gap-x-2 m-2">
-            <button className="bg-[#1d5e7e] text-white px-3 py-1 rounded-md text-xs">Save</button>
-            <button className="bg-[#1d5e7e] text-white px-3 py-1 rounded-md text-xs">Cancel</button>
-            <button className="bg-[#1d5e7e] text-white px-3 py-1 rounded-md text-xs">Print</button>
-            <button className="bg-[#1d5e7e] text-white px-3 py-1 rounded-md text-xs">Email</button>
-            <button className="bg-[#1d5e7e] text-white px-3 py-1 rounded-md text-xs">Export</button>
-          </div>
-        </div>
+        
       </div>
     </>
   );
