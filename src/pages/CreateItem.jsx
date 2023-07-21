@@ -64,10 +64,6 @@ const CreateItem = () => {
     });
   };
 
-  const handleDelete = () => {
-    console.log("Delete");
-  };
-
   const handlePrint = () => {
     console.log("Print");
   };
@@ -259,7 +255,6 @@ const CreateItem = () => {
       <div className="flex flex-row gap-x-3 justify-end mt-5">
         <button className="bg-[#1d5e7e] text-white px-3 py-1 text-xs" onClick={handleSave} >Save</button>
         <button className="bg-[#1d5e7e] text-white px-3 py-1 text-xs" onClick={handleClear} >Clear</button>
-        <button className="bg-[#1d5e7e] text-white px-3 py-1 text-xs" onClick={handleDelete}>Delete</button>
         <button className="bg-[#1d5e7e] text-white px-3 py-1 text-xs" onClick={handlePrint}>Print</button>
         <button className="bg-[#1d5e7e] text-white px-3 py-1 text-xs" onClick={handleImport}>Import</button>
       </div>

@@ -19,14 +19,14 @@ const ImageUploadPreview = () => {
 
   return (
     <div className="w-7/12 mx-auto">
-      <div className="flex justify-center items-center relative h-48 border-2 border-dashed border-[#1D5B79] rounded-md p-2">
+      <div className="flex justify-center items-center h-72 border-2 border-dashed border-[#1D5B79] rounded-md p-2">
         {image ? (
-          <img src={image} alt="Uploaded" className="rounded-md" />
+          <img src={image} alt="Uploaded" className="rounded-md object-fit" />
         ) : (
             <FcAddImage size={120} className="text-gray-500" />
         )}
       </div>
-      <label htmlFor="upload" className="block w-6/12 text-center py-2 mx-auto bg-[#1D5B79] text-white font-bold mt-2">
+      <label htmlFor="upload" className="block w-6/12 text-center py-2 mx-auto bg-[#1D5B79] text-white font-bold mt-3">
         Upload Image
       </label>
       <input type="file" id="upload" className="hidden" accept="image/*" onChange={handleImageChange} />
