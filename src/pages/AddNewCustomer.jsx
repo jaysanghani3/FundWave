@@ -4,9 +4,9 @@ import SharedContext from "../contexts/SharedContext";
 
 const AddNewCustomer = () => {
   
-  const { customerFields } = useContext(SharedContext);
+  const { fields } = useContext(SharedContext);
   const [customer, setCustomer] = useState(
-    customerFields.reduce((acc, field) => {
+    fields.reduce((acc, field) => {
       acc[field.name] = "";
       return acc;
     }, {})
@@ -22,7 +22,7 @@ const AddNewCustomer = () => {
   };
 
   const handleClear = () => {
-    const clearFields = customerFields.reduce((acc, field) => {
+    const clearFields = fields.reduce((acc, field) => {
       acc[field.name] = "";
       return acc;
     }, {});
@@ -40,21 +40,20 @@ const AddNewCustomer = () => {
 
   return (
     <>
-      <h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">Add New Customer</h1>
       
-      <CustomerVendorForm fields={customerFields} data={customer} onChange={handleChange} />
+      <CustomerVendorForm title={"Add New Customer"} fields={fields} data={customer} onChange={handleChange} />
       
-      <div className="flex justify-end mt-5 space-x-3">
-        <button onClick={handleSave} className="bg-[#1d5e7e] text-white px-3 py-1 rounded-md">
+      <div className="flex justify-end mt-3 space-x-3 text-xs">
+        <button onClick={handleSave} className="bg-[#1d5e7e] text-white px-3 py-1">
           Save
         </button>
-        <button onClick={handleClear} className="bg-[#1d5e7e] text-white px-3 py-1 rounded-md">
+        <button onClick={handleClear} className="bg-[#1d5e7e] text-white px-3 py-1">
           Clear
         </button>
-        <button onClick={handlePrint} className="bg-[#1d5e7e] text-white px-3 py-1 rounded-md">
+        <button onClick={handlePrint} className="bg-[#1d5e7e] text-white px-3 py-1">
           Print
         </button>
-        <button onClick={handleImport} className="bg-[#1d5e7e] text-white px-3 py-1 rounded-md">
+        <button onClick={handleImport} className="bg-[#1d5e7e] text-white px-3 py-1">
           Import
         </button>
       </div>

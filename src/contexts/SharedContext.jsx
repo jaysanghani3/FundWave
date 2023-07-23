@@ -35,7 +35,7 @@ export function SharedContextProvider({ children }) {
         // },
       ];
 
-      const customerFields = [
+      const fields = [
         { label: "GST No.", name: "gstNo", type: "text" },
         { label: "Name", name: "name", type: "text" },
         { label: "Code", name: "code", type: "text" },
@@ -43,15 +43,18 @@ export function SharedContextProvider({ children }) {
         { label: "Phone No", name: "phone", type: "text" },
         { label: "PAN No", name: "panNo", type: "text" },
         { label: "Billing Address", name: "billingAddress", type: "textarea" },
-        { label: "City", name: "city", type: "select", options: ["City 1", "City 2"] },
-        { label: "State", name: "state", type: "select", options: ["State 1", "State 2"] },
-        { label: "Zip", name: "zip", type: "text" },
         { label: "Country", name: "country", type: "select", options: ["Country 1", "Country 2"] },
+        { label: "State", name: "state", type: "select", options: ["State 1", "State 2"] },
+        { label: "City", name: "city", type: "select", options: ["City 1", "City 2"] },
+        { label: "Zip", name: "zip", type: "text" },
+        { label: "IFSC Code", name: "ifscCode", type: "text" },
+        { label: "Bank Name", name: "bankName", type: "text" },
+        { label: "Bank Account No", name: "bankAccountNo", type: "text" },
         { label: "Notes", name: "notes", type: "textarea" },
       ];
     const value = {
         sidebarMenus,
-        customerFields
+        fields
     };
 
     return <SharedContext.Provider value={value}>{children}</SharedContext.Provider>;
