@@ -10,6 +10,7 @@ import EstimateBill from "./pages/sales/EstimateBill";
 const FundWave = () => {
   return (
     <div className="min-h-screen">
+
       <div className="flex flex-row min-h-screen">
         <div className="flex-col top-0 left-0 w-auto bg-[#1D5B79] min-h-full border-r">
           <Sidebar />
@@ -19,6 +20,7 @@ const FundWave = () => {
           <EstimateBill />
         </div>
       </div>
+      
     </div>
   );
 };
