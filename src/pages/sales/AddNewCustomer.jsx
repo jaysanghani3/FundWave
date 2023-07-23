@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import CustomerVendorForm from "../components/CustomerVendorForm";
-import SharedContext from "../contexts/SharedContext";
+import CustomerVendorForm from "../../components/CustomerVendorForm";
+import SharedContext from "../../contexts/SharedContext";
 
 const AddNewCustomer = () => {
   

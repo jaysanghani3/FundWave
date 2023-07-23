@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ImageUpload from "../components/ImageUpload";
+import ImageUpload from "../../components/ImageUpload";
 
 const CreateItem = () => {
   const [item, setItem] = useState({

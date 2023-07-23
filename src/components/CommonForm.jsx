@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MdOutlineDelete, MdEdit } from "react-icons/md";
 
-const CommonForm = ({ formFields }) => {
+const CommonForm = ({ title, formFields }) => {
   const [rows, setRows] = useState([{}]);
 
   const addRow = () => {
@@ -11,12 +11,11 @@ const CommonForm = ({ formFields }) => {
   return (
     <>
       <div className="flex flex-col border-2 gap-y-3 min-h-full text-xs">
-        <h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">Common Form</h1>
+        <h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">{title}</h1>
 
-        {/* Form fields */}
         <div className="grid grid-cols-3 gap-6 border p-2 mx-2">
           {formFields.map((column) => (
-            <div className="flex flex-col gap-y-1">
+            <div className="flex flex-col gap-y-1 border-l-2 border-blue-100">
               {column.map((field) => (
                 <div className="flex flex-row" key={field.name}>
                   <label className="ml-5 font-medium text-gray-700">{field.label}</label>
@@ -58,7 +57,7 @@ const CommonForm = ({ formFields }) => {
                 <td className="p-1 w-14 text-center">Total</td>
               </tr>
             </thead>
-            <tbody className="text-right">
+            <tbody className="text-right ">
               {rows.map((item, index) => (
                 <tr key={index} className="bg-white hover:bg-gray-50">
                   <td className="text-center">{index + 1}</td>

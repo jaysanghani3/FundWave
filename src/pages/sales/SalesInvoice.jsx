@@ -1,5 +1,5 @@
 import React from "react";
-import CommonForm from "../components/CommonForm";
+import CommonForm from "../../components/CommonForm";
 
 const SalesInvoice = () => {
   const invoiceFields = [
@@ -22,7 +22,7 @@ const SalesInvoice = () => {
 
   return (
     <div>
-      <CommonForm formFields={invoiceFields} />
+      <CommonForm title={"Create New Sales Invoice"} formFields={invoiceFields} />
     </div>
   );
 };
