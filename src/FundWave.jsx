@@ -7,9 +7,10 @@ import Sidebar from "./components/Sidebar";
 // import Reports from "./pages/Reports";
 // import Settings from "./pages/Settings";
 // import Sales from "./pages/Sales";
-// import SalesInvoice from "./pages/SalesInvoice";
+import SalesInvoice from "./pages/SalesInvoice";
 // import CreateItem from "./pages/CreateItem";                                    
 import AddNewCustomer from "./pages/AddNewCustomer";
+import CommonForm from "./components/CommonForm";
 
 const FundWave = () => {
   return (
@@ -30,7 +31,7 @@ const FundWave = () => {
             <Route path="*" element={<h1>Not Found</h1>} />
           </Routes> */}
 
-          <AddNewCustomer />
+          <SalesInvoice />
         </div>
       </div>
     </div>
