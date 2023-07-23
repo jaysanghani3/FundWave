@@ -18,8 +18,8 @@ const ImageUploadPreview = () => {
   };
 
   return (
-    <div className="w-7/12 mx-auto">
-      <div className="flex justify-center items-center h-72 border-2 border-dashed border-[#1D5B79] rounded-md p-2">
+    <div className="w-8/12 mx-auto">
+      <div className="flex justify-center items-center h-64 border-2 border-dashed border-[#1D5B79] rounded-md p-2">
         {image ? (
           <img src={image} alt="Uploaded" className="rounded-md object-fit" />
         ) : (

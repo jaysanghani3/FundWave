@@ -39,30 +39,30 @@ const CreateItem = () => {
     console.log(item);
   };
 
-  const handleClear = () => {
-    setItem({
-      ItemName: "",
-      Group: "",  
-      Category: "",
-      ItemCode: "",
-      ItemType: "", 
-      Description: "",
-      StockUnit: "",
-      Quantity: "",
-      ReorderLevel: "",
-      ExpiryDate: "",
-      GST: "",
-      PurchasePrice: "",
-      PurchaseRateFactor: "",
-      MPR: "",
-      MinimumPrice: "",
-      SalesPrice: "",
-      WholesalePrice: "",
-      DealerPrice: "",
-      RateFactor: "",
-      Discount: "",
-    });
-  };
+    const handleClear = () => {
+      setItem({
+        ItemName: "",
+        Group: "",  
+        Category: "",
+        ItemCode: "",
+        ItemType: "", 
+        Description: "",
+        StockUnit: "",
+        Quantity: "",
+        ReorderLevel: "",
+        ExpiryDate: "",
+        GST: "",
+        PurchasePrice: "",
+        PurchaseRateFactor: "",
+        MPR: "",
+        MinimumPrice: "",
+        SalesPrice: "",
+        WholesalePrice: "",
+        DealerPrice: "",
+        RateFactor: "",
+        Discount: "",
+      });
+    };
 
   const handlePrint = () => {
     console.log("Print");

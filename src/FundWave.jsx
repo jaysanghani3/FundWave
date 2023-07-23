@@ -1,14 +1,14 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Sidebar from "./pages/Sidebar";
-import Dashboard from "./pages/Dashboard";
-import Inventory from "./pages/Inventory";
-import Purchases from "./pages/Purchases";
-import Reports from "./pages/Reports";
-import Settings from "./pages/Settings";
-import Sales from "./pages/Sales";
-import SalesInvoice from "./pages/SalesInvoice";
-import CreateItem from "./pages/CreateItem";
+// import { Routes, Route } from "react-router-dom";
+import Sidebar from "./components/Sidebar";
+// import Dashboard from "./pages/Dashboard";
+// import Inventory from "./pages/Inventory";
+// import Purchases from "./pages/Purchases";
+// import Reports from "./pages/Reports";
+// import Settings from "./pages/Settings";
+// import Sales from "./pages/Sales";
+// import SalesInvoice from "./pages/SalesInvoice";
+// import CreateItem from "./pages/CreateItem";                                    
 import AddNewCustomer from "./pages/AddNewCustomer";
 
 const FundWave = () => {
@@ -20,7 +20,7 @@ const FundWave = () => {
         </div>
 
         <div className="flex-auto py-1 px-3">
-          <Routes>
+          {/* <Routes>
             <Route path="/" element={<AddNewCustomer />} />
             <Route path="/sales" element={<Sales />} />
             <Route path="/inventory" element={<Inventory />} />
@@ -28,7 +28,9 @@ const FundWave = () => {
             <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="*" element={<h1>Not Found</h1>} />
-          </Routes>
+          </Routes> */}
+
+          <AddNewCustomer />
         </div>
       </div>
     </div>
