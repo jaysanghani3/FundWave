@@ -11,9 +11,7 @@ export function SharedContextProvider({ children }) {
         {
             menuName: "Dashboard",
             icon: <TbFileInvoice className="w-8 h-8 sm:w-4 sm:h-4 text-white" />,
-            subMenus:[
-                {name:"Dashboard", link:"/"},
-            ]
+            link: "/",
         },
         { 
             menuName: "Sales",
