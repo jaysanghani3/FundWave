@@ -6,6 +6,7 @@ import PurchaseBill from "./pages/purchases/PurchaseBill";
 import AddNewCustomer from "./pages/sales/AddNewCustomer";
 import CommonForm from "./components/CommonForm";
 import EstimateBill from "./pages/sales/EstimateBill";
+import Dashboard from "./pages/Dashboard";
 
 const FundWave = () => {
   return (
@@ -17,7 +18,13 @@ const FundWave = () => {
         </div>
 
         <div className="flex-auto py-1 px-3">
-          <EstimateBill />
+          {/* <EstimateBill /> */}
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/sales-invoice" element={<SalesInvoice />} />
+            <Route path="/purchase-bill" element={<PurchaseBill />} />
+            <Route path="/estimate" element={<EstimateBill />} />
+          </Routes>
         </div>
       </div>
       

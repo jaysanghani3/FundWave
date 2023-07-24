@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import SharedContext from "../contexts/SharedContext";
 import { AiOutlineDown } from "react-icons/ai";
 import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
 
@@ -33,9 +34,13 @@ const Sidebar = () => {
 
           {openSubMenu === index && (
             menu.subMenus.map((subMenu, subIndex) => (
-              <button key={subIndex} className="flex flex-col text-white text-sm pl-8 pr-2 hover:bg-[#267399] w-full py-1">
-                {subMenu}
-              </button>
+              <Link key={subIndex} to={subMenu.link} className="flex flex-col text-white text-sm pl-8 pr-2 hover:bg-[#267399] w-full py-1">
+                {subMenu.name}
+              </Link>
+
+              // <button key={subIndex} className="flex flex-col text-white text-sm pl-8 pr-2 hover:bg-[#267399] w-full py-1">
+              //   {subMenu}
+              // </button>
             ))
           )}
           

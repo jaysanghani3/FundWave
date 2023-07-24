@@ -8,31 +8,46 @@ const SharedContext = createContext();
 export function SharedContextProvider({ children }) {
 
     const sidebarMenus = [
+        {
+            menuName: "Dashboard",
+            icon: <TbFileInvoice className="w-8 h-8 sm:w-4 sm:h-4 text-white" />,
+            subMenus:[
+                {name:"Dashboard", link:"/"},
+            ]
+        },
         { 
             menuName: "Sales",
             icon: <TbFileInvoice className="w-8 h-8 sm:w-4 sm:h-4 text-white" />,
-            subMenus:["Customer","Estimate","Sales Invoice"]
+            subMenus:[
+                {name:"Customer", link:"/customer"},
+                {name:"Estimate", link:"/estimate"},
+                {name:"Sales Invoice", link:"/sales-invoice"},
+            ]
         },
         { 
             menuName: "Purchases",
             icon: <PiHandCoinsBold className="w-8 h-8 sm:w-4 sm:h-4 text-white" />,
-            subMenus:["Vendor","Purchase Bill","Bill Payment"]
+            subMenus:[
+                {name:"Vendor", link:"/vendor"},
+                {name:"Purchase Bill", link:"/purchase-bill"},
+                {name:"Bill Payment", link:"/bill-payment"},
+            ]
         },
         { 
             menuName: "Inventory",
             icon: <MdOutlineInventory2 className="w-8 h-8 sm:w-4 sm:h-4 text-white" />,
-            subMenus:["Item Master","Stock Master"]
+            subMenus:[
+                {name:"Item Master", link:"/item-master"},
+                {name:"Stock Master", link:"/stock-master"},
+            ]
         },
         { 
             menuName: "Reports",
             icon: <TbReportAnalytics className="w-8 h-8 sm:w-4 sm:h-4 text-white" />,
-            subMenus:["All Report"]
-        },
-        // { 
-        //     menuName: "Settings",
-        //     icon: <MdSettings className="w-8 h-8 sm:w-4 sm:h-4 text-white" />,
-        //     subMenus:["","",""]
-        // },
+            subMenus:[
+                {name:"All Report", link:"/all-report"},
+            ]
+        }
       ];
 
       const fields = [
