@@ -1,5 +1,5 @@
 import React from "react";
-import CommonForm from "../../components/CommonForm";
+import CommonBillForm from "../../components/CommonBillForm";
 
 const PurchaseBill = () => {
     const purchaseFields = [
@@ -22,7 +22,7 @@ const PurchaseBill = () => {
 
   return (
     <div>
-      <CommonForm title={"Create New Purchase Bill"} formFields={purchaseFields} />
+      <CommonBillForm title={"Create New Purchase Bill"} formFields={purchaseFields} />
     </div>
   );
 };

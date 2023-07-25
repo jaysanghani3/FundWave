@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MdOutlineDelete, MdEdit } from "react-icons/md";
 
-const CommonForm = ({ title, formFields }) => {
+const CommonBillForm = ({ title, formFields }) => {
   const [rows, setRows] = useState([{}]);
 
   const addRow = () => {
@@ -173,4 +173,4 @@ const CommonForm = ({ title, formFields }) => {
   );
 };
 
-export default CommonForm;
+export default CommonBillForm;

@@ -37,12 +37,9 @@ const AddNewVendor = () => {
     const handleImport = () => {
       console.log("Import");
     };
-    
   
     return (
       <>
-        
-        
         <CustomerVendorForm title={"Add New Vendor"} fields={fields} data={vendor} onChange={handleChange} />
         
         <div className="flex justify-end mt-3 space-x-3 text-xs">
