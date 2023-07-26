@@ -28,7 +28,7 @@ export function SharedContextProvider({ children }) {
       subMenus: [
         { name: "Vendor", link: "/vendor" },
         { name: "Purchase Bill", link: "/purchase-bill" },
-        { name: "Bill Payment", link: "/bill-payment" },
+        // { name: "Bill Payment", link: "/bill-payment" },
       ],
     },
     {
@@ -36,14 +36,14 @@ export function SharedContextProvider({ children }) {
       icon: <MdOutlineInventory2 className="w-8 h-8 sm:w-4 sm:h-4 text-white" />,
       subMenus: [
         { name: "Item Master", link: "/item-master" },
-        { name: "Stock Master", link: "/stock-master" },
+        // { name: "Stock Master", link: "/stock-master" },
       ],
     },
-    {
-      menuName: "Reports",
-      icon: <TbReportAnalytics className="w-8 h-8 sm:w-4 sm:h-4 text-white" />,
-      subMenus: [{ name: "All Report", link: "/all-report" }],
-    },
+    // {
+    //   menuName: "Reports",
+    //   icon: <TbReportAnalytics className="w-8 h-8 sm:w-4 sm:h-4 text-white" />,
+    //   subMenus: [{ name: "All Report", link: "/all-report" }],
+    // },
   ];
 
   const fields = [
@@ -68,7 +68,7 @@ export function SharedContextProvider({ children }) {
     tableHeader: [
       { name: "S.No", width: "w-7" },
       { name: "Action", width: "w-10" },
-      { name: "Name", width: "w-72" },
+      { name: "Name", width: "w-5/12" },
       { name: "Code", width: "" },
       { name: "Phone", width: "" },
       { name: "Email", width: "" },

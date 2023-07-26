@@ -4,7 +4,7 @@ import SharedContext from '../../contexts/SharedContext'
 
 const VendorMaster = () => {
     const { tableData } = useContext(SharedContext);
-    return (<MasterTableview title={"Vendor Master"} tableHeader = {tableData.tableHeader} tableBody = {tableData.vendorData}/>)
+    return (<MasterTableview title={"Vendor"} tableHeader = {tableData.tableHeader} tableBody = {tableData.vendorData}/>)
 }
 
 export default VendorMaster
