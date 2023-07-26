@@ -10,12 +10,10 @@ import logo from "./assets/logo.png";
 import CustomerMaster from "./pages/sales/CustomerMaster";
 import VendorMaster from "./pages/purchases/VendorMaster";
 import PageNotFound from "./pages/PageNotFound";
-
-
 const FundWave = () => {
   return (
-    <div className="h-screen bg-slate-50">
-      <header className="bg-[#1D5B79] flex justify-between items-center px-3 py-2">
+    <div className="min-h-screen bg-slate-50">
+      <header className="sticky z-50 top-0 bg-[#1D5B79] flex justify-between items-center px-3 py-2">
         <div className="flex items-center">
           <img src={logo} alt="FundWave" className="w-8 h-8 sm:w-9 sm:h-9" />
           <span className="text-white text-xl font-bold ml-4">FundWave</span>
@@ -33,11 +31,11 @@ const FundWave = () => {
       </header>
 
       <div className="flex flex-row">
-        <aside className="flex flex-col w-auto bg-[#1D5B79] border-r h-screen">
+        <aside className="flex-col w-auto bg-[#1D5B79] border-r h-screen">
           <Sidebar />
         </aside>
 
-        <div className="flex flex-col overflow-y-auto">
+        <div className="flex-auto p-1 ">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/sales-invoice" element={<SalesInvoice />} />
@@ -50,8 +48,8 @@ const FundWave = () => {
           </Routes>
         </div>
       </div>
-
-      {/* <footer className="bg-[#1D5B79] text-white py-2 px-4 fixed bottom-0 left-0 w-full">
+{/* 
+      <footer class="bg-[#1D5B79] text-white py-2 px-4 sticky z-50  bottom-0 left-0 w-full">
     Fixed Footer
   </footer> */}
     </div>
