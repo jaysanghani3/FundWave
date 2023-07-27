@@ -13,8 +13,8 @@ const CommonBillForm = ({ title, formFields }) => {
         <h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">{title}</h1>
 
         <div className="grid grid-cols-3 gap-6 border border-gray-300 p-2 mx-2">
-          {formFields.map((column) => (
-            <div className="flex flex-col gap-y-1 border-l-2 border-blue-100">
+          {formFields.map((column,index) => (
+            <div key={index} className="flex flex-col gap-y-1 border-l-2 border-blue-100">
               {column.map((field) => (
                 <div className="flex flex-row" key={field.name}>
                   <label className="ml-5 font-medium text-gray-700">{field.label}</label>
@@ -94,7 +94,7 @@ const CommonBillForm = ({ title, formFields }) => {
                     <input type="number" name="igst" id="igst" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
                   </td>
                   <td className="">
-                    <input type="number" name="total" id="total" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
+                    <input type="number" name="total" id="item_total" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
                   </td>
                 </tr>
               ))}
@@ -129,27 +129,27 @@ const CommonBillForm = ({ title, formFields }) => {
 
               <div className="flex flex-row">
                 <label className=" font-medium text-gray-700">Discount</label>
-                <input type="text" name="discount" id="discount" autoComplete="given-name" className="border border-gray-300 ms-auto w-6/12 text-right h-5  pr-2" />
+                <input type="text" name="discount" id="t_discount" autoComplete="given-name" className="border border-gray-300 ms-auto w-6/12 text-right h-5  pr-2" />
               </div>
 
               <div className="flex flex-row">
                 <label className=" font-medium text-gray-700">Taxable Value</label>
-                <input type="text" name="taxableValue" id="taxableValue" autoComplete="given-name" className="border border-gray-300 ms-auto w-6/12 text-right h-5  pr-2" />
+                <input type="text" name="taxableValue" id="t_taxableValue" autoComplete="given-name" className="border border-gray-300 ms-auto w-6/12 text-right h-5  pr-2" />
               </div>
 
               <div className="flex flex-row">
                 <label className=" font-medium text-gray-700">CGST</label>
-                <input type="text" name="cgst" id="cgst" autoComplete="given-name" className="border border-gray-300 ms-auto w-6/12 text-right h-5  pr-2" />
+                <input type="text" name="cgst" id="t_cgst" autoComplete="given-name" className="border border-gray-300 ms-auto w-6/12 text-right h-5  pr-2" />
               </div>
 
               <div className="flex flex-row">
                 <label className=" font-medium text-gray-700">SGST</label>
-                <input type="text" name="sgst" id="sgst" autoComplete="given-name" className="border border-gray-300 ms-auto w-6/12 text-right h-5  pr-2" />
+                <input type="text" name="sgst" id="t_sgst" autoComplete="given-name" className="border border-gray-300 ms-auto w-6/12 text-right h-5  pr-2" />
               </div>
 
               <div className="flex flex-row">
                 <label className=" font-medium text-gray-700">IGST</label>
-                <input type="text" name="igst" id="igst" autoComplete="given-name" className="border border-gray-300 ms-auto w-6/12 text-right h-5  pr-2" />
+                <input type="text" name="igst" id="t_igst" autoComplete="given-name" className="border border-gray-300 ms-auto w-6/12 text-right h-5  pr-2" />
               </div>
 
               <div className="flex flex-row">

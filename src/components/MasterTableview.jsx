@@ -32,7 +32,7 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
           />
           <button className="bg-[#1d5e7e] text-white px-3 py-1">Export</button>
           <button className="bg-[#1d5e7e] text-white px-3 py-1">Print</button>
-          <Link to="/add-new-cutomer">
+          <Link to={`/add-new-${title.toLowerCase()}`}>
             <button className="bg-[#1d5e7e] text-white px-3 py-1">Add New {title}</button>
           </Link>
         </div>
@@ -53,7 +53,9 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
                 <tr key={index} className="bg-white border hover:bg-gray-200">
                   <td className="px-2 py-1 border-r">{item.srno}</td>
                   <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
-                    <MdEdit className="text-blue-500 mr-2" /> |
+                    <Link to='/add-new-item'>
+                      <MdEdit className="text-blue-500 mr-2" />
+                    </Link>
                     <MdOutlineDelete className="text-red-500 ml-2" />
                   </td>
                   <td className="px-2 border-r">{item.name}</td>

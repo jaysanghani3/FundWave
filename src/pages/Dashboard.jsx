@@ -2,8 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FcSalesPerformance } from "react-icons/fc";
 import { GiPayMoney, GiReceiveMoney, GiProfit, GiExpense, GiTakeMyMoney } from "react-icons/gi";
+import SharedContext from "../contexts/SharedContext";
 
 const Dashboard = () => {
+
+  const { dashboardTable } = React.useContext(SharedContext);
+
   const list = [
     { name: "Sales", value: "₹ 0.00", color: "text-black", icon: <FcSalesPerformance size={70} /> },
     { name: "Purchase", value: "₹ 0.00", color: "text-black", icon: <GiTakeMyMoney size={70} /> },
@@ -13,52 +17,7 @@ const Dashboard = () => {
     { name: "Payable", value: "₹ 0.00", color: "text-black", icon: <GiPayMoney size={70} /> },
   ];
 
-  const tables = [
-    { 
-      name: "Recent Invoices",
-      columns: ["Invoice No", "Customer Name", "Amount", "Status"],
-      data: [
-        ["GT-0001", "Jay Sanghani", "₹ 2,00,000.00", "Paid"],
-        ["GT-0002", "Savan Sagapariya", "₹ 1,000.00", "Paid"],
-        ["GT-0003", "Dhruhit Akbari", "₹ 1,20,000.00", "Unpaid"],
-        ["GT-0004", "Arth Daraniya", "₹ 20,000.00", "Paid"],
-        ["GT-0005", "Karan Bhuva", "₹ 8000.00", "Paid"],
-      ],
-    },
-    {
-      name: "Recent Purchase Bills",
-      columns: ["Vendor Name", "Amount", "Status"],
-      data: [
-        ["Jay Sanghani", "₹ 1000.00", "Paid"],
-        ["Savan Sagapariya", "₹ 8900.00", "Paid"],
-        ["Dhruhit Akbari", "₹ 10,20,000.00", "Unpaid"],
-        ["Arth Daraniya", "₹ 20,000.00", "Paid"],
-        ["Karan Bhuva", "₹ 96,000.00", "Paid"],
-      ],
-    },
-    {
-      name: "Top 5 Customers",
-      columns: ["Customer Name", "Amount","Joining Duration"],
-      data: [
-        ["Jay Sanghani", "₹ 1,00,000.00", "100 days"],
-        ["Savan Sagapariya", "₹ 89,000.00","90 days"],
-        ["Dhruhit Akbari", "₹ 10,20,000.00","2 days"],
-        ["Arth Daraniya", "₹ 20,000.00","30 days"],
-        ["Karan Bhuva", "₹ 96,000.00","45 days"],
-      ],
-    },
-    {
-      name: "Top 5 Vendors",
-      columns: ["Vendor Name", "Amount","Joining Duration"],
-      data: [
-        ["Jay Patel", "₹ 1,00,000.00","150 days"],
-        ["Savan Patel", "₹ 89,000.00","95 days"],
-        ["Dhruhit Patel", "₹ 10,20,000.00","3 days"],
-        ["Arth Patel", "₹ 20,000.00","90 days"],
-        ["Karan Patel", "₹ 96,000.00","60 days"],
-      ],
-    },
-  ];
+  
 
   return (
     <div className="mx-auto">
@@ -88,7 +47,7 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6">
         {
-          tables.map((table, index) => (
+          dashboardTable.map((table, index) => (
             <div className="bg-white p-3 rounded-lg" key={index}>
               <span className="text-xl font-semibold">{table.name}</span>
               <div className="overflow-x-auto mt-4">
