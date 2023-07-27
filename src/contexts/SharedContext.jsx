@@ -6,7 +6,6 @@ import { MdOutlineInventory2 } from "react-icons/md";
 const SharedContext = createContext();
 
 export function SharedContextProvider({ children }) {
-  
   const sidebarMenus = [
     {
       menuName: "Dashboard",
@@ -64,7 +63,7 @@ export function SharedContextProvider({ children }) {
     { label: "Notes", name: "notes", type: "textarea" },
   ];
 
-  const tableData = {
+  const vcTableData = {
     tableHeader: [
       { name: "S.No", width: "w-7" },
       { name: "Action", width: "w-10" },
@@ -108,7 +107,7 @@ export function SharedContextProvider({ children }) {
         created_on_date: "2023-07-25",
       },
     ],
-    vendorData : [
+    vendorData: [
       {
         srno: 1,
         name: "Vendor 1",
@@ -139,13 +138,92 @@ export function SharedContextProvider({ children }) {
         gst_no: "GST101010",
         created_on_date: "2023-07-10",
       },
-    ]
+    ],
+  };
+
+  const itemTableData = {
+    itemTableHeader: [
+      { name: "S.No", width: "w-7" },
+      { name: "Action", width: "w-10" },
+      { name: "Name", width: "w-5/12" },
+      { name: "Code", width: "" },
+      { name: "Category", width: "" },
+      { name: "Group", width: "" },
+      { name: "Type", width: "" },
+      { name: "HSN Code", width: "" },
+      { name: "Unit", width: "" },
+      { name: "Tax Rate", width: "" },
+      { name: "Created on", width: "" },
+    ],
+    itemData: [
+      {
+        srno: 1,
+        name: "Item 1",
+        code: "A123",
+        category: "Category A",
+        group: "Group X",
+        type: "Type 1",
+        hsnCode: "1234",
+        unit: "pcs",
+        taxRate: "5%",
+        createdOn: "2023-07-27",
+      },
+      {
+        srno: 2,
+        name: "Item 2",
+        code: "B456",
+        category: "Category B",
+        group: "Group Y",
+        type: "Type 2",
+        hsnCode: "5678",
+        unit: "kg",
+        taxRate: "12%",
+        createdOn: "2023-07-26",
+      },
+      {
+        srno: 3,
+        name: "Item 3",
+        code: "C789",
+        category: "Category C",
+        group: "Group Z",
+        type: "Type 3",
+        hsnCode: "9101",
+        unit: "m",
+        taxRate: "18%",
+        createdOn: "2023-07-25",
+      },
+      {
+        srno: 4,
+        name: "Item 4",
+        code: "D012",
+        category: "Category A",
+        group: "Group X",
+        type: "Type 1",
+        hsnCode: "1112",
+        unit: "pcs",
+        taxRate: "5%",
+        createdOn: "2023-07-24",
+      },
+      {
+        srno: 5,
+        name: "Item 5",
+        code: "E345",
+        category: "Category B",
+        group: "Group Y",
+        type: "Type 2",
+        hsnCode: "1314",
+        unit: "kg",
+        taxRate: "12%",
+        createdOn: "2023-07-23",
+      },
+    ],
   };
 
   const value = {
     sidebarMenus,
     fields,
-    tableData,
+    vcTableData,
+    itemTableData
   };
 
   return <SharedContext.Provider value={value}>{children}</SharedContext.Provider>;

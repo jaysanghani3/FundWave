@@ -10,6 +10,7 @@ import logo from "./assets/logo.png";
 import CustomerMaster from "./pages/sales/CustomerMaster";
 import VendorMaster from "./pages/purchases/VendorMaster";
 import PageNotFound from "./pages/PageNotFound";
+import ItemMasters from "./pages/inventory/ItemMasters";
 const FundWave = () => {
   return (
     <div className="min-h-screen bg-slate-50">
@@ -31,11 +32,11 @@ const FundWave = () => {
       </header>
 
       <div className="flex flex-row">
-        <aside className="flex-col w-auto bg-[#1D5B79] border-r h-screen">
+        <aside className="flex flex-col w-auto bg-[#1D5B79] border-r min-h-screen">
           <Sidebar />
         </aside>
 
-        <div className="flex-auto p-1 ">
+        <div className="flex-auto p-6 overflow-y-scroll">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/sales-invoice" element={<SalesInvoice />} />
@@ -44,14 +45,15 @@ const FundWave = () => {
             <Route path="/add-new-cutomer" element={<AddNewCustomer />} />
             <Route path="/customer" element={<CustomerMaster />} />
             <Route path="/vendor" element={<VendorMaster />} />
+            <Route path="/item-master" element={<ItemMasters />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>
       </div>
-{/* 
-      <footer class="bg-[#1D5B79] text-white py-2 px-4 sticky z-50  bottom-0 left-0 w-full">
-    Fixed Footer
-  </footer> */}
+
+      <footer className="bg-[#1D5B79] text-white items-center px-4 fixed bottom-0 left-0 w-full h-6">
+        <span className="text-xs">© 2023 FundWave. All rights reserved.</span>
+      </footer>
     </div>
   );
 };

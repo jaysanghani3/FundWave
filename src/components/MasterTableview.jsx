@@ -48,7 +48,27 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((item, index) => (
+            {title === "Item" ? (
+              filteredData.map((item, index) => (
+                <tr key={index} className="bg-white border hover:bg-gray-200">
+                  <td className="px-2 py-1 border-r">{item.srno}</td>
+                  <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
+                    <MdEdit className="text-blue-500 mr-2" /> |
+                    <MdOutlineDelete className="text-red-500 ml-2" />
+                  </td>
+                  <td className="px-2 border-r">{item.name}</td>
+                  <td className="px-2 border-r">{item.code}</td>
+                  <td className="px-2 border-r">{item.category}</td>
+                  <td className="px-2 border-r">{item.group}</td>
+                  <td className="px-2 border-r">{item.type}</td>
+                  <td className="px-2 border-r">{item.hsnCode}</td>
+                  <td className="px-2 border-r">{item.unit}</td>
+                  <td className="px-2 border-r text-end">{item.taxRate}</td>
+                  <td className="px-2 border-r">{item.createdOn}</td>
+                </tr>
+              ))
+            ):(
+            filteredData.map((item, index) => (
               <tr key={index} className="bg-white border hover:bg-gray-200">
                 <td className="px-2 py-1 border-r">{item.srno}</td>
                 <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
@@ -63,7 +83,7 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
                 <td className="px-2 border-r">{item.gst_no}</td>
                 <td className="px-2    ">{item.created_on_date}</td>
               </tr>
-            ))}
+            )))}
           </tbody>
         </table>
       </div>

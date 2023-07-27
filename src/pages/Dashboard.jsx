@@ -61,8 +61,8 @@ const Dashboard = () => {
   ];
 
   return (
-    <div>
-      <div className="flex flex-row items-center w-11/12 mx-auto mt-6">
+    <div className="mx-auto">
+      <div className="flex flex-row items-center">
         <Link to="/sales-invoice">
           <button className="bg-[#1D5B79] text-sm text-white px-4 py-2 rounded-md font-semibold me-3">Sales Invoice</button>
         </Link>
@@ -74,7 +74,7 @@ const Dashboard = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-11/12 mx-auto mt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
         {list.map((item, index) => (
           <div className="flex flex-row bg-white p-3 rounded-lg h-36" key={index}>
             <div className={`w-5/12 ps-9 py-4 border-r ${item.color}`}>{item.icon}</div>
@@ -86,7 +86,7 @@ const Dashboard = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-11/12 mx-auto mt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6">
         {
           tables.map((table, index) => (
             <div className="bg-white p-3 rounded-lg" key={index}>

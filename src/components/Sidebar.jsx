@@ -22,13 +22,13 @@ const Sidebar = () => {
           {menu.menuName == "Dashboard" ? (
             <Link to={menu.link} className="flex items-center w-full focus:outline-none hover:bg-[#267399] text-gray-600 border-l-4 border-transparent hover:border-white pr-6 py-1 flex-row">
               <span className="ml-2 inline-flex justify-center items-center">{menu.icon}</span>
-              <span className="text-base hidden sm:block tracking-wide truncate mx-2 text-white">{menu.menuName}</span>
+              <span className="text-sm hidden sm:block tracking-wide truncate mx-2 text-white">{menu.menuName}</span>
             </Link>
           ) : (
             <>
               <button onClick={() => toggleSubMenu(index)} className="flex items-center w-full focus:outline-none hover:bg-[#267399] text-gray-600 border-l-4 border-transparent hover:border-white pr-6 py-1 flex-row">
                 <span className="ml-2 inline-flex justify-center items-center">{menu.icon}</span>
-                <span className="text-base hidden sm:block tracking-wide truncate mx-2 text-white">{menu.menuName}</span>
+                <span className="text-sm hidden sm:block tracking-wide truncate mx-2 text-white">{menu.menuName}</span>
                 <AiOutlineDown className="text-white ms-auto " />
               </button>
 
