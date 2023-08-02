@@ -42,7 +42,7 @@ const AddNewVendor = () => {
       <>
         <CustomerVendorForm title={"Add New Vendor"} fields={fields} data={vendor} onChange={handleChange} />
         
-        <div className="flex justify-end mt-3 space-x-3 text-xs">
+        <div className="flex justify-end my-3 space-x-3 text-xs">
           <button onClick={handleSave} className="bg-[#1d5e7e] text-white px-3 py-1">
             Save
           </button>

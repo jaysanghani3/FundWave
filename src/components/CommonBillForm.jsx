@@ -1,15 +1,34 @@
 import React, { useState } from "react";
 import { MdOutlineDelete, MdEdit } from "react-icons/md";
 
-const CommonBillForm = ({ title, formFields }) => {
-  const [rows, setRows] = useState([{}]);
+const CommonBillForm = ({ title, formFields, onChange , data }) => {
 
+  const [rows, setRows] = useState([{}]);
+  const [bill, setBill] = useState({
+    // billNo: "",
+    // customer: "",
+    gstNo: "",
+    cashCredit: "",
+    date: "",
+    dueDate: "",
+    contactNo: "",
+    address: "",
+  });
+  
+  const handleBillChange = (e) => {
+    const { name, value } = e.target;
+    setBill((prev) => ({ ...prev, [name]: value }));
+  }
+
+  const handleBillSubmit = () => {
+    console.log(bill);
+  }
   const addRow = () => {
     setRows([...rows, {}]);
   };
 
   return (
-    <div className="flex flex-col border-2 gap-y-3 min-h-full text-xs">
+    <div className="h-full flex flex-col border-2 gap-y-3 min-h-full text-xs">
         <h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">{title}</h1>
 
         <div className="grid grid-cols-3 gap-6 border border-gray-300 p-2 mx-2">
@@ -19,7 +38,7 @@ const CommonBillForm = ({ title, formFields }) => {
                 <div className="flex flex-row" key={field.name}>
                   <label className="ml-5 font-medium text-gray-700">{field.label}</label>
                   {field.type === "select" ? (
-                    <select name={field.name} id={field.name} className="border border-gray-300 ms-auto w-7/12">
+                    <select onChange={handleBillChange} name={field.name} id={field.name} className="border border-gray-300 ms-auto w-7/12">
                       {field.options.map((option) => (
                         <option key={option} value={option}>
                           {option}
@@ -27,9 +46,9 @@ const CommonBillForm = ({ title, formFields }) => {
                       ))}
                     </select>
                   ) : field.type === "textarea" ? (
-                    <textarea name={field.name} id={field.name} autoComplete="given-name" className="border border-gray-300 ml-3 ms-auto w-7/12 resize-none" />
+                    <textarea onChange={handleBillChange} name={field.name} id={field.name} autoComplete="given-name" className="border border-gray-300 ml-3 ms-auto w-7/12 resize-none" />
                   ) : (
-                    <input type={field.type} name={field.name} id={field.name} autoComplete="given-name" className="border border-gray-300 ms-auto w-7/12" />
+                    <input onChange={handleBillChange} type={field.type} name={field.name} id={field.name} autoComplete="given-name" className="border border-gray-300 ms-auto w-7/12" />
                   )}
                 </div>
               ))}
@@ -67,34 +86,34 @@ const CommonBillForm = ({ title, formFields }) => {
                     <MdEdit />
                   </td>
                   <td className="text-left">
-                    <input type="text" name="product" id="product" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
+                    <input onChange={handleBillChange} type="text" name="product" id="product" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
                   </td>
                   <td className="text-left">
-                    <input type="text" name="description" id="description" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
+                    <input onChange={handleBillChange} type="text" name="description" id="description" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
                   </td>
                   <td className="">
-                    <input type="number" name="qty" id="qty" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
+                    <input onChange={handleBillChange} type="number" name="qty" id="qty" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
                   </td>
                   <td className="">
-                    <input type="number" name="rate" id="rate" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
+                    <input onChange={handleBillChange} type="number" name="rate" id="rate" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
                   </td>
                   <td className="">
-                    <input type="number" name="discount" id="discount" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
+                    <input onChange={handleBillChange} type="number" name="discount" id="discount" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
                   </td>
                   <td className="">
-                    <input type="number" name="taxableValue" id="taxableValue" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
+                    <input onChange={handleBillChange} type="number" name="taxableValue" id="taxableValue" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
                   </td>
                   <td className="">
-                    <input type="number" name="cgst" id="cgst" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
+                    <input onChange={handleBillChange} type="number" name="cgst" id="cgst" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
                   </td>
                   <td className="">
-                    <input type="number" name="sgst" id="sgst" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
+                    <input onChange={handleBillChange} type="number" name="sgst" id="sgst" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
                   </td>
                   <td className="">
-                    <input type="number" name="igst" id="igst" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
+                    <input onChange={handleBillChange} type="number" name="igst" id="igst" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
                   </td>
                   <td className="">
-                    <input type="number" name="total" id="item_total" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
+                    <input onChange={handleBillChange} type="number" name="total" id="item_total" autoComplete="given-name" className="border border-gray-300 ms-auto w-full" />
                   </td>
                 </tr>
               ))}
@@ -160,7 +179,7 @@ const CommonBillForm = ({ title, formFields }) => {
           </div>
 
           <div className="flex flex-row justify-end gap-x-2 m-2">
-            <button className="bg-[#1d5e7e] text-white px-3 py-1 ">Save</button>
+            <button className="bg-[#1d5e7e] text-white px-3 py-1 " onClick={handleBillSubmit} >Save</button>
             <button className="bg-[#1d5e7e] text-white px-3 py-1 ">Cancel</button>
             <button className="bg-[#1d5e7e] text-white px-3 py-1 ">Print</button>
             <button className="bg-[#1d5e7e] text-white px-3 py-1 ">Email</button>

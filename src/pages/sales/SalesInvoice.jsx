@@ -1,9 +1,11 @@
-import React from "react";
+import React,{useState} from "react";
 import CommonBillForm from "../../components/CommonBillForm";
 
 const SalesInvoice = () => {
+
+ 
+
   const invoiceFields = [
-    // column1
     [
       { label: "Invoice No.", name: "invoiceNo", type: "text" },
       { label: "Customer", name: "customer", type: "text" },
@@ -21,8 +23,9 @@ const SalesInvoice = () => {
   ];
 
   return (
-    <div>
-      <CommonBillForm title={"Create New Sales Invoice"} formFields={invoiceFields} />
+    <div className="h-[98%]">
+      <CommonBillForm title={"Create New Sales Invoice"} formFields={invoiceFields}/>
+
     </div>
   );
 };

@@ -307,7 +307,6 @@ export function SharedContextProvider({ children }) {
     ],
   };
 
-
   const value = {
     sidebarMenus,
     fields,

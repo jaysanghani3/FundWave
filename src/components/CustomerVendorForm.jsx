@@ -4,8 +4,7 @@ import ImageUpload from "../components/ImageUpload";
 const CustomerVendorForm = ({ title, fields, data, onChange }) => {
   return (
     <>
-
-<h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">{title}</h1>
+      <h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">{title}</h1>
 
       <div className="grid grid-cols-3 gap-6 border p-3 pl-9 my-2 text-[13px]">
         <div className="flex flex-col col-span-2 gap-y-2 w-10/12 mx-auto">

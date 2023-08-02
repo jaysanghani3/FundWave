@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ImageUpload from "../../components/ImageUpload";
 
 const CreateItem = () => {
+  
   const [item, setItem] = useState({
     ItemName: "",
     Group: "",
@@ -252,7 +253,7 @@ const CreateItem = () => {
         </div>
       </div>
 
-      <div className="flex flex-row gap-x-3 justify-end mt-5">
+      <div className="flex flex-row gap-x-3 justify-end my-5">
         <button className="bg-[#1d5e7e] text-white px-3 py-1 text-xs" onClick={handleSave} >Save</button>
         <button className="bg-[#1d5e7e] text-white px-3 py-1 text-xs" onClick={handleClear} >Clear</button>
         <button className="bg-[#1d5e7e] text-white px-3 py-1 text-xs" onClick={handlePrint}>Print</button>

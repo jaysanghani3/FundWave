@@ -9,7 +9,7 @@ const Dashboard = () => {
   const { dashboardTable } = React.useContext(SharedContext);
 
   const list = [
-    { name: "Sales", value: "₹ 0.00", color: "text-black", icon: <FcSalesPerformance size={70} /> },
+    { name: "Sales", value: "₹ 400k", color: "text-black", icon: <FcSalesPerformance size={70} /> },
     { name: "Purchase", value: "₹ 0.00", color: "text-black", icon: <GiTakeMyMoney size={70} /> },
     { name: "Expenses", value: "₹ 0.00", color: "text-red-500", icon: <GiExpense size={70} /> },
     { name: "Net Profit", value: "₹ 0.00", color: "text-green-500", icon: <GiProfit size={70} /> },
@@ -45,7 +45,7 @@ const Dashboard = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6 text-xs">
         {
           dashboardTable.map((table, index) => (
             <div className="bg-white p-3 rounded-lg" key={index}>

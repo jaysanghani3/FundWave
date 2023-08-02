@@ -48,46 +48,51 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
             </tr>
           </thead>
           <tbody>
-            {title === "Item" ? (
-              filteredData.map((item, index) => (
-                <tr key={index} className="bg-white border hover:bg-gray-200">
-                  <td className="px-2 py-1 border-r">{item.srno}</td>
-                  <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
-                    <Link to='/add-new-item'>
-                      <MdEdit className="text-blue-500 mr-2" />
-                    </Link>
-                    <MdOutlineDelete className="text-red-500 ml-2" />
-                  </td>
-                  <td className="px-2 border-r">{item.name}</td>
-                  <td className="px-2 border-r">{item.code}</td>
-                  <td className="px-2 border-r">{item.category}</td>
-                  <td className="px-2 border-r">{item.group}</td>
-                  <td className="px-2 border-r">{item.type}</td>
-                  <td className="px-2 border-r">{item.hsnCode}</td>
-                  <td className="px-2 border-r">{item.unit}</td>
-                  <td className="px-2 border-r text-end">{item.taxRate}</td>
-                  <td className="px-2 border-r">{item.createdOn}</td>
-                </tr>
-              ))
-            ):(
-            filteredData.map((item, index) => (
-              <tr key={index} className="bg-white border hover:bg-gray-200">
-                <td className="px-2 py-1 border-r">{item.srno}</td>
-                <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
-                  <MdEdit className="text-blue-500 mr-2" /> |
-                  <MdOutlineDelete className="text-red-500 ml-2" />
-                </td>
-                <td className="px-2 border-r">{item.name}</td>
-                <td className="px-2 border-r">{item.customer_code}</td>
-                <td className="px-2 border-r">{item.phone}</td>
-                <td className="px-2 border-r">{item.email}</td>
-                <td className="px-2 border-r">{item.city}</td>
-                <td className="px-2 border-r">{item.gst_no}</td>
-                <td className="px-2    ">{item.created_on_date}</td>
-              </tr>
-            )))}
+            {title === "Item"
+              ? filteredData.map((item, index) => (
+                  <tr key={index} className="bg-white border hover:bg-gray-200">
+                    <td className="px-2 py-1 border-r">{item.srno}</td>
+                    <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
+                      <Link to={`/add-new-item`}>
+                        <MdEdit className="text-blue-500 mr-2" />
+                      </Link>
+                      <MdOutlineDelete className="text-red-500 ml-2" />
+                    </td>
+                    <td className="px-2 border-r">{item.name}</td>
+                    <td className="px-2 border-r">{item.code}</td>
+                    <td className="px-2 border-r">{item.category}</td>
+                    <td className="px-2 border-r">{item.group}</td>
+                    <td className="px-2 border-r">{item.type}</td>
+                    <td className="px-2 border-r">{item.hsnCode}</td>
+                    <td className="px-2 border-r">{item.unit}</td>
+                    <td className="px-2 border-r text-end">{item.taxRate}</td>
+                    <td className="px-2 border-r">{item.createdOn}</td>
+                  </tr>
+                ))
+              : filteredData.map((item, index) => (
+                  <tr key={index} className="bg-white border hover:bg-gray-200">
+                    <td className="px-2 py-1 border-r">{item.srno}</td>
+                    <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
+                      <MdEdit className="text-blue-500 mr-2" /> |
+                      <MdOutlineDelete className="text-red-500 ml-2" />
+                    </td>
+                    <td className="px-2 border-r">{item.name}</td>
+                    <td className="px-2 border-r">{item.customer_code}</td>
+                    <td className="px-2 border-r">{item.phone}</td>
+                    <td className="px-2 border-r">{item.email}</td>
+                    <td className="px-2 border-r">{item.city}</td>
+                    <td className="px-2 border-r">{item.gst_no}</td>
+                    <td className="px-2    ">{item.created_on_date}</td>
+                  </tr>
+                ))}
           </tbody>
         </table>
+      </div>
+      <div className="px-4 py-2">
+        <hr className="my-3" />
+        <span>
+          Total {title} : {tableBody.length}
+        </span>
       </div>
     </div>
   );
