@@ -8,7 +8,7 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
 
   const handleSearch = () => {
     const filteredData = tableBody.filter((item) => {
-      return item.name.toLowerCase().includes(searchValue.toLowerCase());
+      return item.ContactPerson.toLowerCase().includes(searchValue.toLowerCase());
     });
     setFilteredData(filteredData);
   };
@@ -71,18 +71,18 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
                 ))
               : filteredData.map((item, index) => (
                   <tr key={index} className="bg-white border hover:bg-gray-200">
-                    <td className="px-2 py-1 border-r">{item.srno}</td>
+                    <td className="px-2 py-1 border-r">{index+1}</td>
                     <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
                       <MdEdit className="text-blue-500 mr-2" /> |
                       <MdOutlineDelete className="text-red-500 ml-2" />
                     </td>
-                    <td className="px-2 border-r">{item.name}</td>
-                    <td className="px-2 border-r">{item.customer_code}</td>
-                    <td className="px-2 border-r">{item.phone}</td>
-                    <td className="px-2 border-r">{item.email}</td>
-                    <td className="px-2 border-r">{item.city}</td>
-                    <td className="px-2 border-r">{item.gst_no}</td>
-                    <td className="px-2    ">{item.created_on_date}</td>
+                    <td className="px-2 border-r">{item.ContactPerson}</td>
+                    <td className="px-2 border-r">{item.Code}</td>
+                    <td className="px-2 border-r">{item.ContactNumber}</td>
+                    <td className="px-2 border-r">{item.Email}</td>
+                    <td className="px-2 border-r">{item.City}</td>
+                    <td className="px-2 border-r">{item.GST}</td>
+                    <td className="px-2    ">{item.CreatedOnDate}</td>
                   </tr>
                 ))}
           </tbody>

@@ -50,7 +50,7 @@ const FundWave = () => {
       </header>
 
       <div className="flex flex-row h-auto">
-        <aside className="flex flex-col w-auto bg-[#1D5B79]  border-r">
+        <aside className="flex flex-col w-auto bg-[#1D5B79] border-r">
           <Sidebar />
         </aside>
 

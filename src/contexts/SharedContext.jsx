@@ -2,6 +2,7 @@ import { createContext } from "react";
 import { TbFileInvoice, TbReportAnalytics } from "react-icons/tb";
 import { PiHandCoinsBold } from "react-icons/pi";
 import { MdOutlineInventory2 } from "react-icons/md";
+import custorJson from "./Customer.json";
 
 const SharedContext = createContext();
 
@@ -82,7 +83,7 @@ export function SharedContextProvider({ children }) {
       data: [
         ["Jay Sanghani", "₹ 1000.00", "Paid"],
         ["Savan Sagapariya", "₹ 8900.00", "Paid"],
-        ["Dhruhit Akbari", "₹ 10,20,000.00", "Unpaid"],
+        ["Dhruhit Akbari", "₹ 20,000.00", "Unpaid"],
         ["Arth Daraniya", "₹ 20,000.00", "Paid"],
         ["Karan Bhuva", "₹ 96,000.00", "Paid"],
       ],
@@ -93,7 +94,7 @@ export function SharedContextProvider({ children }) {
       data: [
         ["Jay Sanghani", "₹ 1,00,000.00", "100 days"],
         ["Savan Sagapariya", "₹ 89,000.00","90 days"],
-        ["Dhruhit Akbari", "₹ 10,20,000.00","2 days"],
+        ["Dhruhit Akbari", "₹ 1,020.00","2 days"],
         ["Arth Daraniya", "₹ 20,000.00","30 days"],
         ["Karan Bhuva", "₹ 96,000.00","45 days"],
       ],
@@ -313,6 +314,7 @@ export function SharedContextProvider({ children }) {
     vcTableData,
     itemTableData,
     dashboardTable,
+    custorJson,
   };
 
   return <SharedContext.Provider value={value}>{children}</SharedContext.Provider>;
