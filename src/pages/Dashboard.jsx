@@ -28,7 +28,7 @@ const Dashboard = () => {
         <Link to="/purchase-bill">
           <button className="bg-[#1D5B79] text-sm text-white px-4 py-2 rounded-md font-semibold mx-3">Purchase Bill</button>
         </Link>
-        <Link to="/add-new-cutomer">
+        <Link to="/add-new-customer">
           <button className="bg-[#1D5B79] text-sm text-white px-4 py-2 rounded-md font-semibold mx-3">Add New Customer</button>
         </Link>
       </div>

@@ -8,7 +8,7 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
 
   const handleSearch = () => {
     const filteredData = tableBody.filter((item) => {
-      return item.ContactPerson.toLowerCase().includes(searchValue.toLowerCase());
+      return item.name.toLowerCase().includes(searchValue.toLowerCase());
     });
     setFilteredData(filteredData);
   };
@@ -76,13 +76,13 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
                       <MdEdit className="text-blue-500 mr-2" /> |
                       <MdOutlineDelete className="text-red-500 ml-2" />
                     </td>
-                    <td className="px-2 border-r">{item.ContactPerson}</td>
-                    <td className="px-2 border-r">{item.Code}</td>
-                    <td className="px-2 border-r">{item.ContactNumber}</td>
-                    <td className="px-2 border-r">{item.Email}</td>
-                    <td className="px-2 border-r">{item.City}</td>
-                    <td className="px-2 border-r">{item.GST}</td>
-                    <td className="px-2    ">{item.CreatedOnDate}</td>
+                    <td className="px-2 border-r">{item.name}</td>
+                    <td className="px-2 border-r">{item.customer_code}</td>
+                    <td className="px-2 border-r">{item.phone}</td>
+                    <td className="px-2 border-r">{item.email}</td>
+                    <td className="px-2 border-r">{item.city}</td>
+                    <td className="px-2 border-r">{item.gst_no}</td>
+                    <td className="px-2    ">{item.created_on_date}</td>
                   </tr>
                 ))}
           </tbody>

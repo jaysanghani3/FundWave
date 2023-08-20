@@ -1,0 +1,24 @@
+[
+    {
+        "name":"",
+        "group":"",
+        "category":"",
+        "code":"",
+        "type":"",
+        "description":"",
+        "stockUnit":"",
+        "quantity":0,
+        "reorderLevel":0,
+        "expiryDate":"",
+        "gst":0,
+        "purchasePrice":0,
+        "purchaseRateFactor":0,
+        "mrp":0,
+        "minimumSalePrice":0,
+        "salePrice":0,
+        "wholeSalePrice":0,
+        "dealerPrice":0,
+        "saleRateFactor":0,
+        "discount":0
+    }
+]

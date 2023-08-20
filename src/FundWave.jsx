@@ -76,9 +76,9 @@ const FundWave = () => {
         <span className="text-xs">© 2023 FundWave. All rights reserved.</span>
       </footer>
       </>
-      {/* ): (
+     {/* ): (
      <Login onLogin={handleLogin} />
-   )}    */}
+   )} */}
     </div>
   );
 };

@@ -1,174 +1,44 @@
 [
     {
-        "Id": "1",
-        "CompanyName": "Hindustan Plast Industries",
-        "ContactPerson": "Jay Patel",
-        "ContactNumber": "6353123580",
-        "Email": "hindustanplast@gmail.com",
-        "Code": "C001",
-        "Status": "Active",
-        "Type": "Retail",
-        "GST": "24AABCU9602R1Z5",
-        "PAN": "GST.substr(2, 11)" ,
-        "BillingAddress": "Mavdi",
-        "ShippingAddress": "Mavdi",
-        "State": "Gujarat",
-        "City": "Rajkot",
-        "Pincode": "360004",
-        "Country": "India",
-        "CreatedOnDate": "2021-06-01",
-        "UpdatedOnDate": "2021-06-01",
-        "Notes": "Special handling instructions",
+        "companyName": "Hindustan Plast Industries",
+        "contactPerson": "Jay Patel",
+        "contactNumber": 6353123580,
+        "email": "hindustanplast@gmail.com",
+        "code": "C001",
+        "status": "Active",
+        "type": "Retail",
+        "gst": "24AABCU9602R1Z5",
+        "pan": "AABCU9602R1" ,
+        "billingAddress": "Mavdi",
+        "shippingAddress": "Mavdi",
+        "state": "Gujarat",
+        "city": "Rajkot",
+        "pincode": 360004,
+        "country": "India",
+        "createdOnDate": "2021-06-01",
+        "updatedOnDate": "2021-06-01",
+        "notes": "Special handling instructions",
         "purchasesData":{
-            "TotalPurchaseCount": 2,
-            "TotalPurchaseAmount": 10200
+            "totalPurchaseCount": 0,
+            "totalPurchaseAmount": 0
         },
         "salesData":{
-            "TotalSaleCount": 0,
-            "TotalSaleAmount": 0
+            "totalSaleCount": 0,
+            "totalSaleAmount": 0
         },
         "returnsData":{
-            "TotalReturnCount": 0,
-            "TotalReturnAmount": 0
+            "totalReturnCount": 0,
+            "totalReturnAmount": 0
         },
         "paymentsData":{
-            "TotalPaymentCount": 0,
-            "TotalPaymentAmount": 0
+            "totalPaymentCount": 0,
+            "totalPaymentAmount": 0
         },
         "bankingInfo":{
-            "BankName": "HDFC",
-            "AccountNumber": "1234567890",
-            "IFSC": "HDFC0000123",
-            "Branch": "Mavdi"
-        }
-    },
-    {
-        "Id": "2",
-        "CompanyName": "ABC Company",
-        "ContactPerson": "Ajay Patel",
-        "ContactNumber": "6353166680",
-        "Email": "ajay@gmail.com",
-        "Code": "C002",
-        "Status": "Active",
-        "Type": "Retail",
-        "GST": "24AABCU9602R1Z5",
-        "PAN": "GST.substr(2, 11)" ,
-        "BillingAddress": "Mavdi",
-        "ShippingAddress": "Mavdi",
-        "State": "Gujarat",
-        "City": "Rajkot",
-        "Pincode": "360004",
-        "Country": "India",
-        "CreatedOnDate": "2021-06-01",
-        "UpdatedOnDate": "2022-01-01",
-        "Notes": "Special handling instructions",
-        "purchasesData":{
-            "TotalPurchaseCount": 4,
-            "TotalPurchaseAmount": 30200
-        },
-        "salesData":{
-            "TotalSaleCount": 0,
-            "TotalSaleAmount": 0
-        },
-        "returnsData":{
-            "TotalReturnCount": 0,
-            "TotalReturnAmount": 0
-        },
-        "paymentsData":{
-            "TotalPaymentCount": 0,
-            "TotalPaymentAmount": 0
-        },
-        "bankingInfo":{
-            "BankName": "HDFC",
-            "AccountNumber": "1234567890",
-            "IFSC": "HDFC0000123",
-            "Branch": "Mavdi"
-        }
-    },
-    {
-        "Id": "3",
-        "CompanyName": "XYZ Company",
-        "ContactPerson": "Vijay Patel",
-        "ContactNumber": "6353123580",
-        "Email": "vijay@gmail.com",
-        "Code": "C003",
-        "Status": "Active",
-        "Type": "WholeSale",
-        "GST": "24AABCU9602R1Z5",
-        "PAN": "GST.substr(2, 11)" ,
-        "BillingAddress": "Mavdi",
-        "ShippingAddress": "Mavdi",
-        "State": "Gujarat",
-        "City": "Rajkot",
-        "Pincode": "360004",
-        "Country": "India",
-        "CreatedOnDate": "2021-06-01",
-        "UpdatedOnDate": "2021-06-01",
-        "Notes": "Special handling instructions",
-        "purchasesData":{
-            "TotalPurchaseCount": 7,
-            "TotalPurchaseAmount": 78036
-        },
-        "salesData":{
-            "TotalSaleCount": 0,
-            "TotalSaleAmount": 0
-        },
-        "returnsData":{
-            "TotalReturnCount": 0,
-            "TotalReturnAmount": 0
-        },
-        "paymentsData":{
-            "TotalPaymentCount": 5,
-            "TotalPaymentAmount": 50000
-        },
-        "bankingInfo":{
-            "BankName": "HDFC",
-            "AccountNumber": "1234567890",
-            "IFSC": "HDFC0000123",
-            "Branch": "Mavdi"
-        }
-    },
-    {
-        "Id": "3",
-        "CompanyName": "XYZ Company",
-        "ContactPerson": "Sanjay Patel",
-        "ContactNumber": "6353123580",
-        "Email": "sanjay@gmail.com",
-        "Code": "C004",
-        "Status": "Active",
-        "Type": "WholeSale",
-        "GST": "24AABCU9602R1Z5",
-        "PAN": "GST.substr(2, 11)" ,
-        "BillingAddress": "Mavdi",
-        "ShippingAddress": "Mavdi",
-        "State": "Gujarat",
-        "City": "Surat",
-        "Pincode": "361104",
-        "Country": "India",
-        "CreatedOnDate": "2021-06-01",
-        "UpdatedOnDate": "2023-06-11",
-        "Notes": "Special handling instructions",
-        "purchasesData":{
-            "TotalPurchaseCount": 5,
-            "TotalPurchaseAmount": 50000
-        },
-        "salesData":{
-            "TotalSaleCount": 0,
-            "TotalSaleAmount": 0
-        },
-        "returnsData":{
-            "TotalReturnCount": 0,
-            "TotalReturnAmount": 0
-        },
-        "paymentsData":{
-            "TotalPaymentCount": 5,
-            "TotalPaymentAmount": 50000
-        },
-        "bankingInfo":{
-            "BankName": "HDFC",
-            "AccountNumber": "1234567890",
-            "IFSC": "HDFC0000123",
-            "Branch": "Mavdi"
+            "bankName": "HDFC",
+            "accountNumber": 12345678900101,
+            "ifsc": "HDFC0000123",
+            "branch": "Mavdi"
         }
     }
 ]

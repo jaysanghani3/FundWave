@@ -1,0 +1,54 @@
+[
+  {
+    "invoiceNumber": "",
+    "createdDate": "",
+    "dueDate": "",
+    "sender": {
+      "companyName": "",
+      "firstName": "",
+      "lastName": "",
+      "country": "",
+      "addressLine1": "",
+      "addressLine2": "",
+      "state": "",
+      "city": "",
+      "phone": "",
+      "email": ""
+    },
+    "recipient": {
+      "companyName": "",
+      "firstName": "",
+      "addressLine1": "",
+      "addressLine2": "",
+      "city": "",
+      "state": "",
+      "country": "",
+      "postalCode": "",
+      "phone": "",
+      "email": ""
+    },
+    "items": [
+      {
+        "name": "",
+        "description": "",
+        "quantity": 0,
+        "price": 0,
+        "discount": 0,
+        "taxableValue": 0,
+        "cgst": 0,
+        "sgst": 0,
+        "igst": 0,
+        "total": 0
+      }
+    ],
+    "subTotal": 0,
+    "discount": 0,
+    "taxableValue": 0,
+    "cgst": 0,
+    "sgst": 0,
+    "igst": 0,
+    "total": 0,
+    "terms": "",
+    "notes": ""
+  }
+]

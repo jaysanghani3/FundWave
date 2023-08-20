@@ -21,7 +21,7 @@ const ImageUploadPreview = () => {
     <div className="w-8/12 mx-auto">
       <div className="flex justify-center items-center h-64 border-2 border-dashed border-[#1D5B79] rounded-md p-2">
         {image ? (
-          <img src={image} alt="Uploaded" className="rounded-md object-fit" />
+          <img src={image} alt="Uploaded" className="rounded-md object-fit h-56" />
         ) : (
             <FcAddImage size={120} className="text-gray-500" />
         )}
