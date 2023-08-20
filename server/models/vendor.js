@@ -24,11 +24,9 @@ const vendorSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    required: true,
   },
   type: {
     type: String,
-    required: true,
   },
   gst: {
     type: String,
@@ -44,7 +42,6 @@ const vendorSchema = new mongoose.Schema({
   },
   shippingAddress: {
     type: String,
-    required: true,
   },
   state: {
     type: String,
@@ -64,11 +61,9 @@ const vendorSchema = new mongoose.Schema({
   },
   createdOnDate: {
     type: Date,
-    required: true,
   },
   updatedOnDate: {
     type: Date,
-    required: true,
   },
   notes: {
     type: String,

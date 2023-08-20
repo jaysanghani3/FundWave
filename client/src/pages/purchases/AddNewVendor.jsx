@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import CustomerVendorForm from "../../components/CustomerVendorForm";
 import SharedContext from "../../contexts/SharedContext";
+import axios from 'axios';
 
 const AddNewVendor = () => {
   
@@ -20,8 +21,16 @@ const AddNewVendor = () => {
   
     const handleSave = () => {
       console.log(vendor);
+      axios.post('http://localhost:3000/vendor/store', vendor)
+        .then((response) => {
+          console.log('Response:', response.data);
+          alert("Vendor saved successfully.");
+        })
+        .catch((error) => {
+          console.error('Error:', error.response.data.error);
+        });  
     };
-  
+
     const handleClear = () => {
       const clearFields = fields.reduce((acc, field) => {
         acc[field.name] = "";

@@ -1,29 +1,30 @@
 import React, { useState } from "react";
 import ImageUpload from "../../components/ImageUpload";
+import axios from "axios";
 
 const CreateItem = () => {
-  
+
   const [item, setItem] = useState({
-    ItemName: "",
-    Group: "",
-    Category: "",
-    ItemCode: "",
-    ItemType: "",
-    Description: "",
-    StockUnit: "",
-    Quantity: "",
-    ReorderLevel: "",
-    ExpiryDate: "",
-    GST: "",
-    PurchasePrice: "",
-    PurchaseRateFactor: "",
-    MPR: "",
-    MinimumPrice: "",
-    SalesPrice: "",
-    WholesalePrice: "",
-    DealerPrice: "",
-    RateFactor: "",
-    Discount: "",
+    name: "",
+    group: "",
+    category: "",
+    code: "",
+    type: "",
+    description: "",
+    stockUnit: "",
+    quantity: "",
+    reorderLevel: "",
+    expiryDate: "",
+    gst: "",
+    purchasePrice: "",
+    purchaseRateFactor: "",
+    mrp: "",
+    minimumPrice: "",
+    salesPrice: "",
+    wholesalePrice: "",
+    dealerPrice: "",
+    rateFactor: "",
+    discount: "",
   });
 
   const handleChange = (e) => {
@@ -36,34 +37,44 @@ const CreateItem = () => {
     });
   };
 
-  const handleSave = () => {   
+  const handleSave = () => {
     console.log(item);
+    axios
+      .post("http://localhost:3000/item/store", item)
+      .then((response) => {
+        console.log(response.data);
+        alert("Item saved successfully.");
+      })
+      .catch((error) => {
+        console.log(error.response.data.error);
+        alert("Item not saved. Please check the console for errors.");
+      });
   };
 
-    const handleClear = () => {
-      setItem({
-        ItemName: "",
-        Group: "",  
-        Category: "",
-        ItemCode: "",
-        ItemType: "", 
-        Description: "",
-        StockUnit: "",
-        Quantity: "",
-        ReorderLevel: "",
-        ExpiryDate: "",
-        GST: "",
-        PurchasePrice: "",
-        PurchaseRateFactor: "",
-        MPR: "",
-        MinimumPrice: "",
-        SalesPrice: "",
-        WholesalePrice: "",
-        DealerPrice: "",
-        RateFactor: "",
-        Discount: "",
-      });
-    };
+  const handleClear = () => {
+    setItem({
+      name: "",
+      group: "",
+      category: "",
+      code: "",
+      type: "",
+      description: "",
+      stockUnit: "",
+      quantity: "",
+      reorderLevel: "",
+      expiryDate: "",
+      gst: "",
+      purchasePrice: "",
+      purchaseRateFactor: "",
+      mrp: "",
+      minimumPrice: "",
+      salesPrice: "",
+      wholesalePrice: "",
+      dealerPrice: "",
+      rateFactor: "",
+      discount: "",
+    });
+  };
 
   const handlePrint = () => {
     console.log("Print");
@@ -131,27 +142,27 @@ const CreateItem = () => {
         <div className="flex flex-col col-span-2 gap-y-2">
           <div className="flex flex-row">
             <label className="text-gray-700 ">Item Name</label>
-            <input onChange={handleChange} value={item.ItemName} type="text" name="ItemName" id="ItemName" autoComplete="given-name" className="border ms-auto pl-1 w-10/12"/>
+            <input onChange={handleChange} value={item.name} type="text" name="name" id="name" autoComplete="given-name" className="border ms-auto pl-1 w-10/12" />
           </div>
 
           <div className="flex flex-row">
             <label className="text-gray-700 ">Group</label>
-            <input onChange={handleChange} value={item.Group} type="text" name="Group" id="Group" autoComplete="given-name" className="border ms-auto pl-1 w-10/12" />
+            <input onChange={handleChange} value={item.group} type="text" name="group" id="group" autoComplete="given-name" className="border ms-auto pl-1 w-10/12" />
           </div>
 
           <div className="flex flex-row">
             <label className="text-gray-700 ">Category</label>
-            <input onChange={handleChange} value={item.Category} type="text" name="Category" id="Category" autoComplete="given-name" className="border ms-auto pl-1 w-10/12" />
+            <input onChange={handleChange} value={item.category} type="text" name="category" id="category" autoComplete="given-name" className="border ms-auto pl-1 w-10/12" />
           </div>
 
           <div className="flex flex-row">
             <label className="text-gray-700 ">Item Code</label>
-            <input onChange={handleChange} value={item.ItemCode} type="text" name="ItemCode" id="ItemCode" autoComplete="given-name" className="border ms-auto pl-1 w-10/12" />
+            <input onChange={handleChange} value={item.code} type="text" name="code" id="code" autoComplete="given-name" className="border ms-auto pl-1 w-10/12" />
           </div>
 
           <div className="flex flex-row">
             <label className="text-gray-700 ">Item Type</label>
-            <select onChange={handleChange} value={item.ItemType} name="ItemType" id="ItemType" className="border ms-auto pl-1 w-10/12">
+            <select onChange={handleChange} value={item.type} name="type" id="type" className="border ms-auto pl-1 w-10/12">
               {itemTypes.map((itemType) => (
                 <option key={itemType.id} value={itemType.name}>
                   {itemType.name}
@@ -162,14 +173,14 @@ const CreateItem = () => {
 
           <div className="flex flex-row">
             <label className="text-gray-700 ">Description</label>
-            <textarea onChange={handleChange} value={item.Description} name="Description" id="Description" autoComplete="given-name" className="border h-16 ms-auto pl-1 w-10/12 resize-none " />
+            <textarea onChange={handleChange} value={item.description} name="description" id="description" autoComplete="given-name" className="border h-16 ms-auto pl-1 w-10/12 resize-none " />
           </div>
 
           <div className="flex flex-row mt-10 justify-between">
             <div className="flex flex-col gap-y-2">
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Stock Unit</label>
-                <select onChange={handleChange} value={item.StockUnit} name="StockUnit" id="StockUnit" className="border ms-auto pl-1 w-6/12">
+                <select onChange={handleChange} value={item.stockUnit} name="stockUnit" id="stockUnit" className="border ms-auto pl-1 w-6/12">
                   {stockUnits.map((stockUnit) => (
                     <option key={stockUnit.id} value={stockUnit.name}>
                       {stockUnit.name}
@@ -180,67 +191,67 @@ const CreateItem = () => {
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Quantity</label>
-                <input onChange={handleChange} value={item.Quantity} type="number" name="Quantity" id="Quantity" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.quantity} type="number" name="quantity" id="quantity" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Reorder Level</label>
-                <input onChange={handleChange} value={item.ReorderLevel} type="number" name="ReorderLevel" id="ReorderLevel" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.reorderLevel} type="number" name="reorderLevel" id="reorderLevel" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Expiry Date</label>
-                <input onChange={handleChange} value={item.ExpiryDate} type="date" name="ExpiryDate" id="ExpiryDate" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.expiryDate} type="date" name="expiryDate" id="expiryDate" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">GST</label>
-                <input onChange={handleChange} value={item.GST} type="number" name="GST" id="GST" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.gst} type="number" name="gst" id="gst" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Purchase Price</label>
-                <input onChange={handleChange} value={item.PurchasePrice} type="number" name="PurchasePrice" id="PurchasePrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.purchasePrice} type="number" name="purchasePrice" id="purchasePrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Purchase Rate Factor</label>
-                <input onChange={handleChange} value={item.PurchaseRateFactor} type="number" name="PurchaseRateFactor" id="PurchaseRateFactor" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.purchaseRateFactor} type="number" name="purchaseRateFactor" id="purchaseRateFactor" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
             </div>
 
             <div className="flex flex-col gap-y-2">
               <div className="flex flex-row">
                 <label className="text-gray-700 ">MPR</label>
-                <input onChange={handleChange} value={item.MPR} type="number" name="MPR" id="MPR" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.mrp} type="number" name="mrp" id="mrp" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Minimum Price</label>
-                <input onChange={handleChange} value={item.MinimumPrice} type="number" name="MinimumPrice" id="MinimumPrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.minimumPrice} type="number" name="minimumPrice" id="minimumPrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Sales Price</label>
-                <input onChange={handleChange} value={item.SalesPrice} type="number" name="SalesPrice" id="SalesPrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.salesPrice} type="number" name="salesPrice" id="salesPrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Wholesale Price</label>
-                <input onChange={handleChange} value={item.WholesalePrice} type="number" name="WholesalePrice" id="WholesalePrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.wholesalePrice} type="number" name="wholesalePrice" id="wholesalePrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Dealer Price</label>
-                <input onChange={handleChange} value={item.DealerPrice} type="number" name="DealerPrice" id="DealerPrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.dealerPrice} type="number" name="dealerPrice" id="dealerPrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Rate Factor</label>
-                <input onChange={handleChange} value={item.RateFactor} type="number" name="RateFactor" id="RateFactor" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.rateFactor} type="number" name="rateFactor" id="rateFactor" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Discount</label>
-                <input onChange={handleChange} value={item.Discount} type="number" name="Discount" id="Discount" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.discount} type="number" name="discount" id="discount" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
             </div>
           </div>
