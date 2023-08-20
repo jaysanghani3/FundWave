@@ -48,20 +48,21 @@ export function SharedContextProvider({ children }) {
   ];
 
   const fields = [
-    { label: "GST No.", name: "gstNo", type: "text" },
-    { label: "Name", name: "name", type: "text" },
+    { label: "GST No.", name: "gst", type: "text" },
+    { label: "Comapny Name", name: "companyName", type: "text" },
+    { label: "Contact Person", name: "contactPerson", type: "text" },
     { label: "Code", name: "code", type: "text" },
     { label: "Email", name: "email", type: "email" },
-    { label: "Phone No", name: "phone", type: "text" },
-    { label: "PAN No", name: "panNo", type: "text" },
+    { label: "Phone No", name: "contactNumber", type: "number" },
+    { label: "PAN No", name: "pan", type: "text" },
     { label: "Billing Address", name: "billingAddress", type: "textarea" },
     { label: "Country", name: "country", type: "select", options: ["Country 1", "Country 2"] },
     { label: "State", name: "state", type: "select", options: ["State 1", "State 2"] },
     { label: "City", name: "city", type: "select", options: ["City 1", "City 2"] },
-    { label: "Zip", name: "zip", type: "text" },
-    { label: "IFSC Code", name: "ifscCode", type: "text" },
+    { label: "Zip", name: "pincode", type: "text" },
+    { label: "IFSC Code", name: "ifsc", type: "text" },
     { label: "Bank Name", name: "bankName", type: "text" },
-    { label: "Bank Account No", name: "bankAccountNo", type: "text" },
+    { label: "Bank Account No", name: "accountNumber", type: "text" },
     { label: "Notes", name: "notes", type: "textarea" },
   ];
 
