@@ -52,8 +52,6 @@ const CommonBillForm = ({ title, formFields, onChange, data }) => {
       igst,
       total,
     }));
-
-
   };
 
   const handleBillSubmit = () => {
@@ -63,6 +61,13 @@ const CommonBillForm = ({ title, formFields, onChange, data }) => {
   const addRow = () => {
     setRows([...rows, {}]);
   };
+
+  const handleDeleteItem = (e) => {
+    const updatedRows = [...rows];
+    updatedRows.pop();
+    setRows(updatedRows);
+  }
+
 
   return (
     <div className="h-full flex flex-col border-2 gap-y-3 min-h-full text-xs ">
@@ -101,7 +106,7 @@ const CommonBillForm = ({ title, formFields, onChange, data }) => {
             <tr>
               <td className="p-1 w-7">Sr</td>
               <td className="p-1 w-6"></td>
-              <td className="p-1 w-6"></td>
+              {/* <td className="p-1 w-6"></td> */}
               <td className="p-1 w-40">Product</td>
               <td className="p-1">Description</td>
               <td className="p-1 w-14 text-center">Qty</td>
@@ -119,11 +124,13 @@ const CommonBillForm = ({ title, formFields, onChange, data }) => {
               <tr key={index} className="bg-transparent hover:bg-gray-50">
                 <td className="text-center">{index + 1}</td>
                 <td className="text-red-400 text-sm text-center">
-                  <MdOutlineDelete />
+                  <button type="button" onClick={() => handleDeleteItem()} className="focus:outline-none p-1">
+                    <MdOutlineDelete size={17}/>
+                  </button>
                 </td>
-                <td className="text-blue-400 text-sm text-center">
+                {/* <td className="text-blue-400 text-sm text-center">
                   <MdEdit />
-                </td>
+                </td> */}
                 <td className="text-left">
                   <input onChange={(e) => handleItemChange(e, index, "product")} type="text" name="product" id="product" className="ps-2 border border-gray-300 ms-auto w-full" />
                 </td>

@@ -1,5 +1,3 @@
-// routes/customerRoutes.js
-
 const express = require('express');
 const customerController = require('../controllers/customerController');
 // const { createCustomer, updateCustomer } = require('../validators/customerValidator');

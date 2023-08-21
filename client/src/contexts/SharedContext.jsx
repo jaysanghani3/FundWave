@@ -10,7 +10,6 @@ const SharedContext = createContext();
 
 export function SharedContextProvider({ children }) {
   
-
     const [customerData, setCustomerData] = useState([]);
     const [vendorData, setVendorData] = useState([]);
     const [itemData, setItemData] = useState([]);

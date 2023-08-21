@@ -1,23 +1,63 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineDelete, MdEdit } from "react-icons/md";
+import axios from "axios";
 
 const MasterTableview = ({ title, tableHeader, tableBody }) => {
 
   const [searchValue, setSearchValue] = useState("");
-   const [filteredTableBody, setFilteredTableBody] = useState(tableBody);
-  
-   useEffect(() => {
+  const [filteredTableBody, setFilteredTableBody] = useState(tableBody);
+
+  const fetchData = () => {
+
     if (searchValue) {
       const filteredData = tableBody.filter((item) =>
-      item.companyName?.toLowerCase().includes(searchValue?.toLowerCase()) ||
-      item.name?.toLowerCase().includes(searchValue?.toLowerCase())
+        item.companyName?.toLowerCase().includes(searchValue?.toLowerCase()) ||
+        item.name?.toLowerCase().includes(searchValue?.toLowerCase())
       );
       setFilteredTableBody(filteredData);
     } else {
       setFilteredTableBody(tableBody);
     }
-  }, [searchValue, tableBody]);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [searchValue, tableBody,]);
+
+  const handleDeleteVC = async (id) => {
+    if (title === "Customer") {
+      if (window.confirm("Are you sure you want to delete this customer?")) {
+        try {
+          await axios.delete(`http://localhost:3000/customer/${id}`);
+          fetchData();
+        } catch (error) {
+          console.error('Error deleting item:', error);
+        }
+      }
+
+    } else if (title === "Vendor") {
+      if (window.confirm("Are you sure you want to delete this vendor?")) {
+        try {
+          await axios.delete(`http://localhost:3000/vendor/${id}`);
+          fetchData();
+        } catch (error) {
+          console.error('Error deleting item:', error);
+        }
+      }
+    }
+  };
+
+  const handleDeleteItem = async (id) => {
+    if (window.confirm("Are you sure you want to delete this Item?")) {
+      try {
+        await axios.delete(`http://localhost:3000/item/${id}`);
+        fetchData();
+      } catch (error) {
+        console.error('Error deleting item:', error);
+      }
+    }
+  };
 
   return (
     <div className="text-xs">
@@ -55,12 +95,14 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
             {title === "Item"
               ? filteredTableBody.map((item, index) => (
                 <tr key={index} className="bg-white border hover:bg-gray-200">
-                  <td className="px-2 py-1 border-r text-center">{index+1}</td>
+                  <td className="px-2 py-1 border-r text-center">{index + 1}</td>
                   <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
                     <Link to={`/add-new-item`}>
                       <MdEdit className="text-blue-500 mr-2" />
                     </Link>
-                    <MdOutlineDelete className="text-red-500 ml-2" />
+                    <button onClick={() => handleDeleteItem(item._id)}>
+                      <MdOutlineDelete className="text-red-500 ml-2" />
+                    </button>
                   </td>
                   <td className="px-2 border-r">{item.code}</td>
                   <td className="px-2 border-r">{item.name}</td>
@@ -78,7 +120,9 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
                   <td className="px-2 py-1 border-r">{index + 1}</td>
                   <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
                     <MdEdit className="text-blue-500 mr-2" /> |
-                    <MdOutlineDelete className="text-red-500 ml-2" />
+                    <button onClick={() => handleDeleteVC(item._id)}>
+                      <MdOutlineDelete className="text-red-500 ml-2" />
+                    </button>
                   </td>
                   <td className="px-2 border-r">{item.code}</td>
                   <td className="px-2 border-r">{item.companyName}</td>
@@ -86,11 +130,11 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
                   <td className="px-2 border-r">{item.email}</td>
                   <td className="px-2 border-r">{item.city}</td>
                   <td className="px-2 border-r">{item.gst}</td>
-                   {/* <td className="px-2    ">{item.created_on_date}</td> */}
+                  {/* <td className="px-2    ">{item.created_on_date}</td> */}
                 </tr>
-              ))} 
+              ))}
           </tbody>
-         </table> 
+        </table>
       </div>
       <div className="px-4 py-2">
         <hr className="my-3" />
