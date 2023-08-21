@@ -3,16 +3,21 @@ import { Link } from "react-router-dom";
 import { MdOutlineDelete, MdEdit } from "react-icons/md";
 
 const MasterTableview = ({ title, tableHeader, tableBody }) => {
-  const [searchValue, setSearchValue] = useState("");
-  const [filteredData, setFilteredData] = useState(tableBody);
 
-  const handleSearch = () => {
-    const filteredData = tableBody.filter((item) => {
-      return item.name.toLowerCase().includes(searchValue.toLowerCase());
-    });
-    setFilteredData(filteredData);
-  };
-  useEffect(() => handleSearch(), [searchValue]);
+  const [searchValue, setSearchValue] = useState("");
+   const [filteredTableBody, setFilteredTableBody] = useState(tableBody);
+  
+   useEffect(() => {
+    if (searchValue) {
+      const filteredData = tableBody.filter((item) =>
+      item.companyName?.toLowerCase().includes(searchValue?.toLowerCase()) ||
+      item.name?.toLowerCase().includes(searchValue?.toLowerCase())
+      );
+      setFilteredTableBody(filteredData);
+    } else {
+      setFilteredTableBody(tableBody);
+    }
+  }, [searchValue, tableBody]);
 
   return (
     <div className="text-xs">
@@ -27,7 +32,6 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
             value={searchValue}
             onChange={(e) => {
               setSearchValue(e.target.value);
-              handleSearch();
             }}
           />
           <button className="bg-[#1d5e7e] text-white px-3 py-1">Export</button>
@@ -49,44 +53,44 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
           </thead>
           <tbody>
             {title === "Item"
-              ? filteredData.map((item, index) => (
-                  <tr key={index} className="bg-white border hover:bg-gray-200">
-                    <td className="px-2 py-1 border-r">{item.srno}</td>
-                    <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
-                      <Link to={`/add-new-item`}>
-                        <MdEdit className="text-blue-500 mr-2" />
-                      </Link>
-                      <MdOutlineDelete className="text-red-500 ml-2" />
-                    </td>
-                    <td className="px-2 border-r">{item.name}</td>
-                    <td className="px-2 border-r">{item.code}</td>
-                    <td className="px-2 border-r">{item.category}</td>
-                    <td className="px-2 border-r">{item.group}</td>
-                    <td className="px-2 border-r">{item.type}</td>
-                    <td className="px-2 border-r">{item.hsnCode}</td>
-                    <td className="px-2 border-r">{item.unit}</td>
-                    <td className="px-2 border-r text-end">{item.taxRate}</td>
-                    <td className="px-2 border-r">{item.createdOn}</td>
-                  </tr>
-                ))
-              : filteredData.map((item, index) => (
-                  <tr key={index} className="bg-white border hover:bg-gray-200">
-                    <td className="px-2 py-1 border-r">{index+1}</td>
-                    <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
-                      <MdEdit className="text-blue-500 mr-2" /> |
-                      <MdOutlineDelete className="text-red-500 ml-2" />
-                    </td>
-                    <td className="px-2 border-r">{item.name}</td>
-                    <td className="px-2 border-r">{item.customer_code}</td>
-                    <td className="px-2 border-r">{item.phone}</td>
-                    <td className="px-2 border-r">{item.email}</td>
-                    <td className="px-2 border-r">{item.city}</td>
-                    <td className="px-2 border-r">{item.gst_no}</td>
-                    <td className="px-2    ">{item.created_on_date}</td>
-                  </tr>
-                ))}
+              ? filteredTableBody.map((item, index) => (
+                <tr key={index} className="bg-white border hover:bg-gray-200">
+                  <td className="px-2 py-1 border-r text-center">{index+1}</td>
+                  <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
+                    <Link to={`/add-new-item`}>
+                      <MdEdit className="text-blue-500 mr-2" />
+                    </Link>
+                    <MdOutlineDelete className="text-red-500 ml-2" />
+                  </td>
+                  <td className="px-2 border-r">{item.code}</td>
+                  <td className="px-2 border-r">{item.name}</td>
+                  <td className="px-2 border-r">{item.category}</td>
+                  <td className="px-2 border-r">{item.group}</td>
+                  <td className="px-2 border-r">{item.type}</td>
+                  <td className="px-2 border-r">{item.quantity}</td>
+                  <td className="px-2 border-r">{item.stockUnit}</td>
+                  <td className="px-2 border-r text-end">{item.gst}</td>
+                  {/* <td className="px-2 border-r">{item.createdOn}</td> */}
+                </tr>
+              ))
+              : filteredTableBody.map((item, index) => (
+                <tr key={index} className="bg-white border hover:bg-gray-200">
+                  <td className="px-2 py-1 border-r">{index + 1}</td>
+                  <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
+                    <MdEdit className="text-blue-500 mr-2" /> |
+                    <MdOutlineDelete className="text-red-500 ml-2" />
+                  </td>
+                  <td className="px-2 border-r">{item.code}</td>
+                  <td className="px-2 border-r">{item.companyName}</td>
+                  <td className="px-2 border-r">{item.contactNumber}</td>
+                  <td className="px-2 border-r">{item.email}</td>
+                  <td className="px-2 border-r">{item.city}</td>
+                  <td className="px-2 border-r">{item.gst}</td>
+                   {/* <td className="px-2    ">{item.created_on_date}</td> */}
+                </tr>
+              ))} 
           </tbody>
-        </table>
+         </table> 
       </div>
       <div className="px-4 py-2">
         <hr className="my-3" />

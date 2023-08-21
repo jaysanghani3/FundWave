@@ -3,9 +3,9 @@ import MasterTableview from '../../components/MasterTableview';
 import SharedContext from '../../contexts/SharedContext'
 
 const CustomerMaster = () => {
-    const { vcTableData, custorJson } = useContext(SharedContext);
+    const { vcHeader, customerData} = useContext(SharedContext);
     return (
-        <MasterTableview title={"Customer"} tableHeader={vcTableData.tableHeader} tableBody={vcTableData.customerData} />
+        <MasterTableview title={"Customer"} tableHeader={vcHeader} tableBody={customerData} />
     )
 }
 
