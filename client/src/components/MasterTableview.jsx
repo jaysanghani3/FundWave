@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { MdOutlineDelete, MdEdit } from "react-icons/md";
 import axios from "axios";
 
-const MasterTableview = ({ title, tableHeader, tableBody }) => {
+const MasterTableview = ({ title, tableHeader, tableBody,getCustomerData }) => {
 
   const [searchValue, setSearchValue] = useState("");
   const [filteredTableBody, setFilteredTableBody] = useState(tableBody);
@@ -30,7 +30,7 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
       if (window.confirm("Are you sure you want to delete this customer?")) {
         try {
           await axios.delete(`http://localhost:3000/customer/${id}`);
-          fetchData();
+          getCustomerData();
         } catch (error) {
           console.error('Error deleting item:', error);
         }
@@ -119,7 +119,10 @@ const MasterTableview = ({ title, tableHeader, tableBody }) => {
                 <tr key={index} className="bg-white border hover:bg-gray-200">
                   <td className="px-2 py-1 border-r">{index + 1}</td>
                   <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
-                    <MdEdit className="text-blue-500 mr-2" /> |
+                    {/* <MdEdit className="text-blue-500 mr-2" /> | */}
+                    <Link to={`/edit-customer/${item._id}`} >
+                      <MdEdit className="text-blue-500 mr-2" />
+                    </Link>
                     <button onClick={() => handleDeleteVC(item._id)}>
                       <MdOutlineDelete className="text-red-500 ml-2" />
                     </button>

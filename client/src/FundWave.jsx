@@ -67,6 +67,7 @@ const FundWave = () => {
             <Route path="/vendor" element={<VendorMaster />} />
             <Route path="/item-master" element={<ItemMasters />} />
             <Route path="/add-new-item" element={<ItemMasters />} />
+            <Route path="/edit-customer/:customerId" element={<AddNewCustomer />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>

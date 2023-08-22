@@ -45,6 +45,7 @@ exports.getByCustomerCode = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
 exports.getByCustomerCompanyName = async (req, res) => {
     try {
         const customers = await Customer.find({ companyName: { $regex: req.params.companyName, $options: "i" }}).exec();

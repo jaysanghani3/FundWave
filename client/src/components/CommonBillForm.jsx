@@ -36,12 +36,13 @@ const CommonBillForm = ({ title, formFields, onChange, data }) => {
     setRows(updatedRows);
 
     // calculate all the totals
-    const subTotal = updatedRows.reduce((acc, item) => acc + Number(item.total), 0);
-    const discount = updatedRows.reduce((acc, item) => acc + Number(item.discount), 0);
-    const cgst = updatedRows.reduce((acc, item) => acc + Number(item.cgst), 0);
-    const sgst = updatedRows.reduce((acc, item) => acc + Number(item.sgst), 0);
-    const igst = updatedRows.reduce((acc, item) => acc + Number(item.igst), 0);
-    const total = updatedRows.reduce((acc, item) => acc + Number(item.total), 0) - discount;
+    const subTotal = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.total)) || 0), 0);
+const discount = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.discount)) || 0), 0);
+const cgst = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.cgst)) || 0), 0);
+const sgst = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.sgst)) || 0), 0);
+const igst = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.igst)) || 0), 0);
+const total = subTotal - discount;
+
     // update the bill state
     setBill((prev) => ({
       ...prev,

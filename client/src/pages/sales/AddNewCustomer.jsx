@@ -1,17 +1,38 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import CustomerVendorForm from "../../components/CustomerVendorForm";
 import SharedContext from "../../contexts/SharedContext";
 import axios from 'axios';
+import { useNavigate, useParams } from "react-router-dom";
 
 const AddNewCustomer = () => {
+  const { fields, getCustomerData } = useContext(SharedContext);
+  const { customerId } = useParams(); // Get the customer ID from the route parameters
 
-  const { fields } = useContext(SharedContext);
   const [customer, setCustomer] = useState(
     fields.reduce((acc, field) => {
       acc[field.name] = "";
       return acc;
     }, {})
   );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("Customer ID:", customerId)
+    if (customerId) {
+      // Fetch the customer data for editing
+      fetchCustomerData();
+    }
+  }, [customerId]);
+
+  const fetchCustomerData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/customer/${customerId}`);
+      setCustomer(response.data);
+    } catch (error) {
+      console.error('Error fetching customer data:', error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,35 +42,24 @@ const AddNewCustomer = () => {
   const handleSave = async (e) => {
     console.log(customer);
     try {
-      const response = await axios.post('http://localhost:3000/customer/store', customer);
-      console.log('Response:', response.data);
-      alert("Customer saved successfully.");
+      if (customerId) {
+        // Update the customer
+        const response = await axios.put(`http://localhost:3000/customer/${customerId}`, customer);
+        console.log('Response:', response.data);
+        getCustomerData();
+        alert("Customer updated successfully.");
+        navigate("/customer");
+      } else {
+        // Create a new customer
+        const response = await axios.post('http://localhost:3000/customer/store', customer);
+        console.log('Response:', response.data);
+        alert("Customer saved successfully.");
+      }
       // Handle success or any other action here
     } catch (error) {
       console.error('Error:', error.response.data.error);
 
     }
-    // const response = await fetch("http://localhost:3000/customer/store", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(customer),
-    // });
-
-    // const data = await response.json();
-
-    // if(data.status === 422) {
-    //   console.log(data.errors);
-    //   window.alert("Customer not saved. Please check the console for errors.");
-    // }
-    // else {
-    //   window.alert("Customer saved successfully.");
-
-    //   console.log(data);
-    //   console.log("Success - Customer saved successfully.");
-    //   // handleClear();
-    // }
   };
 
   const handleClear = () => {

@@ -2,7 +2,6 @@ import { createContext } from "react";
 import { TbFileInvoice, TbReportAnalytics } from "react-icons/tb";
 import { PiHandCoinsBold } from "react-icons/pi";
 import { MdOutlineInventory2 } from "react-icons/md";
-import custorJson from "./Customer.json";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -168,14 +167,14 @@ export function SharedContextProvider({ children }) {
     sidebarMenus,
     fields,
     dashboardTable,
-    custorJson,
     vcHeader,
     itemTableHeader,
     customerData,
     vendorData,
     itemData,
-
-
+    getCustomerData,
+    getVendorData,
+    getItemData
   };
 
   return <SharedContext.Provider value={value}>{children}</SharedContext.Provider>;
