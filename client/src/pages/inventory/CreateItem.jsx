@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,  useContext, useEffect } from "react";
 import ImageUpload from "../../components/ImageUpload";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import SharedContext from "../../contexts/SharedContext";
 
 const CreateItem = () => {
+  const {  getItemData } = useContext(SharedContext);
 
   const [item, setItem] = useState({
     name: "",
@@ -26,7 +29,50 @@ const CreateItem = () => {
     rateFactor: "",
     discount: "",
   });
+  const { itemId } = useParams(); // Get the item ID from the route parameters
+  const navigate = useNavigate();
+  useEffect(() => {
+    console.log("Item ID:", itemId)
+    if (itemId) {
+      // Fetch the item data for editing
+      fetchItemData();
+    }
+  }, [itemId]);
 
+  const fetchItemData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3000/item/${itemId}`);
+      // const updatedItem = fields.reduce((acc, field) => {
+      //   acc[field.name] = response.data[field.name] || "";
+      //   return acc;
+      // }, {});
+  
+      setItem({
+        name: response.data.name || "",
+      group: response.data.group || "",
+      category: response.data.category || "",
+      code: response.data.code || "",
+      type: response.data.type || "",
+      description: response.data.description || "",
+      stockUnit: response.data.stockUnit || "",
+      quantity: response.data.quantity || "",
+      reorderLevel: response.data.reorderLevel || "",
+      expiryDate: response.data.expiryDate || "",
+      gst: response.data.gst || "",
+      purchasePrice: response.data.purchasePrice || "",
+      purchaseRateFactor: response.data.purchaseRateFactor || "",
+      mrp: response.data.mrp || "",
+      minimumPrice: response.data.minimumPrice || "",
+      salesPrice: response.data.salesPrice || "",
+      wholesalePrice: response.data.wholesalePrice || "",
+      dealerPrice: response.data.dealerPrice || "",
+      rateFactor: response.data.rateFactor || "",
+      discount: response.data.discount || "",
+      });
+    } catch (error) {
+      console.error('Error fetching item data:', error);
+    }
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setItem((prev) => {
@@ -37,18 +83,27 @@ const CreateItem = () => {
     });
   };
 
-  const handleSave = () => {
-    console.log(item);
-    axios
-      .post("http://localhost:3000/item/store", item)
-      .then((response) => {
-        console.log(response.data);
+  const handleSave = async (e) => {
+    // console.log(item);
+    try {
+      if (itemId) {
+        // Update the item
+        const response = await axios.put(`http://localhost:3000/item/${itemId}`, item);
+        console.log('Response:', response.data);
+        getItemData();
+        alert("Item updated successfully.");
+        navigate("/item-master");
+      } else {
+        // Create a new item
+        const response = await axios.post('http://localhost:3000/item/store', item);
+        console.log('Response:', response.data);
         alert("Item saved successfully.");
-      })
-      .catch((error) => {
-        console.log(error.response.data.error);
-        alert("Item not saved. Please check the console for errors.");
-      });
+      }
+      // Handle success or any other action here
+    } catch (error) {
+      console.error('Error:', error.response.data.error);
+
+    }
   };
 
   const handleClear = () => {

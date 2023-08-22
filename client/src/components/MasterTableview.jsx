@@ -3,13 +3,12 @@ import { Link } from "react-router-dom";
 import { MdOutlineDelete, MdEdit } from "react-icons/md";
 import axios from "axios";
 
-const MasterTableview = ({ title, tableHeader, tableBody,getCustomerData }) => {
+const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getItemData, getVendorData }) => {
 
   const [searchValue, setSearchValue] = useState("");
   const [filteredTableBody, setFilteredTableBody] = useState(tableBody);
 
   const fetchData = () => {
-
     if (searchValue) {
       const filteredData = tableBody.filter((item) =>
         item.companyName?.toLowerCase().includes(searchValue?.toLowerCase()) ||
@@ -30,7 +29,7 @@ const MasterTableview = ({ title, tableHeader, tableBody,getCustomerData }) => {
       if (window.confirm("Are you sure you want to delete this customer?")) {
         try {
           await axios.delete(`http://localhost:3000/customer/${id}`);
-          getCustomerData();
+          getCustomerData(); // to refrsh page and render data
         } catch (error) {
           console.error('Error deleting item:', error);
         }
@@ -40,7 +39,7 @@ const MasterTableview = ({ title, tableHeader, tableBody,getCustomerData }) => {
       if (window.confirm("Are you sure you want to delete this vendor?")) {
         try {
           await axios.delete(`http://localhost:3000/vendor/${id}`);
-          fetchData();
+          getVendorData();
         } catch (error) {
           console.error('Error deleting item:', error);
         }
@@ -52,7 +51,7 @@ const MasterTableview = ({ title, tableHeader, tableBody,getCustomerData }) => {
     if (window.confirm("Are you sure you want to delete this Item?")) {
       try {
         await axios.delete(`http://localhost:3000/item/${id}`);
-        fetchData();
+        getItemData();
       } catch (error) {
         console.error('Error deleting item:', error);
       }
@@ -91,13 +90,14 @@ const MasterTableview = ({ title, tableHeader, tableBody,getCustomerData }) => {
               ))}
             </tr>
           </thead>
+
           <tbody>
             {title === "Item"
               ? filteredTableBody.map((item, index) => (
                 <tr key={index} className="bg-white border hover:bg-gray-200">
                   <td className="px-2 py-1 border-r text-center">{index + 1}</td>
                   <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
-                    <Link to={`/add-new-item`}>
+                    <Link to={`/edit-item/${item._id}`}>
                       <MdEdit className="text-blue-500 mr-2" />
                     </Link>
                     <button onClick={() => handleDeleteItem(item._id)}>
@@ -119,8 +119,7 @@ const MasterTableview = ({ title, tableHeader, tableBody,getCustomerData }) => {
                 <tr key={index} className="bg-white border hover:bg-gray-200">
                   <td className="px-2 py-1 border-r">{index + 1}</td>
                   <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
-                    {/* <MdEdit className="text-blue-500 mr-2" /> | */}
-                    <Link to={`/edit-customer/${item._id}`} >
+                    <Link to={`/edit-${title.toLowerCase()}/${item._id}`}>
                       <MdEdit className="text-blue-500 mr-2" />
                     </Link>
                     <button onClick={() => handleDeleteVC(item._id)}>

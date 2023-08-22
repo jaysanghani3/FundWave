@@ -37,11 +37,11 @@ const CommonBillForm = ({ title, formFields, onChange, data }) => {
 
     // calculate all the totals
     const subTotal = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.total)) || 0), 0);
-const discount = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.discount)) || 0), 0);
-const cgst = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.cgst)) || 0), 0);
-const sgst = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.sgst)) || 0), 0);
-const igst = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.igst)) || 0), 0);
-const total = subTotal - discount;
+    const discount = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.discount)) || 0), 0);
+    const cgst = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.cgst)) || 0), 0);
+    const sgst = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.sgst)) || 0), 0);
+    const igst = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.igst)) || 0), 0);
+    const total = subTotal - discount;
 
     // update the bill state
     setBill((prev) => ({
@@ -93,7 +93,7 @@ const total = subTotal - discount;
                 ) : field.type === "textarea" ? (
                   <textarea onChange={handleBillChange} name={field.name} id={field.name} className="border ps-2 border-gray-300 ml-3 ms-auto w-7/12 resize-none" />
                 ) : (
-                  <input onChange={handleBillChange} type={field.type} name={field.name} id={field.name} className="border ps-2 border-gray-300 ms-auto w-7/12" />
+                  <input autoComplete="false" onChange={handleBillChange} type={field.type} name={field.name} id={field.name} className="border ps-2 border-gray-300 ms-auto w-7/12" />
                 )}
               </div>
             ))}
@@ -126,41 +126,41 @@ const total = subTotal - discount;
                 <td className="text-center">{index + 1}</td>
                 <td className="text-red-400 text-sm text-center">
                   <button type="button" onClick={() => handleDeleteItem()} className="focus:outline-none p-1">
-                    <MdOutlineDelete size={17}/>
+                    <MdOutlineDelete size={17} />
                   </button>
                 </td>
                 {/* <td className="text-blue-400 text-sm text-center">
                   <MdEdit />
                 </td> */}
                 <td className="text-left">
-                  <input onChange={(e) => handleItemChange(e, index, "product")} type="text" name="product" id="product" className="ps-2 border border-gray-300 ms-auto w-full" />
+                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "product")} type="text" name="product" id="product" className="ps-2 border border-gray-300 ms-auto w-full" />
                 </td>
                 <td className="text-left">
-                  <input onChange={(e) => handleItemChange(e, index, "description")} type="text" name="description" id="description" className="border ps-2 border-gray-300 ms-auto w-full" />
+                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "description")} type="text" name="description" id="description" className="border ps-2 border-gray-300 ms-auto w-full" />
                 </td>
                 <td className="">
-                  <input onChange={(e) => handleItemChange(e, index, "qty")} type="number" name="qty" id="qty" className="border text-right pr-1 ps-2 border-gray-300 ms-auto w-full" />
+                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "qty")} type="number" name="qty" id="qty" className="border text-right pr-1 ps-2 border-gray-300 ms-auto w-full" />
                 </td>
                 <td className="">
-                  <input onChange={(e) => handleItemChange(e, index, "rate")} type="number" name="rate" id="rate" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
+                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "rate")} type="number" name="rate" id="rate" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
                 <td className="">
-                  <input onChange={(e) => handleItemChange(e, index, "cgst")} type="number" name="cgst" id="cgst" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
+                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "cgst")} type="number" name="cgst" id="cgst" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
                 <td className="">
-                  <input onChange={(e) => handleItemChange(e, index, "sgst")} type="number" name="sgst" id="sgst" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
+                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "sgst")} type="number" name="sgst" id="sgst" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
                 <td className="">
-                  <input onChange={(e) => handleItemChange(e, index, "igst")} type="number" name="igst" id="igst" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
+                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "igst")} type="number" name="igst" id="igst" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
                 <td className="">
-                  <input onChange={(e) => handleItemChange(e, index, "discount")} type="number" name="discount" id="discount" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
+                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "discount")} type="number" name="discount" id="discount" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
                 <td className="">
-                  <input onChange={(e) => handleItemChange(e, index, "taxableValue")} type="number" name="taxableValue" id="taxableValue" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" value={(item?.qty * item?.rate) - item?.discount} contentEditable={false} />
+                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "taxableValue")} type="number" name="taxableValue" id="taxableValue" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" value={(item?.qty * item?.rate) - item?.discount} contentEditable={false} />
                 </td>
                 <td className="">
-                  <input onChange={(e) => handleItemChange(e, index, "item_total")} type="number" name="total" id="item_total" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" value={(
+                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "item_total")} type="number" name="total" id="item_total" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" value={(
                     parseFloat(item?.qty) * parseFloat(item?.rate) -
                     parseFloat(item?.discount) +
                     parseFloat(item?.cgst) +

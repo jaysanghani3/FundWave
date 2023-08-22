@@ -1,11 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import CustomerVendorForm from "../../components/CustomerVendorForm";
 import SharedContext from "../../contexts/SharedContext";
 import axios from 'axios';
+import { useNavigate, useParams } from "react-router-dom";
 
 const AddNewVendor = () => {
   
-    const { fields } = useContext(SharedContext);
+  const { fields, getVendorData } = useContext(SharedContext);
+  const { vendorId } = useParams(); // Get the Vendor ID from the route parameters
 
     const [vendor, setVendor] = useState(
       fields.reduce((acc, field) => {
@@ -14,21 +16,49 @@ const AddNewVendor = () => {
       }, {})
     );
   
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      console.log("Vendor ID:", vendorId)
+      if (vendorId) {
+        fetchVendorData();    // Fetch the vendor data for editing
+      }
+    }, [vendorId]);
+  
+    const fetchVendorData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/vendor/${vendorId}`);
+        const updatedVendor = fields.reduce((acc, field) => {
+          acc[field.name] = response.data[field.name] || "";
+          return acc;
+        }, {});
+    
+        setVendor(updatedVendor);
+      } catch (error) {
+        console.error('Error fetching vendor data:', error);
+      }
+    };
     const handleChange = (e) => {
       const { name, value } = e.target;
       setVendor((prev) => ({ ...prev, [name]: value }));
     };
   
-    const handleSave = () => {
-      console.log(vendor);
-      axios.post('http://localhost:3000/vendor/store', vendor)
-        .then((response) => {
-          console.log('Response:', response.data);
-          alert("Vendor saved successfully.");
-        })
-        .catch((error) => {
+    const handleSave = async (e) => {
+        try {
+          if (vendorId) {   // Update the vendor
+            const response = await axios.put(`http://localhost:3000/vendor/${vendorId}`, vendor);
+            console.log('Response:', response.data);
+            getVendorData();
+            alert("vendor updated successfully.");
+            navigate("/vendor");
+          } else {        // Create a new vendor
+            const response = await axios.post('http://localhost:3000/vendor/store', vendor);
+            console.log('Response:', response.data);
+            alert("vendor saved successfully.");
+          }
+        } catch (error) {
           console.error('Error:', error.response.data.error);
-        });  
+        }
     };
 
     const handleClear = () => {

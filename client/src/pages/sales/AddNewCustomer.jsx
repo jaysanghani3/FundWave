@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from "react-router-dom";
 
 const AddNewCustomer = () => {
+  
   const { fields, getCustomerData } = useContext(SharedContext);
   const { customerId } = useParams(); // Get the customer ID from the route parameters
 
@@ -28,7 +29,12 @@ const AddNewCustomer = () => {
   const fetchCustomerData = async () => {
     try {
       const response = await axios.get(`http://localhost:3000/customer/${customerId}`);
-      setCustomer(response.data);
+      const updatedCustomer = fields.reduce((acc, field) => {
+        acc[field.name] = response.data[field.name] || "";
+        return acc;
+      }, {});
+  
+      setCustomer(updatedCustomer);
     } catch (error) {
       console.error('Error fetching customer data:', error);
     }
@@ -40,7 +46,7 @@ const AddNewCustomer = () => {
   };
 
   const handleSave = async (e) => {
-    console.log(customer);
+    // console.log(customer);
     try {
       if (customerId) {
         // Update the customer

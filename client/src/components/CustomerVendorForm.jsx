@@ -13,15 +13,7 @@ const CustomerVendorForm = ({ title, fields, data, onChange }) => {
               <label className="w-1/3" htmlFor={field.name}>
                 {field.label}
               </label>
-              {field.type === "select" ? (
-                <select onChange={onChange} value={data[field.name]} className="border ms-auto pl-1 w-10/12" id={field.name} name={field.name}>
-                  {field.options.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              ) : field.type === "textarea" ? (
+              {field.type === "textarea" ? (
                 <textarea onChange={onChange} value={data[field.name]} className="border h-16 ms-auto px-2 w-10/12 resize-none" id={field.name} name={field.name}></textarea>
               ) : (
                 <input onChange={onChange} value={data[field.name]} className="border ms-auto pl-1 w-10/12" id={field.name} name={field.name} type={field.type} />
