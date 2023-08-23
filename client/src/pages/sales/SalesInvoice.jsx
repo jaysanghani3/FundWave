@@ -3,8 +3,6 @@ import CommonBillForm from "../../components/CommonBillForm";
 
 const SalesInvoice = () => {
 
- 
-
   const invoiceFields = [
     [
       { label: "Invoice No.", name: "invoiceNo", type: "text" },

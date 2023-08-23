@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-import { MdOutlineDelete, MdEdit } from "react-icons/md";
+import { MdOutlineDelete } from "react-icons/md";
 
-const CommonBillForm = ({ title, formFields, onChange, data }) => {
+const CommonBillForm = ({ title, formFields }) => {
+  const initialItem = {
+    product: "",
+    description: "",
+    qty: 0,
+    rate: 0,
+    taxCode: 0,
+    discount: 0,
+    taxableValue: 0,
+    total: 0,
+  };
 
-  const [rows, setRows] = useState([{}]);
+  const [rows, setRows] = useState([initialItem]);
+
   const [bill, setBill] = useState({
-    // billNo: "",
-    // customer: "",
     gstNo: "",
     cashCredit: "",
     date: "",
@@ -18,82 +27,130 @@ const CommonBillForm = ({ title, formFields, onChange, data }) => {
     discount: 0,
     cgst: 0,
     sgst: 0,
-    igst: 0,
+    // igst: 0,
     total: 0,
   });
 
   const handleBillChange = (e) => {
     const { name, value } = e.target;
     setBill((prev) => ({ ...prev, [name]: value }));
-  }
+  };
 
   const handleItemChange = (e, rowIndex, field) => {
     const { value } = e.target;
 
     const updatedRows = [...rows];
-    updatedRows[rowIndex][field] = value;
+    // here not parsed bcz product and description are string values so it will appear as NaN.
+    if (field === "product" || field === "description") {
+      updatedRows[rowIndex][field] = value;
+      setRows(updatedRows);
+      return;
+    }
+    else {
+      updatedRows[rowIndex][field] = parseFloat(value); // Parse the value as a float
 
-    setRows(updatedRows);
+      const qty = parseFloat(updatedRows[rowIndex]?.qty || 0);
+      const rate = parseFloat(updatedRows[rowIndex]?.rate || 0);
+      const discount = parseFloat(updatedRows[rowIndex]?.discount || 0);
+      const taxCode = parseFloat(updatedRows[rowIndex]?.taxCode || 0);
 
-    // calculate all the totals
-    const subTotal = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.total)) || 0), 0);
-    const discount = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.discount)) || 0), 0);
-    const cgst = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.cgst)) || 0), 0);
-    const sgst = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.sgst)) || 0), 0);
-    const igst = updatedRows.reduce((acc, item) => acc + ((parseFloat(item.igst)) || 0), 0);
-    const total = subTotal - discount;
+      const taxableValue = qty * rate - discount;
+      const taxAmount = (taxableValue * taxCode) / 100;
+      const total = taxableValue + taxAmount;
 
-    // update the bill state
+      updatedRows[rowIndex].total = total;
+      updatedRows[rowIndex].taxableValue = taxableValue;
+      setRows(updatedRows);
+      updateBillTotals();
+      return;
+    }
+  };
+
+  const updateBillTotals = () => {
+    let subTotal = 0;
+    let discountTotal = 0;
+    let cgstTotal = 0;
+    let sgstTotal = 0;
+    let totalBill = 0;
+
+    rows.forEach((item) => {
+      subTotal += item.taxableValue;
+      discountTotal += item.discount;
+      cgstTotal += item.taxableValue * (item.taxCode / 200); // Assuming equal split between cgst and sgst
+      sgstTotal += item.taxableValue * (item.taxCode / 200); // Assuming equal split between cgst and sgst
+      totalBill += item.total;
+    });
+
     setBill((prev) => ({
       ...prev,
       subTotal,
-      discount,
-      cgst,
-      sgst,
-      igst,
-      total,
+      discount: discountTotal,
+      cgst: cgstTotal,
+      sgst: sgstTotal,
+      total: totalBill,
     }));
+  };
+
+  const addRow = () => {
+    setRows([...rows, initialItem]);
+  };
+
+  const handleDeleteItem = () => {
+    const updatedRows = [...rows];
+    updatedRows.pop();
+    setRows(updatedRows);
+    updateBillTotals();
   };
 
   const handleBillSubmit = () => {
     console.log(bill);
     console.log(rows);
-  }
-  const addRow = () => {
-    setRows([...rows, {}]);
   };
-
-  const handleDeleteItem = (e) => {
-    const updatedRows = [...rows];
-    updatedRows.pop();
-    setRows(updatedRows);
-  }
-
 
   return (
     <div className="h-full flex flex-col border-2 gap-y-3 min-h-full text-xs ">
-      <h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">{title}</h1>
+      <h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">
+        {title}
+      </h1>
 
       <div className="grid grid-cols-3 gap-6 border border-gray-300 p-2 mx-2">
-
         {formFields.map((column, index) => (
-          <div key={index} className="flex flex-col gap-y-1 border-l-2 border-blue-100">
+          <div
+            key={index}
+            className="flex flex-col gap-y-1 border-l-2 border-blue-100"
+          >
             {column.map((field) => (
               <div className="flex flex-row" key={field.name}>
                 <label className="ml-5 font-medium text-gray-700">{field.label}</label>
                 {field.type === "select" ? (
-                  <select onChange={handleBillChange} name={field.name} id={field.name} className="border border-gray-300 ms-auto w-7/12 ps-2">
+                  <select
+                    onChange={handleBillChange}
+                    name={field.name}
+                    id={field.name}
+                    className="border border-gray-300 ms-auto w-7/12 ps-2"
+                  >
                     {field.options.map((option) => (
-                      <option className='ps-2' key={option} value={option}>
+                      <option className="ps-2" key={option} value={option}>
                         {option}
                       </option>
                     ))}
                   </select>
-
                 ) : field.type === "textarea" ? (
-                  <textarea onChange={handleBillChange} name={field.name} id={field.name} className="border ps-2 border-gray-300 ml-3 ms-auto w-7/12 resize-none" />
+                  <textarea
+                    onChange={handleBillChange}
+                    name={field.name}
+                    id={field.name}
+                    className="border ps-2 border-gray-300 ml-3 ms-auto w-7/12 resize-none"
+                  />
                 ) : (
-                  <input autoComplete="false" onChange={handleBillChange} type={field.type} name={field.name} id={field.name} className="border ps-2 border-gray-300 ms-auto w-7/12" />
+                  <input
+                    autoComplete="false"
+                    onChange={handleBillChange}
+                    type={field.type}
+                    name={field.name}
+                    id={field.name}
+                    className="border ps-2 border-gray-300 ms-auto w-7/12"
+                  />
                 )}
               </div>
             ))}
@@ -107,15 +164,12 @@ const CommonBillForm = ({ title, formFields, onChange, data }) => {
             <tr>
               <td className="p-1 w-7">Sr</td>
               <td className="p-1 w-6"></td>
-              {/* <td className="p-1 w-6"></td> */}
               <td className="p-1 w-40">Product</td>
               <td className="p-1">Description</td>
               <td className="p-1 w-14 text-center">Qty</td>
-              <td className="p-1 w-14 text-center">Rate</td>
-              <td className="p-1 w-14 text-center">CGST</td>  {/*TAXCode*/}
-              <td className="p-1 w-14 text-center">SGST</td>
-              <td className="p-1 w-14 text-center">IGST</td>
+              <td className="p-1 w-24 text-center">Rate</td>
               <td className="p-1 w-16 text-center">Discount</td>
+              <td className="p-1 w-24 text-center">TaxCode in %</td>
               <td className="p-1 w-24 text-center">Taxable Value</td>
               <td className="p-1 w-24 text-center">Total</td>
             </tr>
@@ -129,67 +183,73 @@ const CommonBillForm = ({ title, formFields, onChange, data }) => {
                     <MdOutlineDelete size={17} />
                   </button>
                 </td>
-                {/* <td className="text-blue-400 text-sm text-center">
-                  <MdEdit />
-                </td> */}
                 <td className="text-left">
-                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "product")} type="text" name="product" id="product" className="ps-2 border border-gray-300 ms-auto w-full" />
+                  <select onChange={(e) => handleItemChange(e, index, "product")} name="product" id={`product-${index}`} className="border border-gray-300 ms-auto w-full ps-2">
+                    <option value="product1">Product 1</option>
+                    <option value="product2">Product 2</option>
+                    <option value="product3">Product 3</option>
+                  </select>
+                  {/* <input autoComplete="false"  value={item.product || ""} onChange={(e) => handleItemChange(e, index, "product")} type="text" name="product" id={`product-${index}`}  className="ps-2 border border-gray-300 ms-auto w-full" /> */}
                 </td>
                 <td className="text-left">
-                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "description")} type="text" name="description" id="description" className="border ps-2 border-gray-300 ms-auto w-full" />
+                  <input autoComplete="false" value={item.description || ""} onChange={(e) => handleItemChange(e, index, "description")} type="text" name="description" id={`description-${index}`} className="border ps-2 border-gray-300 ms-auto w-full" />
                 </td>
-                <td className="">
+                <td>
                   <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "qty")} type="number" name="qty" id="qty" className="border text-right pr-1 ps-2 border-gray-300 ms-auto w-full" />
                 </td>
-                <td className="">
+                <td>
                   <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "rate")} type="number" name="rate" id="rate" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
-                <td className="">
-                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "cgst")} type="number" name="cgst" id="cgst" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
+                <td>
+                  <input autoComplete="false" onChange={(e) => { handleItemChange(e, index, "discount") }} type="number" name="discount" id="discount" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
-                <td className="">
-                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "sgst")} type="number" name="sgst" id="sgst" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
+                <td>
+                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "taxCode")} type="number" name="taxCode" id="taxCode" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
-                <td className="">
-                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "igst")} type="number" name="igst" id="igst" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
+                <td>
+                  <div className="text-right border pr-1 bg-white border-gray-300 ms-auto w-full ps-2">
+                    {item.taxableValue || 0}
+                  </div>
+
                 </td>
-                <td className="">
-                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "discount")} type="number" name="discount" id="discount" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
-                </td>
-                <td className="">
-                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "taxableValue")} type="number" name="taxableValue" id="taxableValue" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" value={(item?.qty * item?.rate) - item?.discount} contentEditable={false} />
-                </td>
-                <td className="">
-                  <input autoComplete="false" onChange={(e) => handleItemChange(e, index, "item_total")} type="number" name="total" id="item_total" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" value={(
-                    parseFloat(item?.qty) * parseFloat(item?.rate) -
-                    parseFloat(item?.discount) +
-                    parseFloat(item?.cgst) +
-                    parseFloat(item?.sgst) +
-                    parseFloat(item?.igst)
-                  )} contentEditable={false} />
+                <td>
+                  <div className="text-right pr-1 border bg-white border-gray-300 ms-auto w-full ps-2">
+                    {item.total || 0}
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
         <div className="flex flex-row justify-end gap-x-2 m-2">
-          <button className="bg-[#1d5e7e] text-white px-3 py-1" onClick={addRow}>
+          <button
+            className="bg-[#1d5e7e] text-white px-3 py-1"
+            onClick={addRow}
+          >
             Add Item
           </button>
         </div>
       </div>
 
-      <div className="">
+      <div>
         <div className="flex flex-row gap-x-10 mx-2">
           <div className="flex flex-col w-9/12 gap-y-6 mt-3">
             <div className="flex flex-row">
               <label className="w-2/12  font-medium text-gray-700">Remarks</label>
-              <textarea name="remarks" id="remarks" className="border border-gray-300 ml-3 w-10/12 resize-none h-12" />
+              <textarea
+                name="remarks"
+                id="remarks"
+                className="border border-gray-300 ml-3 w-10/12 resize-none h-12"
+              />
             </div>
 
             <div className="flex flex-row">
               <label className="w-2/12  font-medium text-gray-700">Terms & Conditions</label>
-              <textarea name="terms" id="terms" className="border border-gray-300 ml-3 w-10/12 resize-none h-12" />
+              <textarea
+                name="terms"
+                id="terms"
+                className="border border-gray-300 ml-3 w-10/12 resize-none h-12"
+              />
             </div>
           </div>
 
@@ -197,38 +257,61 @@ const CommonBillForm = ({ title, formFields, onChange, data }) => {
             <table className="table-auto w-full bg-transparent">
               <tbody className="text-right ">
                 <tr>
-                  <td className="w-1/2"><span className="text-right text-gray-700">Sub Total</span></td>
-                  <td><span>{bill.subTotal}</span></td>
+                  <td className="w-1/2">
+                    <span className="text-right text-gray-700">Sub Total</span>
+                  </td>
+                  <td>
+                    <span>{(bill.subTotal).toFixed(2)}</span>
+                  </td>
                 </tr>
 
                 <tr>
-                  <td className="w-1/2"><span className="text-right text-gray-700">Discount</span></td>
-                  <td><span>{bill.discount}</span></td>
+                  <td className="w-1/2">
+                    <span className="text-right text-gray-700">Discount</span>
+                  </td>
+                  <td>
+                    <span>{(bill.discount).toFixed(2)}</span>
+                  </td>
                 </tr>
 
                 <tr>
-                  <td className="w-1/2"><span className="text-right text-gray-700">Taxable Value</span></td>
-                  <td><span>{bill.subTotal - bill.discount}</span></td>
+                  <td className="w-1/2">
+                    <span className="text-right text-gray-700">
+                      Taxable Value
+                    </span>
+                  </td>
+                  <td>
+                    <span>{(bill.subTotal - bill.discount).toFixed(2)}</span>
+                  </td>
                 </tr>
 
                 <tr>
-                  <td className="w-1/2"><span className="text-right text-gray-700">CGST</span></td>
-                  <td><span>{bill.cgst}</span></td>
+                  <td className="w-1/2">
+                    <span className="text-right text-gray-700">CGST</span>
+                  </td>
+                  <td>
+                    <span>{(bill.cgst).toFixed(2)}</span>
+                  </td>
                 </tr>
 
                 <tr>
-                  <td className="w-1/2"><span className="text-right text-gray-700">SGST</span></td>
-                  <td><span>{bill.sgst}</span></td>
+                  <td className="w-1/2">
+                    <span className="text-right text-gray-700">SGST</span>
+                  </td>
+                  <td>
+                    <span>{(bill.sgst).toFixed(2)}</span>
+                  </td>
                 </tr>
 
                 <tr>
-                  <td className="w-1/2"><span className="text-right text-gray-700">IGST</span></td>
-                  <td><span>{bill.igst}</span></td>
-                </tr>
-
-                <tr>
-                  <td className="w-1/2"><span className="text-lg text-right text-gray-700">Total</span></td>
-                  <td><span className="font-semibold text-lg">{bill.total}</span></td>
+                  <td className="w-1/2">
+                    <span className="text-lg text-right text-gray-700">
+                      Total
+                    </span>
+                  </td>
+                  <td>
+                    <span className="font-semibold text-lg">{(bill.total).toFixed(2)}</span>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -236,7 +319,12 @@ const CommonBillForm = ({ title, formFields, onChange, data }) => {
         </div>
 
         <div className="flex flex-row justify-end gap-x-2 m-2">
-          <button className="bg-[#1d5e7e] text-white px-3 py-1 " onClick={handleBillSubmit} >Save</button>
+          <button
+            className="bg-[#1d5e7e] text-white px-3 py-1 "
+            onClick={handleBillSubmit}
+          >
+            Save
+          </button>
           <button className="bg-[#1d5e7e] text-white px-3 py-1 ">Cancel</button>
           <button className="bg-[#1d5e7e] text-white px-3 py-1 ">Print</button>
           <button className="bg-[#1d5e7e] text-white px-3 py-1 ">Email</button>
