@@ -22,7 +22,7 @@ const PurchaseBill = () => {
 
   return (
     <div>
-      <CommonBillForm title={"Create New Purchase Bill"} formFields={purchaseFields} />
+      <CommonBillForm title={"Purchase Bill"} formFields={purchaseFields} />
     </div>
   );
 };

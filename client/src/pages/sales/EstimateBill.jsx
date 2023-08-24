@@ -18,7 +18,7 @@ const EstimateBill = () => {
 
   return (
     <div>
-      <CommonBillForm title={"Create New Estimate Bill"} formFields={estimateFields} />
+      <CommonBillForm title={"Estimate Bill"} formFields={estimateFields} />
     </div>
   );
 };

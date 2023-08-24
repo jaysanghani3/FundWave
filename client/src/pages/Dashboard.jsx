@@ -6,19 +6,32 @@ import SharedContext from "../contexts/SharedContext";
 
 const Dashboard = () => {
 
-  const { dashboardTable } = React.useContext(SharedContext);
+  const { dashboardTable, customerData, vendorData, itemData } = React.useContext(SharedContext);
+
+  let totalSalesData = 0;
+  let totalPurchaseAmount = 0;
+  let totalExpensesAmount = 100;
+  let totalReceivableAmount = 0;
+  let totalPayableAmount = 0;
+
+  for (const item of customerData) {
+    totalSalesData += item.salesData.totalSaleAmount;
+    totalReceivableAmount += item.paymentsData.totalPaymentAmount;
+  }
+  for (const item of vendorData) {
+    totalPurchaseAmount += item.purchasesData.totalPurchaseAmount;
+  }
 
   const list = [
-    { name: "Sales", value: "₹ 400k", color: "text-black", icon: <FcSalesPerformance size={70} /> },
-    { name: "Purchase", value: "₹ 0.00", color: "text-black", icon: <GiTakeMyMoney size={70} /> },
-    { name: "Expenses", value: "₹ 0.00", color: "text-red-500", icon: <GiExpense size={70} /> },
-    { name: "Net Profit", value: "₹ 0.00", color: "text-green-500", icon: <GiProfit size={70} /> },
-    { name: "Receivable", value: "₹ 0.00", color: "text-black", icon: <GiReceiveMoney size={70} /> },
-    { name: "Payable", value: "₹ 0.00", color: "text-black", icon: <GiPayMoney size={70} /> },
+    { name: "Sales", value: "₹ " +totalSalesData.toFixed(2), color: "text-black", icon: <FcSalesPerformance size={70} /> },
+    { name: "Purchase", value: "₹ "+totalPurchaseAmount.toFixed(2), color: "text-black", icon: <GiTakeMyMoney size={70} /> },
+    { name: "Expenses", value: "₹ "+totalExpensesAmount.toFixed(2), color: "text-red-500", icon: <GiExpense size={70} /> },
+    { name: "Net Profit", value: "₹ "+(totalSalesData - totalPurchaseAmount - totalExpensesAmount).toFixed(2), color: "text-green-500", icon: <GiProfit size={70} /> },
+    { name: "Receivable", value: "₹ "+totalReceivableAmount, color: "text-black", icon: <GiReceiveMoney size={70} /> },
+    { name: "Payable", value: "₹ "+totalPayableAmount, color: "text-black", icon: <GiPayMoney size={70} /> },
   ];
 
-  
-
+  console.log("Sum of totalPaymentAmount:", totalSalesData);
   return (
     <div className="mx-auto">
       <div className="flex flex-row items-center">
