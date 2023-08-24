@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import { Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import SalesInvoice from "./pages/sales/SalesInvoice";
+import SalesInvoiceMaster from "./pages/sales/SalesInvoiceMaster.jsx";
+import ViewInvoice from "./pages/sales/ViewInvoice.jsx";
 import PurchaseBill from "./pages/purchases/PurchaseBill";
 import AddNewCustomer from "./pages/sales/AddNewCustomer";
 import EstimateBill from "./pages/sales/EstimateBill";
@@ -58,6 +60,7 @@ const FundWave = () => {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/sales-invoice" element={<SalesInvoice />} />
+            <Route path="/sales-invoice-master" element={<SalesInvoiceMaster />} />
             <Route path="/purchase-bill" element={<PurchaseBill />} />
             <Route path="/estimate" element={<EstimateBill />} />
             <Route path="/add-new-customer" element={<AddNewCustomer />} />
@@ -70,6 +73,7 @@ const FundWave = () => {
             <Route path="/edit-customer/:customerId" element={<AddNewCustomer />} />
             <Route path="/edit-vendor/:vendorId" element={<AddNewVendor />} />
             <Route path="/edit-item/:itemId" element={<CreateItem />} />
+            <Route path="/view-invoice/:invoiceId" element={<ViewInvoice />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { MdOutlineDelete, MdEdit } from "react-icons/md";
+import { MdOutlineDelete, MdEdit, MdOutlineRemoveRedEye } from "react-icons/md";
 import axios from "axios";
-
-const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getItemData, getVendorData }) => {
+import { format } from "date-fns";
+const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getItemData, getVendorData, getInvoiceData }) => {
 
   const [searchValue, setSearchValue] = useState("");
   const [filteredTableBody, setFilteredTableBody] = useState(tableBody);
@@ -52,6 +52,17 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
       try {
         await axios.delete(`http://localhost:3000/item/${id}`);
         getItemData();
+      } catch (error) {
+        console.error('Error deleting item:', error);
+      }
+    }
+  };
+
+  const handleDeleteInvoice = async (id) => {
+    if (window.confirm("Are you sure you want to delete this Item?")) {
+      try {
+        await axios.delete(`http://localhost:3000/invoice/${id}`);
+        getInvoiceData();
       } catch (error) {
         console.error('Error deleting item:', error);
       }
@@ -118,7 +129,19 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
               : filteredTableBody.map((item, index) => (
                 <tr key={index} className="bg-white border hover:bg-gray-200">
                   <td className="px-2 py-1 border-r">{index + 1}</td>
-                  <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
+                  {
+                    title === "Sales Invoice" ?
+                    (
+                      <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
+                    <Link to={`/view-invoice/${item._id}`}> {/* target="_blank"*/}
+                      <MdOutlineRemoveRedEye className="text-blue-500 mr-2" />
+                    </Link>
+                    <button onClick={() => handleDeleteInvoice(item._id)}>
+                      <MdOutlineDelete className="text-red-500 ml-2" />
+                    </button>
+                  </td>
+                    ):(
+                      <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
                     <Link to={`/edit-${title.toLowerCase()}/${item._id}`}>
                       <MdEdit className="text-blue-500 mr-2" />
                     </Link>
@@ -126,12 +149,14 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
                       <MdOutlineDelete className="text-red-500 ml-2" />
                     </button>
                   </td>
-                  <td className="px-2 border-r">{item.code}</td>
+                    )
+                  }
+                  <td className="px-2 border-r">{item.code?item.code:item.invoiceNo}</td>
                   <td className="px-2 border-r">{item.companyName}</td>
                   <td className="px-2 border-r">{item.contactNumber}</td>
-                  <td className="px-2 border-r">{item.email}</td>
-                  <td className="px-2 border-r">{item.city}</td>
-                  <td className="px-2 border-r">{item.gst}</td>
+                  <td className="px-2 border-r">{item.email?item.email:item.gstNo}</td>
+                  <td className="px-2 border-r text-right">{item.city?item.city:item.total}</td>
+                  <td className="px-2 border-r text-center">{item.gst?item.gst:format(new Date(item.createdDate), "dd MMM yyyy")}</td>
                   {/* <td className="px-2    ">{item.created_on_date}</td> */}
                 </tr>
               ))}

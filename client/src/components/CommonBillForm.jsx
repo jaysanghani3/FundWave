@@ -30,7 +30,7 @@ const CommonInvoiceForm = ({ title, formFields }) => {
     cashCredit: "",
     createdDate: "",
     dueDate: "",
-    contactNo: "",
+    contactNumber: "",
     address: "",
     subTotal: 0,
     taxableValue: 0,
@@ -91,7 +91,6 @@ const CommonInvoiceForm = ({ title, formFields }) => {
     updateInvoiceTotals();
   };
   
-
   const updateInvoiceTotals = () => {
     let subTotal = 0;
     let discountTotal = 0;

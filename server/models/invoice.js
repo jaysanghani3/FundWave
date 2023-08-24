@@ -30,7 +30,7 @@ const invoiceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  contactNo: {
+  contactNumber: {
     type: Number,
     required: true,
   },

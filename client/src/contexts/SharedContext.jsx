@@ -8,15 +8,18 @@ import { useEffect, useState } from "react";
 const SharedContext = createContext();
 
 export function SharedContextProvider({ children }) {
-  
-    const [customerData, setCustomerData] = useState([]);
-    const [vendorData, setVendorData] = useState([]);
-    const [itemData, setItemData] = useState([]);
 
-  useEffect(() =>{
+  const [customerData, setCustomerData] = useState([]);
+  const [vendorData, setVendorData] = useState([]);
+  const [itemData, setItemData] = useState([]);
+  const [invoiceData, setInvoiceData] = useState([]);
+
+  useEffect(() => {
     getCustomerData();
     getVendorData();
     getItemData();
+    getInvoiceData();
+
   }, []);
 
   const getCustomerData = async () => {
@@ -34,6 +37,11 @@ export function SharedContextProvider({ children }) {
     setItemData(response?.data);
   };
 
+  const getInvoiceData = async () => {
+    const response = await axios.get("http://localhost:3000/invoice/getall");
+    setInvoiceData(response?.data);
+  }
+
   const sidebarMenus = [
     {
       menuName: "Dashboard",
@@ -45,8 +53,8 @@ export function SharedContextProvider({ children }) {
       icon: <TbFileInvoice className="w-8 h-8 sm:w-4 sm:h-4 text-white" />,
       subMenus: [
         { name: "Customer", link: "/customer" },
-        { name: "Estimate", link: "/estimate" },
         { name: "Sales Invoice", link: "/sales-invoice" },
+        { name: "Sales Invoice Master", link: "/sales-invoice-master" },
       ],
     },
     {
@@ -82,9 +90,9 @@ export function SharedContextProvider({ children }) {
     { label: "Phone No", name: "contactNumber", type: "number" },
     { label: "PAN No", name: "pan", type: "text" },
     { label: "Billing Address", name: "billingAddress", type: "textarea" },
-    { label: "Country", name: "country", type: "text"},
-    { label: "State", name: "state", type: "text"},
-    { label: "City", name: "city", type: "text"},
+    { label: "Country", name: "country", type: "text" },
+    { label: "State", name: "state", type: "text" },
+    { label: "City", name: "city", type: "text" },
     { label: "Zip", name: "pincode", type: "text" },
     { label: "IFSC Code", name: "ifsc", type: "text" },
     { label: "Bank Name", name: "bankName", type: "text" },
@@ -93,7 +101,7 @@ export function SharedContextProvider({ children }) {
   ];
 
   const dashboardTable = [
-    { 
+    {
       name: "Recent Invoices",
       columns: ["Invoice No", "Customer Name", "Amount", "Status"],
       data: [
@@ -117,40 +125,52 @@ export function SharedContextProvider({ children }) {
     },
     {
       name: "Top 5 Customers",
-      columns: ["Customer Name", "Amount","Joining Duration"],
+      columns: ["Customer Name", "Amount", "Joining Duration"],
       data: [
         ["Jay Sanghani", "₹ 2,000.00", "100 days"],
-        ["Savan Sagapariya", "₹ 1,500.00","90 days"],
-        ["Dhruhit Akbari", "₹ 1,000.00","2 days"],
-        ["Arth Daraniya", "₹ 5,000.00","30 days"],
-        ["Karan Bhuva", "₹ 3,280.00","45 days"],
+        ["Savan Sagapariya", "₹ 1,500.00", "90 days"],
+        ["Dhruhit Akbari", "₹ 1,000.00", "2 days"],
+        ["Arth Daraniya", "₹ 5,000.00", "30 days"],
+        ["Karan Bhuva", "₹ 3,280.00", "45 days"],
       ],
     },
     {
       name: "Top 5 Vendors",
-      columns: ["Vendor Name", "Amount","Joining Duration"],
+      columns: ["Vendor Name", "Amount", "Joining Duration"],
       data: [
-        ["Jay Sanghani", "₹ 50.00","150 days"],
-        ["Savan Sagapariya", "₹ 20.00","95 days"],
-        ["Dhruhit Akbari", "₹ 10.00","3 days"],
-        ["Arth Daraniya", "₹ 50.00","90 days"],
-        ["Karan Bhuva", "₹ 50.00","60 days"],
+        ["Jay Sanghani", "₹ 50.00", "150 days"],
+        ["Savan Sagapariya", "₹ 20.00", "95 days"],
+        ["Dhruhit Akbari", "₹ 10.00", "3 days"],
+        ["Arth Daraniya", "₹ 50.00", "90 days"],
+        ["Karan Bhuva", "₹ 50.00", "60 days"],
       ],
     },
   ];
 
-  const vcHeader = [{ name: "S.No", width: "w-7" },
-  { name: "Action", width: "w-10" },
-  { name: "Code", width: "" },
-  { name: "Name", width: "w-4/12" },
-  { name: "Phone", width: "" },
-  { name: "Email", width: "" },
-  { name: "City", width: "" },
-  { name: "GST no", width: "" },
-  // { name: "Created on", width: "" },
-];
+  const vcHeader = [
+    { name: "S.No", width: "w-7" },
+    { name: "Action", width: "w-10" },
+    { name: "Code", width: "" },
+    { name: "Name", width: "w-4/12" },
+    { name: "Phone", width: "" },
+    { name: "Email", width: "" },
+    { name: "City", width: "" },
+    { name: "GST no", width: "" },
+    // { name: "Created on", width: "" },
+  ];
 
-  const itemTableHeader= [
+  const invoiceHeader = [
+    { name: "S.No", width: "w-7" },
+    { name: "Action", width: "w-10" },
+    { name: "Invoice No.", width: "" },
+    { name: "Customer", width: "w-4/12" },
+    { name: "Contact No.", width: "" },
+    { name: "GST no", width: "" },
+    { name: "Total Amount", width: "" },
+    { name: "Created Date", width: ""}
+  ];
+
+  const itemTableHeader = [
     { name: "S.No", width: "w-7" },
     { name: "Action", width: "w-10" },
     { name: "Code", width: "" },
@@ -163,18 +183,22 @@ export function SharedContextProvider({ children }) {
     { name: "Tax Rate", width: "" },
     // { name: "Created on", width: "" },
   ];
+
   const value = {
     sidebarMenus,
     fields,
     dashboardTable,
     vcHeader,
     itemTableHeader,
+    invoiceHeader,
     customerData,
     vendorData,
     itemData,
+    invoiceData,
     getCustomerData,
     getVendorData,
-    getItemData
+    getItemData,
+    getInvoiceData,
   };
 
   return <SharedContext.Provider value={value}>{children}</SharedContext.Provider>;

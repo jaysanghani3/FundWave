@@ -46,7 +46,6 @@ const AddNewCustomer = () => {
   };
 
   const handleSave = async (e) => {
-    // console.log(customer);
     try {
       if (customerId) {
         // Update the customer
@@ -61,7 +60,6 @@ const AddNewCustomer = () => {
         console.log('Response:', response.data);
         alert("Customer saved successfully.");
       }
-      // Handle success or any other action here
     } catch (error) {
       console.error('Error:', error.response.data.error);
 
