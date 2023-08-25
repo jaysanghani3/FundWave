@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { format } from "date-fns";
 import axios from 'axios';
 import logo from "../../assets/logo.png";
-
+import "../../print-styles.css"
 const ViewInvoice = () => {
 
     const { invoiceId } = useParams();
     const [invoiceData, setInvoiceData] = useState(null);
+    const navigate = useNavigate();
 
     const getInvoiceData = async () => {
         try {
@@ -26,10 +27,27 @@ const ViewInvoice = () => {
     if (!invoiceData) {
         return <div>Loading...</div>;
     }
-
+    const handlePrint = () => {
+        window.print();
+    }
     return (
         <div className="p-8 bg-gray-100 min-h-screen text-xs">
-            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-3">
+            <style
+                dangerouslySetInnerHTML={{
+                    __html: `
+                @media print {
+                    @page {
+                        size: A4;
+                        margin: 0;
+                    }
+                    body {
+                        margin: 1.6cm;
+                    }
+                }
+            `,
+                }}
+            />
+            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-3 print-only">
                 <div className='border-2 border-[#538daaab] p-4 rounded-lg'>
 
                     <div className="flex justify-between mb-6 border-b p-1">
@@ -103,7 +121,7 @@ const ViewInvoice = () => {
                         <tbody>
                             {
                                 invoiceData.items.map((item, index) => (
-                                    <tr key={item.id}>
+                                    <tr key={index}>
                                         <td className="py-1 text-center border-b border-gray-300">{index + 1}</td>
                                         <td className="py-1 ps-3 border-b border-gray-300">{item.product}</td>
                                         <td className="py-1 text-right border-b border-gray-300">{item.qty}</td>
@@ -116,7 +134,7 @@ const ViewInvoice = () => {
                             }
                         </tbody>
                     </table>
-                    <div className="flex justify-end">
+                    <div className="flex justify-end mt-12">
                         <div className="grid grid-cols-3 gap-10">
                             <div className="col-span-2">
                                 <p className="text-right my-2">Sub Total</p>
@@ -138,6 +156,14 @@ const ViewInvoice = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div className="flex flex-row justify-center gap-x-6 m-4">
+                <button className="bg-[#1d5e7e] text-white px-3 py-1 ">Cancel</button>
+                <button className="bg-[#1d5e7e] text-white px-3 py-1 " onClick={() => navigate("/sales-invoice-master")}>Back</button>
+                <button className="bg-[#1d5e7e] text-white px-3 py-1 " onClick={handlePrint}>Print</button>
+                <button className="bg-[#1d5e7e] text-white px-3 py-1 ">Email</button>
+                <button className="bg-[#1d5e7e] text-white px-3 py-1 ">Export</button>
             </div>
         </div>
     )

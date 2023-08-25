@@ -1,6 +1,4 @@
-// models/customerModel.js
-
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const customerSchema = new mongoose.Schema({
   companyName: {
@@ -115,22 +113,20 @@ const customerSchema = new mongoose.Schema({
       default: 0,
     },
   },
-  bankingInfo: {
-    bankName: {
-      type: String,
-    },
-    accountNumber: {
-      type: Number,
-    },
-    ifsc: {
-      type: String,
-    },
-    branch: {
-      type: String,
-    },
+  bankName: {
+    type: String,
+  },
+  accountNumber: {
+    type: Number,
+  },
+  ifsc: {
+    type: String,
+  },
+  branch: {
+    type: String,
   },
 });
 
-const Customer = mongoose.model('Customer', customerSchema);
+const Customer = mongoose.model("Customer", customerSchema);
 
 module.exports = Customer;

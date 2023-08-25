@@ -58,7 +58,8 @@ const AddNewCustomer = () => {
         // Create a new customer
         const response = await axios.post('http://localhost:3000/customer/store', customer);
         console.log('Response:', response.data);
-        alert("Customer saved successfully.");
+        alert("Customer saved successfully.");  getCustomerData();
+        navigate("/customer");
       }
     } catch (error) {
       console.error('Error:', error.response.data.error);
@@ -82,12 +83,10 @@ const AddNewCustomer = () => {
     console.log("Import");
   };
 
-
   return (
     <>
-
       <CustomerVendorForm title={"Add New Customer"} fields={fields} data={customer} onChange={handleChange} />
-
+    
       <div className="flex justify-end my-3 space-x-3 text-xs">
         <button onClick={handleSave} className="bg-[#1d5e7e] text-white px-3 py-1">
           Save

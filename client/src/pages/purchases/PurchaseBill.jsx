@@ -9,7 +9,7 @@ const PurchaseBill = () => {
           { label: "GST No", name: "gstNo", type: "text" },
         ],
         [
-          { label: "Cash/Credit", name: "cashCredit", type: "select", options: ["Cash", "Credit"] },
+          { label: "Cash/Credit", name: "cashCredit", type: "text" },
           { label: "Date", name: "date", type: "date" },
           { label: "Due Date", name: "dueDate", type: "date" },
         ],

@@ -22,11 +22,11 @@ const CreateItem = () => {
     purchasePrice: "",
     purchaseRateFactor: "",
     mrp: "",
-    minimumPrice: "",
-    salesPrice: "",
-    wholesalePrice: "",
+    minimumSalePrice: "",
+    salePrice: "",
+    wholeSalePrice: "",
     dealerPrice: "",
-    rateFactor: "",
+    saleRateFactor  : "",
     discount: "",
   });
   const { itemId } = useParams(); // Get the item ID from the route parameters
@@ -62,11 +62,11 @@ const CreateItem = () => {
       purchasePrice: response.data.purchasePrice || "",
       purchaseRateFactor: response.data.purchaseRateFactor || "",
       mrp: response.data.mrp || "",
-      minimumPrice: response.data.minimumPrice || "",
-      salesPrice: response.data.salesPrice || "",
-      wholesalePrice: response.data.wholesalePrice || "",
+      minimumSalePrice: response.data.minimumSalePrice || "",
+      salePrice: response.data.salePrice || "",
+      wholeSalePrice: response.data.wholeSalePrice || "",
       dealerPrice: response.data.dealerPrice || "",
-      rateFactor: response.data.rateFactor || "",
+      saleRateFactor  : response.data.saleRateFactor   || "",
       discount: response.data.discount || "",
       });
     } catch (error) {
@@ -122,11 +122,11 @@ const CreateItem = () => {
       purchasePrice: "",
       purchaseRateFactor: "",
       mrp: "",
-      minimumPrice: "",
-      salesPrice: "",
-      wholesalePrice: "",
+      minimumSalePrice: "",
+      salePrice: "",
+      wholeSalePrice: "",
       dealerPrice: "",
-      rateFactor: "",
+      saleRateFactor  : "",
       discount: "",
     });
   };
@@ -281,17 +281,17 @@ const CreateItem = () => {
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Minimum Price</label>
-                <input onChange={handleChange} value={item.minimumPrice} type="number" name="minimumPrice" id="minimumPrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.minimumSalePrice} type="number" name="minimumSalePrice" id="minimumSalePrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Sales Price</label>
-                <input onChange={handleChange} value={item.salesPrice} type="number" name="salesPrice" id="salesPrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.salePrice} type="number" name="salePrice" id="salePrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Wholesale Price</label>
-                <input onChange={handleChange} value={item.wholesalePrice} type="number" name="wholesalePrice" id="wholesalePrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.wholeSalePrice} type="number" name="wholeSalePrice" id="wholeSalePrice" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
 
               <div className="flex flex-row">
@@ -301,7 +301,7 @@ const CreateItem = () => {
 
               <div className="flex flex-row">
                 <label className="text-gray-700 ">Rate Factor</label>
-                <input onChange={handleChange} value={item.rateFactor} type="number" name="rateFactor" id="rateFactor" autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
+                <input onChange={handleChange} value={item.saleRateFactor } type="number" name="saleRateFactor " id="saleRateFactor " autoComplete="given-name" className="border ms-auto pl-1 w-6/12" />
               </div>
 
               <div className="flex flex-row">

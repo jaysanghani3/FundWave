@@ -86,7 +86,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
           />
           <button className="bg-[#1d5e7e] text-white px-3 py-1">Export</button>
           <button className="bg-[#1d5e7e] text-white px-3 py-1">Print</button>
-          <Link to={`/add-new-${title.toLowerCase()}`}>
+          <Link to={title === "Sales Invoice" ?`/sales-invoice` : `/add-new-${title.toLowerCase()}`}>
             <button className="bg-[#1d5e7e] text-white px-3 py-1">Add New {title}</button>
           </Link>
         </div>

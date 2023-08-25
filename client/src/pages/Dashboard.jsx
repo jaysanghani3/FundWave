@@ -31,7 +31,6 @@ const Dashboard = () => {
     { name: "Payable", value: "₹ "+totalPayableAmount, color: "text-black", icon: <GiPayMoney size={70} /> },
   ];
 
-  console.log("Sum of totalPaymentAmount:", totalSalesData);
   return (
     <div className="mx-auto">
       <div className="flex flex-row items-center">

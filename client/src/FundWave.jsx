@@ -31,7 +31,7 @@ const FundWave = () => {
 
   return (
     
-    <div className="min-h-screen bg-slate-50 overflow-hidden">
+    <div className="min-h-screen bg-slate-50 overflow-hidden not-print">
     {/* {user ? ( */}
       <>
       <header className="sticky z-50 top-0 bg-[#1D5B79] h-[7vh] flex justify-between items-center px-3 py-2">
@@ -69,7 +69,6 @@ const FundWave = () => {
             <Route path="/customer" element={<CustomerMaster />} />
             <Route path="/vendor" element={<VendorMaster />} />
             <Route path="/item-master" element={<ItemMasters />} />
-            <Route path="/add-new-item" element={<ItemMasters />} />
             <Route path="/edit-customer/:customerId" element={<AddNewCustomer />} />
             <Route path="/edit-vendor/:vendorId" element={<AddNewVendor />} />
             <Route path="/edit-item/:itemId" element={<CreateItem />} />
@@ -83,7 +82,7 @@ const FundWave = () => {
         <span className="text-xs">© 2023 FundWave. All rights reserved.</span>
       </footer>
       </>
-     {/* ): (
+      {/* ): (
      <Login onLogin={handleLogin} />
    )} */}
     </div>
