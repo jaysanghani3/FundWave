@@ -7,7 +7,7 @@ import axios from "axios";
 const SalesInvoice = () => {
 
   const { fields, getInvoiceData } = useContext(SharedContext);
-  const { invoiceId } = useParams(); // Get the Invoice ID from the route parameters
+  // const { invoiceId } = useParams(); // Get the Invoice ID from the route parameters
 
   const invoiceFields = [
     [
@@ -26,31 +26,31 @@ const SalesInvoice = () => {
     ],
   ];
 
-  const [invoice, setInvoice] = useState(
-    invoiceFields.reduce((acc, field) => {
-      acc[field.name] = "";
-      return acc;
-    }, {})
-  );
+  // const [invoice, setInvoice] = useState(
+  //   invoiceFields.reduce((acc, field) => {
+  //     acc[field.name] = "";
+  //     return acc;
+  //   }, {})
+  // );
 
-  useEffect(() => {
-    console.log("Invoice ID:", invoiceId)
-    if (invoiceId) {
-      fetchInvoiceData();    // Fetch the invoice data for editing
-    }
-  }
-  , []);
+  // useEffect(() => {
+  //   console.log("Invoice ID:", invoiceId)
+  //   if (invoiceId) {
+  //     fetchInvoiceData();    // Fetch the invoice data for editing
+  //   }
+  // }
+  // , []);
 
-  const fetchInvoiceData = async () => {
-    const response = await axios.get(`http://localhost:5000/invoice/${invoiceId}`);
-    const invoiceData = response.data;
-    console.log("Invoice Data:", invoiceData)
-    setInvoice(invoiceData);
-  }
+  // const fetchInvoiceData = async () => {
+  //   const response = await axios.get(`http://localhost:5000/invoice/${invoiceId}`);
+  //   const invoiceData = response.data;
+  //   console.log("Invoice Data:", invoiceData)
+  //   setInvoice(invoiceData);
+  // }
 
   return (
     <div className="h-[98%]">
-      <CommonBillForm title={"Sales Invoice"} formFields={invoiceFields}/>
+      <CommonBillForm title={"Sales Invoice"} formFields={invoiceFields} getInvoiceData={getInvoiceData}/>
     </div>
   );
 };

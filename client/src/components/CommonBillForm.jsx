@@ -280,12 +280,12 @@ const CommonInvoiceForm = ({ title, formFields }) => {
                   </button>
                 </td>
                 <td className="text-left">
-                  <select onChange={(e) => handleItemChange(e, index, "product")} name="product" id={`product-${index}`} className="border border-gray-300 ms-auto w-full ps-2">
+                  {/* <select onChange={(e) => handleItemChange(e, index, "product")} name="product" id={`product-${index}`} className="border border-gray-300 ms-auto w-full ps-2">
                     <option value="product1">Product 1</option>
                     <option value="product2">Product 2</option>
                     <option value="product3">Product 3</option>
-                  </select>
-                  {/* <input autoComplete="false"  value={item.product || ""} onChange={(e) => handleItemChange(e, index, "product")} type="text" name="product" id={`product-${index}`}  className="ps-2 border border-gray-300 ms-auto w-full" /> */}
+                  </select> */}
+                  <input autoComplete="false"  value={item.product || ""} onChange={(e) => handleItemChange(e, index, "product")} type="text" name="product" id={`product-${index}`}  className="ps-2 border border-gray-300 ms-auto w-full" />
                 </td>
                 <td className="text-left">
                   <input autoComplete="false" value={item.description || ""} onChange={(e) => handleItemChange(e, index, "description")} type="text" name="description" id={`description-${index}`} className="border ps-2 border-gray-300 ms-auto w-full" />

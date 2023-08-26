@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { MdOutlineDelete, MdEdit, MdOutlineRemoveRedEye } from "react-icons/md";
 import axios from "axios";
 import { format } from "date-fns";
+
 const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getItemData, getVendorData, getInvoiceData }) => {
 
   const [searchValue, setSearchValue] = useState("");
@@ -155,7 +156,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
                   <td className="px-2 border-r">{item.companyName}</td>
                   <td className="px-2 border-r">{item.contactNumber}</td>
                   <td className="px-2 border-r">{item.email?item.email:item.gstNo}</td>
-                  <td className="px-2 border-r text-right">{item.city?item.city:item.total}</td>
+                  <td className="px-2 border-r text-right">{item.city?item.city:(item.total).toFixed(2)}</td>
                   <td className="px-2 border-r text-center">{item.gst?item.gst:format(new Date(item.createdDate), "dd MMM yyyy")}</td>
                   {/* <td className="px-2    ">{item.created_on_date}</td> */}
                 </tr>

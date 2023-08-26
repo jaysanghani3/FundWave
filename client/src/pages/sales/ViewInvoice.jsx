@@ -30,6 +30,7 @@ const ViewInvoice = () => {
     const handlePrint = () => {
         window.print();
     }
+
     return (
         <div className="p-8 bg-gray-100 min-h-screen text-xs">
             <style
@@ -134,25 +135,41 @@ const ViewInvoice = () => {
                             }
                         </tbody>
                     </table>
-                    <div className="flex justify-end mt-12">
-                        <div className="grid grid-cols-3 gap-10">
-                            <div className="col-span-2">
-                                <p className="text-right my-2">Sub Total</p>
-                                <p className="text-right my-2">Discount</p>
-                                <p className="text-right my-2">Taxable Value</p>
-                                <p className="text-right my-2">CGST</p>
-                                <p className="text-right my-2">SGST</p>
-                                <p className="text-lg text-right my-2">Total</p>
-                            </div>
+                    {/* <div className="flex mt-12"> */}
+                    <div className="grid grid-cols-5 gap-10">
+                        <div className="col-span-2 mt-auto">
+                            <p className="text-sm text-gray-600 mb-2 font-bold">Bank Details</p>
+                            <p className="text-xs text-gray-600 mb-1 font-bold">Bank Name : HDFC Bank</p>
+                            <p className="text-xs text-gray-600 mb-1">Account No : 1234567890123456</p>
+                            <p className="text-xs text-gray-600 mb-1">IFSC Code : HDFC0001234</p>
+                        </div>
+                        <div className="col-span-2">
+                            <p className="text-right my-2">Sub Total</p>
+                            <p className="text-right my-2">Discount</p>
+                            <p className="text-right my-2">Taxable Value</p>
+                            <p className="text-right my-2">CGST</p>
+                            <p className="text-right my-2">SGST</p>
+                            <p className="text-lg text-right my-2">Total</p>
+                        </div>
 
-                            <div className="col-span-1">
-                                <p className="text-right my-2">{(invoiceData.subTotal).toFixed(2)}</p>
-                                <p className="text-right my-2">{(invoiceData.discount).toFixed(2)}</p>
-                                <p className="text-right my-2">{(invoiceData.taxableValue).toFixed(2)}</p>
-                                <p className="text-right my-2">{(invoiceData.cgst).toFixed(2)}</p>
-                                <p className="text-right my-2">{(invoiceData.sgst).toFixed(2)}</p>
-                                <p className="text-lg text-right my-2 font-bold">{(invoiceData.total).toFixed(2)}</p>
-                            </div>
+                        <div className="col-span-1">
+                            <p className="text-right my-2">{(invoiceData.subTotal).toFixed(2)}</p>
+                            <p className="text-right my-2">{(invoiceData.discount).toFixed(2)}</p>
+                            <p className="text-right my-2">{(invoiceData.taxableValue).toFixed(2)}</p>
+                            <p className="text-right my-2">{(invoiceData.cgst).toFixed(2)}</p>
+                            <p className="text-right my-2">{(invoiceData.sgst).toFixed(2)}</p>
+                            <p className="text-lg text-right my-2 font-bold">{(invoiceData.total).toFixed(2)}</p>
+                        </div>
+                    </div>
+                    {/* </div> */}
+
+                    <div className="flex justify-between mt-12">
+                        <div className="flex flex-col">
+                            <p className="text-[12px] text-gray-600 mb-2 font-bold">Terms & Conditions</p>
+                            <p className="text-[10px] text-gray-600 mb-1 font-bold">1. Interest @ 24% will be charged if payment is not made within 30 days.</p>
+                            <p className="text-[10px] text-gray-600 mb-1">2. Subject to Rajkot Jurisdiction.</p>
+                            {invoiceData.terms ? <p className="text-[10px] text-gray-600 mb-1">3. {invoiceData.terms}</p> : null}
+                            {invoiceData.remarks ? <p className="text-[12px] text-gray-600 my-2">{invoiceData.remarks}</p> : null}
                         </div>
                     </div>
                 </div>
