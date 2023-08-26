@@ -41,7 +41,7 @@ const CreateItem = () => {
 
   const fetchItemData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/item/${itemId}`);
+      const response = await axios.get(`https://fundwave-qvuy.onrender.com/item/${itemId}`);
       // const updatedItem = fields.reduce((acc, field) => {
       //   acc[field.name] = response.data[field.name] || "";
       //   return acc;
@@ -88,14 +88,14 @@ const CreateItem = () => {
     try {
       if (itemId) {
         // Update the item
-        const response = await axios.put(`http://localhost:3000/item/${itemId}`, item);
+        const response = await axios.put(`https://fundwave-qvuy.onrender.com/item/${itemId}`, item);
         console.log('Response:', response.data);
         getItemData();
         alert("Item updated successfully.");
         navigate("/item-master");
       } else {
         // Create a new item
-        const response = await axios.post('http://localhost:3000/item/store', item);
+        const response = await axios.post('https://fundwave-qvuy.onrender.com/item/store', item);
         console.log('Response:', response.data);
         alert("Item saved successfully.");
       }

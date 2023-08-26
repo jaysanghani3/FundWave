@@ -27,7 +27,7 @@ const AddNewVendor = () => {
   
     const fetchVendorData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/vendor/${vendorId}`);
+        const response = await axios.get(`https://fundwave-qvuy.onrender.com/vendor/${vendorId}`);
         const updatedVendor = fields.reduce((acc, field) => {
           acc[field.name] = response.data[field.name] || "";
           return acc;
@@ -46,13 +46,13 @@ const AddNewVendor = () => {
     const handleSave = async (e) => {
         try {
           if (vendorId) {   // Update the vendor
-            const response = await axios.put(`http://localhost:3000/vendor/${vendorId}`, vendor);
+            const response = await axios.put(`https://fundwave-qvuy.onrender.com/vendor/${vendorId}`, vendor);
             console.log('Response:', response.data);
             getVendorData();
             alert("vendor updated successfully.");
             navigate("/vendor");
           } else {        // Create a new vendor
-            const response = await axios.post('http://localhost:3000/vendor/store', vendor);
+            const response = await axios.post('https://fundwave-qvuy.onrender.com/vendor/store', vendor);
             console.log('Response:', response.data);
             alert("vendor saved successfully.");
           }

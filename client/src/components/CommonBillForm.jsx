@@ -139,7 +139,7 @@ const CommonInvoiceForm = ({ title, formFields }) => {
     console.log(invoice);
     try {
       if (title === "Sales Invoice") {
-        const response = await axios.post('http://localhost:3000/invoice/store', invoice);
+        const response = await axios.post('https://fundwave-qvuy.onrender.com/invoice/store', invoice);
         console.log('Response:', response?.data);
         alert("Invoice saved successfully.");
         // getComputedStyle("/sales-invoice-master");

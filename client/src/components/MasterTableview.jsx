@@ -29,7 +29,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
     if (title === "Customer") {
       if (window.confirm("Are you sure you want to delete this customer?")) {
         try {
-          await axios.delete(`http://localhost:3000/customer/${id}`);
+          await axios.delete(`https://fundwave-qvuy.onrender.com/customer/${id}`);
           getCustomerData(); // to refrsh page and render data
         } catch (error) {
           console.error('Error deleting item:', error);
@@ -39,7 +39,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
     } else if (title === "Vendor") {
       if (window.confirm("Are you sure you want to delete this vendor?")) {
         try {
-          await axios.delete(`http://localhost:3000/vendor/${id}`);
+          await axios.delete(`https://fundwave-qvuy.onrender.com/vendor/${id}`);
           getVendorData();
         } catch (error) {
           console.error('Error deleting item:', error);
@@ -51,7 +51,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
   const handleDeleteItem = async (id) => {
     if (window.confirm("Are you sure you want to delete this Item?")) {
       try {
-        await axios.delete(`http://localhost:3000/item/${id}`);
+        await axios.delete(`https://fundwave-qvuy.onrender.com/item/${id}`);
         getItemData();
       } catch (error) {
         console.error('Error deleting item:', error);
@@ -62,7 +62,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
   const handleDeleteInvoice = async (id) => {
     if (window.confirm("Are you sure you want to delete this Item?")) {
       try {
-        await axios.delete(`http://localhost:3000/invoice/${id}`);
+        await axios.delete(`https://fundwave-qvuy.onrender.com/invoice/${id}`);
         getInvoiceData();
       } catch (error) {
         console.error('Error deleting item:', error);

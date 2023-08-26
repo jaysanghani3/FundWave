@@ -28,7 +28,7 @@ const AddNewCustomer = () => {
 
   const fetchCustomerData = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/customer/${customerId}`);
+      const response = await axios.get(`https://fundwave-qvuy.onrender.com/customer/${customerId}`);
       const updatedCustomer = fields.reduce((acc, field) => {
         acc[field.name] = response.data[field.name] || "";
         return acc;
@@ -49,14 +49,14 @@ const AddNewCustomer = () => {
     try {
       if (customerId) {
         // Update the customer
-        const response = await axios.put(`http://localhost:3000/customer/${customerId}`, customer);
+        const response = await axios.put(`https://fundwave-qvuy.onrender.com/customer/${customerId}`, customer);
         console.log('Response:', response.data);
         getCustomerData();
         alert("Customer updated successfully.");
         navigate("/customer");
       } else {
         // Create a new customer
-        const response = await axios.post('http://localhost:3000/customer/store', customer);
+        const response = await axios.post('https://fundwave-qvuy.onrender.com/customer/store', customer);
         console.log('Response:', response.data);
         alert("Customer saved successfully.");  getCustomerData();
         navigate("/customer");

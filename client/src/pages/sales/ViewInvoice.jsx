@@ -12,7 +12,7 @@ const ViewInvoice = () => {
 
     const getInvoiceData = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/invoice/${invoiceId}`);
+            const response = await axios.get(`https://fundwave-qvuy.onrender.com/invoice/${invoiceId}`);
             setInvoiceData(response.data);
         } catch (error) {
             console.error('Error fetching invoice data:', error);
@@ -176,11 +176,9 @@ const ViewInvoice = () => {
             </div>
 
             <div className="flex flex-row justify-center gap-x-6 m-4">
-                <button className="bg-[#1d5e7e] text-white px-3 py-1 ">Cancel</button>
                 <button className="bg-[#1d5e7e] text-white px-3 py-1 " onClick={() => navigate("/sales-invoice-master")}>Back</button>
                 <button className="bg-[#1d5e7e] text-white px-3 py-1 " onClick={handlePrint}>Print</button>
                 <button className="bg-[#1d5e7e] text-white px-3 py-1 ">Email</button>
-                <button className="bg-[#1d5e7e] text-white px-3 py-1 ">Export</button>
             </div>
         </div>
     )
