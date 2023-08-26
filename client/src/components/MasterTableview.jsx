@@ -3,11 +3,16 @@ import { Link } from "react-router-dom";
 import { MdOutlineDelete, MdEdit, MdOutlineRemoveRedEye } from "react-icons/md";
 import axios from "axios";
 import { format } from "date-fns";
+import { toast,Toaster } from "react-hot-toast";
 
 const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getItemData, getVendorData, getInvoiceData }) => {
 
   const [searchValue, setSearchValue] = useState("");
   const [filteredTableBody, setFilteredTableBody] = useState(tableBody);
+
+  const deleteToast = () => toast("Item deleted successfully",{
+    icon: <MdOutlineDelete size={20} className="text-red-500 ml-2" />,
+  });
 
   const fetchData = () => {
     if (searchValue) {
@@ -31,6 +36,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
         try {
           await axios.delete(`https://fundwave-qvuy.onrender.com/customer/${id}`);
           getCustomerData(); // to refrsh page and render data
+          deleteToast();
         } catch (error) {
           console.error('Error deleting item:', error);
         }
@@ -40,7 +46,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
       if (window.confirm("Are you sure you want to delete this vendor?")) {
         try {
           await axios.delete(`https://fundwave-qvuy.onrender.com/vendor/${id}`);
-          getVendorData();
+          getVendorData();deleteToast();
         } catch (error) {
           console.error('Error deleting item:', error);
         }
@@ -52,18 +58,20 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
     if (window.confirm("Are you sure you want to delete this Item?")) {
       try {
         await axios.delete(`https://fundwave-qvuy.onrender.com/item/${id}`);
-        getItemData();
+        getItemData();deleteToast();
       } catch (error) {
         console.error('Error deleting item:', error);
       }
     }
+
   };
 
   const handleDeleteInvoice = async (id) => {
     if (window.confirm("Are you sure you want to delete this Item?")) {
       try {
         await axios.delete(`https://fundwave-qvuy.onrender.com/invoice/${id}`);
-        getInvoiceData();
+    deleteToast();
+    getInvoiceData();
       } catch (error) {
         console.error('Error deleting item:', error);
       }
@@ -73,7 +81,8 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
   return (
     <div className="text-xs">
       <h1 className="text-sm font-bold bg-[#1d5e7e] text-white py-1 text-center">{title} Master</h1>
-
+      <Toaster position="top-right"
+  reverseOrder={false}/>
       <div className="px-3">
         <div className="flex justify-end items-center space-x-2 mt-3">
           <input

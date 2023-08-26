@@ -3,7 +3,7 @@ import ImageUpload from "../../components/ImageUpload";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import SharedContext from "../../contexts/SharedContext";
-
+import { toast, Toaster } from "react-hot-toast";
 const CreateItem = () => {
   const {  getItemData } = useContext(SharedContext);
 
@@ -90,14 +90,14 @@ const CreateItem = () => {
         // Update the item
         const response = await axios.put(`https://fundwave-qvuy.onrender.com/item/${itemId}`, item);
         console.log('Response:', response.data);
+        toast.success("Item updated successfully.");
         getItemData();
-        alert("Item updated successfully.");
         navigate("/item-master");
       } else {
         // Create a new item
         const response = await axios.post('https://fundwave-qvuy.onrender.com/item/store', item);
         console.log('Response:', response.data);
-        alert("Item saved successfully.");
+        toast.success("Item saved successfully.");
       }
       // Handle success or any other action here
     } catch (error) {
@@ -192,7 +192,7 @@ const CreateItem = () => {
   return (
     <>
       <h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">Create Item</h1>
-
+      <Toaster />
       <div className="grid grid-cols-3 gap-6 border p-3 pl-9 my-2 text-[13px]">
         <div className="flex flex-col col-span-2 gap-y-2">
           <div className="flex flex-row">

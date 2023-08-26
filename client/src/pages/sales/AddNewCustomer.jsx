@@ -3,6 +3,7 @@ import CustomerVendorForm from "../../components/CustomerVendorForm";
 import SharedContext from "../../contexts/SharedContext";
 import axios from 'axios';
 import { useNavigate, useParams } from "react-router-dom";
+import { toast, Toaster } from "react-hot-toast";
 
 const AddNewCustomer = () => {
   
@@ -52,13 +53,13 @@ const AddNewCustomer = () => {
         const response = await axios.put(`https://fundwave-qvuy.onrender.com/customer/${customerId}`, customer);
         console.log('Response:', response.data);
         getCustomerData();
-        alert("Customer updated successfully.");
+        toast.success("Customer updated successfully.");
         navigate("/customer");
       } else {
         // Create a new customer
         const response = await axios.post('https://fundwave-qvuy.onrender.com/customer/store', customer);
         console.log('Response:', response.data);
-        alert("Customer saved successfully.");  getCustomerData();
+        toast.success("Customer updated successfully.");  getCustomerData();
         navigate("/customer");
       }
     } catch (error) {
@@ -86,6 +87,7 @@ const AddNewCustomer = () => {
   return (
     <>
       <CustomerVendorForm title={"Add New Customer"} fields={fields} data={customer} onChange={handleChange} />
+      <Toaster/>
     
       <div className="flex justify-end my-3 space-x-3 text-xs">
         <button onClick={handleSave} className="bg-[#1d5e7e] text-white px-3 py-1">

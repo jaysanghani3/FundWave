@@ -3,11 +3,11 @@ import { MdOutlineDelete } from "react-icons/md";
 import SharedContext from "../contexts/SharedContext";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast, Toaster } from "react-hot-toast";
 
 const CommonInvoiceForm = ({ title, formFields }) => {
 
   const { customerData , getInvoiceData } = useContext(SharedContext);
-  const { invoiceId } = useParams(); // Get the Invoice ID from the route parameters
   const navigate = useNavigate();
 
   const companyNames = customerData.map((item) => {
@@ -141,7 +141,7 @@ const CommonInvoiceForm = ({ title, formFields }) => {
       if (title === "Sales Invoice") {
         const response = await axios.post('https://fundwave-qvuy.onrender.com/invoice/store', invoice);
         console.log('Response:', response?.data);
-        alert("Invoice saved successfully.");
+        toast.success("Invoice Created successfully.");
         // getComputedStyle("/sales-invoice-master");
         getInvoiceData();
         navigate("/sales-invoice-master");
@@ -170,7 +170,7 @@ const CommonInvoiceForm = ({ title, formFields }) => {
       <h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">
         Create New {title}
       </h1>
-
+      <Toaster/>
       <div className="grid grid-cols-3 gap-6 border border-gray-300 p-2 mx-2">
 
         <div className="flex flex-col gap-y-1 border-l-2 border-blue-100">
