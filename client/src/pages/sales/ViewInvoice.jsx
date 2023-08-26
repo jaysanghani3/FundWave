@@ -80,7 +80,7 @@ const ViewInvoice = () => {
                         <div className="col-span-1 w-3/4">
                             <p className="text-xs text-gray-600 mb-2 font-bold">Customer Name & Billing Address</p>
                             <p className="text-xs text-gray-600 mb-1 font-bold">{invoiceData.companyName}</p>
-                            <p className="text-xs text-gray-600 mb-1">{invoiceData.gstNo}</p>
+                            <p className="text-xs text-gray-600 mb-1">{invoiceData.gst}</p>
                             <p className="text-xs text-gray-600 mb-1">{invoiceData.address}</p>
                             <p className="text-xs text-gray-600 mb-1">{invoiceData.contactNumber}</p>
                         </div>

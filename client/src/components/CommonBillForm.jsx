@@ -28,7 +28,7 @@ const CommonInvoiceForm = ({ title, formFields }) => {
   const [rows, setRows] = useState([initialItem]);
 
   const [invoice, setInvoice] = useState({
-    gstNo: "",
+    gst: "",
     invoiceNo: "",
     companyName: "",
     cashCredit: "",
@@ -220,7 +220,7 @@ const CommonInvoiceForm = ({ title, formFields }) => {
 
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">GST No.</label>
-            <input autoComplete="false" value={invoice.gstNo} onChange={handleInvoiceChange} type="text" name="gstNo" id="gstNo" className="border ps-2 border-gray-300 ms-auto w-7/12" />
+            <input autoComplete="false" value={invoice.gst} onChange={handleInvoiceChange} type="text" name="gst" id="gst" className="border ps-2 border-gray-300 ms-auto w-7/12" />
           </div>
         </div>
 

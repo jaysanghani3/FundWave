@@ -1,5 +1,5 @@
 import SharedContext from "../../contexts/SharedContext"
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { MdOutlineDelete } from "react-icons/md";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -24,14 +24,14 @@ const SalesInvoice = () => {
   const [rows, setRows] = useState([initialItem]);
 
   const [invoice, setInvoice] = useState({
-    gstNo: "",
+    gst: "",
     invoiceNo: "",
     companyName: "",
     cashCredit: "",
     createdDate: "",
     dueDate: "",
     contactNumber: "",
-    address: "",
+    billingAddress: "",
     subTotal: 0,
     taxableValue: 0,
     discount: 0,
@@ -43,9 +43,16 @@ const SalesInvoice = () => {
     items: rows.map(() => ({ ...initialItem })),
   });
 
+  const [fetchedCompanyDetails, setFetchedCompanyDetails] = useState(customerData);
+
   const handleInvoiceChange = (e) => {
     const { name, value } = e.target;
     setInvoice((prev) => ({ ...prev, [name]: value }));
+
+    // Filter the customer data based on the input value
+    setFetchedCompanyDetails(customerData.filter((item) =>
+      item.companyName.toLowerCase().includes(value.toLowerCase())
+    ));
   };
 
   const handleItemChange = (e, rowIndex, field) => {
@@ -147,14 +154,23 @@ const SalesInvoice = () => {
   };
 
   const [click, setClick] = useState(false);
-  // const [input, setInput] = useState(invoice.companyName);
 
-  const companyNames = customerData.map((item) => {
-    return { companyName: item.companyName };
-  });
 
-  const handleOptionClick = (companyName) => {
-    setInvoice((prevData) => ({ ...prevData, companyName }));
+  const handleOptionClick = (selectedCompanyName) => {
+    const selectedCompany = fetchedCompanyDetails.find(
+      (company) => company.companyName === selectedCompanyName
+    );
+  
+    if (selectedCompany) {
+      // Update the invoice state with the selected company's details
+      setInvoice((prevData) => ({
+        ...prevData,
+        companyName: selectedCompany.companyName,
+        gst: selectedCompany.gst || "",
+        contactNumber: selectedCompany.contactNumber || "",
+        billingAddress: selectedCompany.billingAddress || "",
+      }));
+    }
     setClick(false);
   }
 
@@ -185,20 +201,23 @@ const SalesInvoice = () => {
                 onChange={handleInvoiceChange}
               />
               {click && (
-                <div className="absolute z-10 bg-white border ps-2 border-gray-300 ms-auto w-full mt-1">
-                  {companyNames
-                    .filter(({ companyName }) => companyName.toLowerCase().includes(invoice.companyName.toLowerCase()))
-                    .map((value, index) => {
+                <div className="absolute z-10 bg-white border border-gray-300  w-[110%] mt-1">
+                  {fetchedCompanyDetails
+                    ?.map((value, index) => {
                       return (
                         <div
                           key={index}
-                          className="cursor-pointer hover:bg-gray-100 py-2 w-full border-b border-gray-300"
+                          className="cursor-pointer border-b border-gray-400 p-2 hover:bg-gray-300"
                           onClick={() => handleOptionClick(value.companyName)}
                         >
-                         {value.companyName}
+                         <span className="border-r pr-2 border-gray-600">{value.code}</span>
+                         <span className="font-semibold ms-2">{value.companyName}</span>
+                         
                         </div>
                       );
-                    })}
+
+                    }
+                    )}
                 </div>
               )}
             </div>
@@ -206,7 +225,7 @@ const SalesInvoice = () => {
 
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">GST No.</label>
-            <input autoComplete="off" value={invoice.gstNo} onChange={handleInvoiceChange} type="text" name="gstNo" id="gstNo" className="border ps-2 border-gray-300 ms-auto w-7/12" />
+            <input autoComplete="off" value={invoice.gst} onChange={handleInvoiceChange} type="text" name="gst" id="gst" className="border ps-2 border-gray-300 ms-auto w-7/12" />
           </div>
         </div>
 
@@ -218,12 +237,29 @@ const SalesInvoice = () => {
 
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Created Date</label>
-            <input autoComplete="off" value={invoice.createdDate} onChange={handleInvoiceChange} type="date" name="createdDate" id="createdDate" className="border ps-2 border-gray-300 ms-auto w-7/12" />
+            <input
+          autoComplete="off"
+          defaultValue={new Date().toISOString().substr(0, 10)} // Set today's date as default
+          onChange={handleInvoiceChange}
+          type="date"
+          name="createdDate"
+          id="createdDate"
+          className="border ps-2 border-gray-300 ms-auto w-7/12"
+        />
           </div>
 
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Due Date</label>
-            <input autoComplete="off" value={invoice.dueDate} onChange={handleInvoiceChange} type="date" name="dueDate" id="dueDate" className="border ps-2 border-gray-300 ms-auto w-7/12" />
+            <input
+          autoComplete="off"
+          defaultValue={(new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000)).toISOString().substr(0, 10)} // Set 30 days from today as default
+          onChange={handleInvoiceChange}
+          type="date"
+          name="dueDate"
+          id="dueDate"
+          className="border ps-2 border-gray-300 ms-auto w-7/12"
+        />
+
           </div>
         </div>
 
@@ -235,7 +271,7 @@ const SalesInvoice = () => {
 
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Address</label>
-            <textarea autoComplete="off" value={invoice.address} onChange={handleInvoiceChange} name="address" id="address" className="border ps-2 border-gray-300 ms-auto w-7/12 resize-none h-12" />
+            <textarea autoComplete="off" value={invoice.billingAddress} onChange={handleInvoiceChange} name="billingAddress" id="billingAddress" className="border ps-2 border-gray-300 ms-auto w-7/12 resize-none h-12" />
           </  div>
         </div>
       </div>

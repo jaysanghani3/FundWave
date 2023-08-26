@@ -6,7 +6,7 @@ const PurchaseBill = () => {
         [
           { label: "Purchase Bill No.", name: "purchaseBillNo", type: "text" },
           { label: "Vendor", name: "vendor", type: "text" },
-          { label: "GST No", name: "gstNo", type: "text" },
+          { label: "GST No", name: "gst", type: "text" },
         ],
         [
           { label: "Cash/Credit", name: "cashCredit", type: "text" },

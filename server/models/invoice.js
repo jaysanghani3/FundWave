@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const invoiceSchema = new mongoose.Schema({
-  gstNo: {
+  gst: {
     type: String,
     required: true,
   },
@@ -26,7 +26,7 @@ const invoiceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  address: {
+  billingAddress: {
     type: String,
     required: true,
   },
