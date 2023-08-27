@@ -73,45 +73,11 @@ const customerSchema = new mongoose.Schema({
   notes: {
     type: String,
   },
-  purchasesData: {
-    totalPurchaseCount: {
-      type: Number,
-      default: 0,
-    },
-    totalPurchaseAmount: {
-      type: Number,
-      default: 0,
-    },
+  totalInvoiceAmount: {
+    type: Number,
   },
-  salesData: {
-    totalSaleCount: {
-      type: Number,
-      default: 0,
-    },
-    totalSaleAmount: {
-      type: Number,
-      default: 0,
-    },
-  },
-  returnsData: {
-    totalReturnCount: {
-      type: Number,
-      default: 0,
-    },
-    totalReturnAmount: {
-      type: Number,
-      default: 0,
-    },
-  },
-  paymentsData: {
-    totalPaymentCount: {
-      type: Number,
-      default: 0,
-    },
-    totalPaymentAmount: {
-      type: Number,
-      default: 0,
-    },
+  totalReceivableAmount: {
+    type: Number,
   },
   bankName: {
     type: String,

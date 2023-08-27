@@ -1,5 +1,5 @@
 import SharedContext from "../../contexts/SharedContext"
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { MdOutlineDelete } from "react-icons/md";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,6 +9,13 @@ const SalesInvoice = () => {
 
   const { customerData, getInvoiceData, itemData } = useContext(SharedContext);
   const navigate = useNavigate();
+
+  const invoiceNumberRef = useRef(null);
+  const cashCreditRef = useRef(null);
+  const companyNameRef = useRef(null);
+  const qtyRef = useRef(null);
+  const addBtnRef = useRef(null);
+  const itemInputsRefs = useRef([]);
 
   const initialItem = {
     name: "",
@@ -42,23 +49,23 @@ const SalesInvoice = () => {
     remarks: "",
     items: rows?.map(() => ({ ...initialItem })),
   });
-  
+
   const [fetchedData, setFetchedData] = useState({
     companyDetails: customerData,
     itemDetails: itemData,
   });
-  
+
   useEffect(() => {
     setFetchedData({
       companyDetails: customerData,
       itemDetails: itemData,
     });
   }, [customerData, itemData]);
-  
+
   const handleInvoiceChange = (e) => {
     const { name, value } = e.target;
     setInvoice((prev) => ({ ...prev, [name]: value }));
-  
+
     // Filter the customer data based on the input value and update fetchedData
     setFetchedData((prevData) => ({
       ...prevData,
@@ -68,56 +75,56 @@ const SalesInvoice = () => {
     }));
   };
 
-    // Define the useEffect hook to update totals when rows change ** Face final total inccoret then i use this
+  // Define the useEffect hook to update totals when rows change ** Face final total inccoret then i use this
   useEffect(() => {
     // Update invoice totals whenever rows change
     updateInvoiceTotals();
-  }, [rows]); 
+  }, [rows]);
 
   const handleItemChange = (e, rowIndex, field) => {
     const { value } = e.target;
-  
+
     // Create a copy of the rows state array to work with
     const updatedRows = [...rows];
-  
+
     // Access the specific item being updated
     const updatedItem = { ...updatedRows[rowIndex] };
-  
+
     // Update the field of the item based on the input value
     updatedItem[field] = field === "name" || field === "description" ? value : parseFloat(value);
-  
+
     // Update taxable value and total if applicable
     if (field === "qty" || field === "rate" || field === "discount" || field === "taxCode") {
       const qty = parseFloat(updatedItem.qty || 0);
       const rate = parseFloat(updatedItem.rate || 0);
       const discount = parseFloat(updatedItem.discount || 0);
       const taxCode = parseFloat(updatedItem.taxCode || 0);
-  
+
       const taxableValue = qty * rate - discount;
       const taxAmount = (taxableValue * taxCode) / 100;
       const total = taxableValue + taxAmount;
-  
+
       updatedItem.taxableValue = taxableValue;
       updatedItem.total = total;
     }
-  
+
     // Update the specific item in the copy of the rows state array
     updatedRows[rowIndex] = updatedItem;
-  
+
     // Update the rows state with the modified array
     setRows(updatedRows);
-   
+
     updateInvoiceTotals();
-  // Filter the item data based on the input value and update fetchedData
-  setFetchedData((prevData) => ({
-    ...prevData,
-    itemDetails: itemData.filter((item) =>
-      item.name.toLowerCase().includes(value.toLowerCase())
-    ),
-  }));
+    // Filter the item data based on the input value and update fetchedData
+    setFetchedData((prevData) => ({
+      ...prevData,
+      itemDetails: itemData.filter((item) =>
+        item.name.toLowerCase().includes(value.toLowerCase())
+      ),
+    }));
     // Update invoice totals
   };
-  
+
   const updateInvoiceTotals = () => {
     let subTotal = 0;
     let discountTotal = 0;
@@ -204,7 +211,7 @@ const SalesInvoice = () => {
       companyDetails: newCompanyData,
     }));
   };
-  
+
   // Update item details
   const updateItemDetails = (newItemData) => {
     setFetchedData((prevData) => ({
@@ -252,6 +259,61 @@ const SalesInvoice = () => {
 
     setClickItemFiled(false); // Move this inside the if block
   };
+  const handleKeyDown = (e) => {
+    if (clickCompanyFiled) {
+      const suggestions = fetchedData.companyDetails || [];
+      const selectedIndex = suggestions.findIndex((value) => value.companyName === invoice.companyName);
+      if (e.key === 'Tab' || e.key === 'Enter') {
+        e.preventDefault();
+        if (selectedIndex !== -1) {
+          handleCompanyFieldClick(suggestions[selectedIndex].companyName);
+        }
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const newIndex = (selectedIndex + 1) % suggestions.length;
+        setInvoice((prevInvoice) => ({
+          ...prevInvoice,
+          companyName: suggestions[newIndex].companyName,
+        }));
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const newIndex = (selectedIndex - 1 + suggestions.length) % suggestions.length;
+        setInvoice((prevInvoice) => ({
+          ...prevInvoice,
+          companyName: suggestions[newIndex].companyName,
+        }));
+      }
+    }
+
+    else if (clickItemFiled) {
+      const suggestions = fetchedData.itemDetails || [];
+      const selectedIndex = suggestions.findIndex((value) => value.name === rows.name);
+      if (e.key === 'Tab' || e.key === 'Enter') {
+        e.preventDefault();
+        if (selectedIndex !== -1) {
+          handleCompanyFieldClick(suggestions[selectedIndex].companyName);
+        }
+      }
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const newIndex = (selectedIndex + 1) % suggestions.length;
+        setRows((prevRows) => ({
+          ...prevRows,
+          name: suggestions[newIndex].name,
+        }));
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const newIndex = (selectedIndex - 1 + suggestions.length) % suggestions.length;
+        setRows((prevRows) => ({
+          ...prevRows,
+          name: suggestions[newIndex].name,
+        }));
+      }
+    }
+
+
+  };
 
   return (
     <div className="h-[98%] flex flex-col border-2 gap-y-3 min-h-full text-xs ">
@@ -262,7 +324,7 @@ const SalesInvoice = () => {
         <div className="flex flex-col gap-y-1 border-l-2 border-blue-100">
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Invoice No.</label>
-            <input autoComplete="off" value={invoice.invoiceNo} onChange={handleInvoiceChange} type="text" name="invoiceNo" id="invoiceNo" className="border ps-2 border-gray-300 ms-auto w-7/12" />
+            <input autoComplete="off" value={invoice.invoiceNo} onChange={handleInvoiceChange} type="text" name="invoiceNo" id="invoiceNo" className="border ps-2 border-gray-300 ms-auto w-7/12" ref={invoiceNumberRef} tabIndex="1" />
           </div>
 
           <div className="flex flex-row">
@@ -276,8 +338,12 @@ const SalesInvoice = () => {
                 className="border ps-2 border-gray-300 ms-auto w-full"
                 value={invoice.companyName}
                 onClick={() => setClickCompanyFiled(true)}
+                onFocus={() => setClickCompanyFiled(true)}
                 onBlur={() => setTimeout(() => setClickCompanyFiled(false), 200)}
+                onKeyDown={handleKeyDown}
                 onChange={handleInvoiceChange}
+                ref={companyNameRef}
+                tabIndex="2"
               />
               {clickCompanyFiled && (
                 <div className="absolute z-10 bg-white border border-gray-300  w-[110%] mt-1">
@@ -299,18 +365,19 @@ const SalesInvoice = () => {
               )}
             </div>
           </div>
-
           <div className="flex flex-row">
-            <label className="ml-5 font-medium text-gray-700">GST No.</label>
-            <input autoComplete="off" value={invoice.gst} onChange={handleInvoiceChange} type="text" name="gst" id="gst" className="border ps-2 border-gray-300 ms-auto w-7/12" />
+            <label className="ml-5 font-medium text-gray-700">Cash/Credit</label>
+            <input autoComplete="off" value={invoice.cashCredit} onChange={handleInvoiceChange} type="text" name="cashCredit" id="cashCredit" className="border ps-2 border-gray-300 ms-auto w-7/12" ref={cashCreditRef} tabIndex="3" />
           </div>
+
         </div>
 
         <div className="flex flex-col gap-y-1 border-l-2 border-blue-100">
           <div className="flex flex-row">
-            <label className="ml-5 font-medium text-gray-700">Cash/Credit</label>
-            <input autoComplete="off" value={invoice.cashCredit} onChange={handleInvoiceChange} type="text" name="cashCredit" id="cashCredit" className="border ps-2 border-gray-300 ms-auto w-7/12" />
+            <label className="ml-5 font-medium text-gray-700">GST No.</label>
+            <input autoComplete="off" value={invoice.gst} onChange={handleInvoiceChange} type="text" name="gst" id="gst" className="border ps-2 border-gray-300 ms-auto w-7/12" />
           </div>
+
 
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Created Date</label>
@@ -387,8 +454,12 @@ const SalesInvoice = () => {
                     className="ps-2 border border-gray-300 ms-auto w-full"
                     value={rows[index].name || ""}
                     onClick={() => setClickItemFiled(true)}
+                    onFocus={() => setClickItemFiled(true)}
+                    // onKeyDown={handleKeyDown}
                     onBlur={() => setTimeout(() => setClickItemFiled(false), 200)}
                     onChange={(e) => handleItemChange(e, index, "name")}
+                    ref={(input) => (itemInputsRefs.current[index] = input)} // Save refs for each item input
+                    tabIndex={4 + index } // Set the tab index accordingly
                   />
                   {clickItemFiled && (
                     <div className="absolute z-10 bg-white border border-gray-300 mt-1">
@@ -410,16 +481,19 @@ const SalesInvoice = () => {
                   <input autoComplete="off" value={rows[index].description || ""} onChange={(e) => handleItemChange(e, index, "description")} type="text" name="description" id={`description-${index}`} className="border ps-2 border-gray-300 ms-auto w-full text-[11px]" />
                 </td>
                 <td>
-                  <input autoComplete="off" value={rows[index].qty || ""} onChange={(e) => handleItemChange(e, index, "qty")} type="number" name="qty" id="qty" className="border text-right pr-1 ps-2 border-gray-300 ms-auto w-full" />
+                  <input autoComplete="off" value={rows[index].qty || ""} onChange={(e) => handleItemChange(e, index, "qty")} type="number" name="qty" id="qty" className="border text-right pr-1 ps-2 border-gray-300 ms-auto w-full"
+                    ref={qtyRef}
+                    tabIndex={5 + index }
+                  />
                 </td>
                 <td>
-                  <input autoComplete="off" value={rows[index].rate ||0} onChange={(e) => handleItemChange(e, index, "rate")} type="number" name="rate" id="rate" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
+                  <input autoComplete="off" value={rows[index].rate || 0} onChange={(e) => handleItemChange(e, index, "rate")} type="number" name="rate" id="rate" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
                 <td>
                   <input autoComplete="off" value={rows[index].discount || 0} onChange={(e) => { handleItemChange(e, index, "discount") }} type="number" name="discount" id="discount" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
                 <td>
-                  <input autoComplete="off" value={rows[index].taxCode || 0} onChange={(e) => {handleItemChange(e, index, "taxCode");console.log(rows[index].qty)}} type="number" name="taxCode" id="taxCode" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
+                  <input autoComplete="off" value={rows[index].taxCode || 0} onChange={(e) => { handleItemChange(e, index, "taxCode"); console.log(rows[index].qty) }} type="number" name="taxCode" id="taxCode" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
                 <td>
                   <div className="text-right border pr-1 bg-white border-gray-300 ms-auto w-full ps-2">
@@ -440,7 +514,14 @@ const SalesInvoice = () => {
       <div className="flex flex-row justify-end gap-x-2 m-2">
         <button
           className="bg-[#1d5e7e] text-white px-3 py-1"
-          onClick={addRow}
+          ref={addBtnRef}
+          tabIndex={6 + rows.length}
+          onClick={() => {
+            addRow();
+            if (itemInputsRefs.current.length > 0) {
+              itemInputsRefs.current[itemInputsRefs.current.length - 1].focus(); // Focus on the last item input
+            }
+          }}
         >
           Add Item
         </button>

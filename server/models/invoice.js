@@ -37,7 +37,7 @@ const invoiceSchema = new mongoose.Schema({
 
   items: [
     {
-      product: {
+      name: {
         type: String,
         required: true,
       },
