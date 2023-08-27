@@ -64,7 +64,7 @@ const customerSchema = new mongoose.Schema({
   },
   createdOnDate: {
     type: Date,
-    required: false,
+    default: Date.now,
   },
   updatedOnDate: {
     type: Date,
@@ -73,12 +73,23 @@ const customerSchema = new mongoose.Schema({
   notes: {
     type: String,
   },
-  totalInvoiceAmount: {
+  totalInvoicesAmount: {
     type: Number,
   },
   totalReceivableAmount: {
     type: Number,
   },
+  invoicesList:[
+    {
+      invoiceNo: String,
+      invoiceDate: Date,
+      dueDate: Date,
+      totalAmount: Number,
+      totalReceivableAmount: Number,
+      status:String,
+      paymentType:String,
+    },
+  ],
   bankName: {
     type: String,
   },

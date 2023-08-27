@@ -81,49 +81,55 @@ const SalesInvoice = () => {
     updateInvoiceTotals();
   }, [rows]);
 
-  const handleItemChange = (e, rowIndex, field) => {
-    const { value } = e.target;
+    const handleItemChange = (e, rowIndex, field) => {
+      const { value } = e.target;
 
-    // Create a copy of the rows state array to work with
-    const updatedRows = [...rows];
+      // Create a copy of the rows state array to work with
+      const updatedRows = [...rows];
 
-    // Access the specific item being updated
-    const updatedItem = { ...updatedRows[rowIndex] };
+      // Access the specific item being updated
+      const updatedItem = { ...updatedRows[rowIndex] };
 
-    // Update the field of the item based on the input value
-    updatedItem[field] = field === "name" || field === "description" ? value : parseFloat(value);
+      // Update the field of the item based on the input value
+      updatedItem[field] = field === "name" || field === "description" ? value : parseFloat(value);
 
-    // Update taxable value and total if applicable
-    if (field === "qty" || field === "rate" || field === "discount" || field === "taxCode") {
-      const qty = parseFloat(updatedItem.qty || 0);
-      const rate = parseFloat(updatedItem.rate || 0);
-      const discount = parseFloat(updatedItem.discount || 0);
-      const taxCode = parseFloat(updatedItem.taxCode || 0);
+      // Update taxable value and total if applicable
+      if (field === "qty" || field === "rate" || field === "discount" || field === "taxCode") {
+        const qty = parseFloat(updatedItem.qty || 0);
+        const rate = parseFloat(updatedItem.rate || 0);
+        const discount = parseFloat(updatedItem.discount || 0);
+        const taxCode = parseFloat(updatedItem.taxCode || 0);
 
-      const taxableValue = qty * rate - discount;
-      const taxAmount = (taxableValue * taxCode) / 100;
-      const total = taxableValue + taxAmount;
+        const taxableValue = qty * rate - discount;
+        const taxAmount = (taxableValue * taxCode) / 100;
+        const total = taxableValue + taxAmount;
 
-      updatedItem.taxableValue = taxableValue;
-      updatedItem.total = total;
-    }
+        updatedItem.taxableValue = taxableValue;
+        updatedItem.total = total;
+      }
 
-    // Update the specific item in the copy of the rows state array
-    updatedRows[rowIndex] = updatedItem;
+      // Update the specific item in the copy of the rows state array
+      updatedRows[rowIndex] = updatedItem;
 
-    // Update the rows state with the modified array
-    setRows(updatedRows);
+      // Update the rows state with the modified array
+      setRows(updatedRows);
+      const updatedInvoiceItems = [...invoice.items];
+updatedInvoiceItems[rowIndex] = { ...updatedItem };
 
-    updateInvoiceTotals();
-    // Filter the item data based on the input value and update fetchedData
-    setFetchedData((prevData) => ({
-      ...prevData,
-      itemDetails: itemData.filter((item) =>
-        item.name.toLowerCase().includes(value.toLowerCase())
-      ),
-    }));
-    // Update invoice totals
-  };
+setInvoice((prevInvoice) => ({
+  ...prevInvoice,
+  items: updatedInvoiceItems,
+}));
+      updateInvoiceTotals();
+      // Filter the item data based on the input value and update fetchedData
+      setFetchedData((prevData) => ({
+        ...prevData,
+        itemDetails: itemData.filter((item) =>
+          item.name.toLowerCase().includes(value.toLowerCase())
+        ),
+      }));
+      // Update invoice totals
+    };
 
   const updateInvoiceTotals = () => {
     let subTotal = 0;
@@ -131,10 +137,12 @@ const SalesInvoice = () => {
     let cgstTotal = 0;
     let sgstTotal = 0;
     let totalInvoice = 0;
+    let totalTaxableValue = 0;
 
     rows.forEach((item) => {
       subTotal += item.taxableValue;
       discountTotal += item.discount;
+      totalTaxableValue += item.taxableValue - item.discount;
       cgstTotal += item.taxableValue * (item.taxCode / 200); // Assuming equal split between cgst and sgst
       sgstTotal += item.taxableValue * (item.taxCode / 200); // Assuming equal split between cgst and sgst
       totalInvoice += item.total;
@@ -144,6 +152,7 @@ const SalesInvoice = () => {
       ...prev,
       subTotal,
       discount: discountTotal,
+      taxableValue: totalTaxableValue,
       cgst: cgstTotal,
       sgst: sgstTotal,
       total: totalInvoice,
@@ -153,7 +162,7 @@ const SalesInvoice = () => {
   const addRow = () => {
     const updatedRows = [...rows, { ...initialItem }]; // Add a new item to the rows state
     setRows(updatedRows);
-
+    
     setInvoice((prevInvoice) => ({
       ...prevInvoice,
       items: [...prevInvoice.items, { ...initialItem }],
@@ -259,6 +268,7 @@ const SalesInvoice = () => {
 
     setClickItemFiled(false); // Move this inside the if block
   };
+
   const handleKeyDown = (e) => {
     if (clickCompanyFiled) {
       const suggestions = fetchedData.companyDetails || [];

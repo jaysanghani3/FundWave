@@ -16,7 +16,9 @@ const CustomerVendorForm = ({ title, fields, data, onChange }) => {
               {field.type === "textarea" ? (
                 <textarea onChange={onChange} value={data[field.name]} className="border h-16 ms-auto px-2 w-10/12 resize-none" id={field.name} name={field.name}></textarea>
               ) : (
-                <input onChange={onChange} value={data[field.name]} className="border ms-auto pl-1 w-10/12" id={field.name} name={field.name} type={field.type} />
+                <input
+                autoComplete="off" 
+                onChange={onChange} value={data[field.name]} className="border ms-auto pl-1 w-10/12" id={field.name} name={field.name} type={field.type} />
               )}
             </div>
           ))}

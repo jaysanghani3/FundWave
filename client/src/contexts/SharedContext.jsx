@@ -13,13 +13,14 @@ export function SharedContextProvider({ children }) {
   const [vendorData, setVendorData] = useState([]);
   const [itemData, setItemData] = useState([]);
   const [invoiceData, setInvoiceData] = useState([]);
+  const [expenseData, setExpenseData] = useState([]);
 
   useEffect(() => {
     getCustomerData();
     getVendorData();
     getItemData();
     getInvoiceData();
-
+    getExpenseData();
   }, []);
 
   const getCustomerData = async () => {
@@ -42,6 +43,12 @@ export function SharedContextProvider({ children }) {
     setInvoiceData(response?.data);
   }
 
+  const getExpenseData = async () => {
+    const response = await axios.get("http://localhost:3000/expense/getall");
+    setExpenseData(response?.data);
+  }
+
+
   const sidebarMenus = [
     {
       menuName: "Dashboard",
@@ -63,7 +70,7 @@ export function SharedContextProvider({ children }) {
       subMenus: [
         { name: "Vendor", link: "/vendor" },
         { name: "Purchase Bill", link: "/purchase-bill" },
-        // { name: "Bill Payment", link: "/bill-payment" },
+        { name: "Expenses", link: "/expenses" },
       ],
     },
     {
@@ -90,6 +97,7 @@ export function SharedContextProvider({ children }) {
     { label: "Phone No", name: "contactNumber", type: "number" },
     { label: "PAN No", name: "pan", type: "text" },
     { label: "Billing Address", name: "billingAddress", type: "textarea" },
+    { label: "Shipping Address", name: "shippingAddress", type: "textarea" },
     { label: "Country", name: "country", type: "text" },
     { label: "State", name: "state", type: "text" },
     { label: "City", name: "city", type: "text" },
@@ -199,6 +207,10 @@ export function SharedContextProvider({ children }) {
     getVendorData,
     getItemData,
     getInvoiceData,
+    expenseData,
+    getExpenseData,
+    
+
   };
 
   return <SharedContext.Provider value={value}>{children}</SharedContext.Provider>;

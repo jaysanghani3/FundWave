@@ -124,7 +124,7 @@ const ViewInvoice = () => {
                                 invoiceData.items.map((item, index) => (
                                     <tr key={index}>
                                         <td className="py-1 text-center border-b border-gray-300">{index + 1}</td>
-                                        <td className="py-1 ps-3 border-b border-gray-300">{item.product}</td>
+                                        <td className="py-1 ps-3 border-b border-gray-300">{item.name}</td>
                                         <td className="py-1 text-right border-b border-gray-300">{item.qty}</td>
                                         <td className="py-1 text-right border-b border-gray-300">{item.rate}</td>
                                         <td className="py-1 text-right border-b border-gray-300">{item.discount}</td>

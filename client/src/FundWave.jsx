@@ -6,7 +6,6 @@ import SalesInvoiceMaster from "./pages/sales/SalesInvoiceMaster.jsx";
 import ViewInvoice from "./pages/sales/ViewInvoice.jsx";
 import PurchaseBill from "./pages/purchases/PurchaseBill";
 import AddNewCustomer from "./pages/sales/AddNewCustomer";
-import EstimateBill from "./pages/sales/EstimateBill";
 import Dashboard from "./pages/Dashboard";
 import logo from "./assets/logo.png";
 import CustomerMaster from "./pages/sales/CustomerMaster";
@@ -18,6 +17,7 @@ import CreateItem from "./pages/inventory/CreateItem";
 import LoginPage from "./pages/RegLog/LoginPage";
 import ProtectedRoute from "./ProtectedRoute";
 import RegisterPage from "./pages/RegLog/RegistrationForm";
+import Expenses from "./pages/purchases/Expenses";
 const FundWave = () => {
 
   const user = localStorage.getItem('token');
@@ -64,7 +64,8 @@ const FundWave = () => {
                 <Route path="/sales-invoice" element={<ProtectedRoute element={SalesInvoice} />} />
                 <Route path="/sales-invoice-master" element={<ProtectedRoute element={SalesInvoiceMaster} />} />
                 <Route path="/purchase-bill" element={<ProtectedRoute element={PurchaseBill} />} />
-                <Route path="/estimate" element={<ProtectedRoute element={EstimateBill} />} />
+                <Route path="/expenses" element={<ProtectedRoute element={Expenses} />} />
+                <Route path="/expenses/:expensesId" element={<ProtectedRoute element={Expenses} />} />
                 <Route path="/add-new-customer" element={<ProtectedRoute element={AddNewCustomer} />} />
                 <Route path="/add-new-vendor" element={<ProtectedRoute element={AddNewVendor} />} />
                 <Route path="/add-new-item" element={<ProtectedRoute element={CreateItem} />} />
