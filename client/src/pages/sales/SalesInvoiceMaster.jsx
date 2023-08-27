@@ -5,7 +5,7 @@ import SharedContext from '../../contexts/SharedContext'
 const SalesInvoiceMaster = () => {
     const { invoiceHeader, invoiceData, getInvoiceData } = useContext(SharedContext);
     return (
-        <MasterTableview title={"Sales Invoice"} tableHeader={invoiceHeader} tableBody={invoiceData} getCustomerData={getInvoiceData}/>
+        <MasterTableview title={"Sales Invoice"} tableHeader={invoiceHeader} tableBody={invoiceData} getInvoiceData={getInvoiceData}/>
     )
 }
 

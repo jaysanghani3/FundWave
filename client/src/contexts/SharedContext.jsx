@@ -23,22 +23,22 @@ export function SharedContextProvider({ children }) {
   }, []);
 
   const getCustomerData = async () => {
-    const response = await axios.get("https://fundwave-qvuy.onrender.com/customer/getall");
+    const response = await axios.get("http://localhost:3000/customer/getall");
     setCustomerData(response?.data);
   };
 
   const getVendorData = async () => {
-    const response = await axios.get("https://fundwave-qvuy.onrender.com/vendor/getall");
+    const response = await axios.get("http://localhost:3000/vendor/getall");
     setVendorData(response?.data);
   };
 
   const getItemData = async () => {
-    const response = await axios.get("https://fundwave-qvuy.onrender.com/item/getall");
+    const response = await axios.get("http://localhost:3000/item/getall");
     setItemData(response?.data);
   };
 
   const getInvoiceData = async () => {
-    const response = await axios.get("https://fundwave-qvuy.onrender.com/invoice/getall");
+    const response = await axios.get("http://localhost:3000/invoice/getall");
     setInvoiceData(response?.data);
   }
 

@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { MdOutlineDelete, MdEdit, MdOutlineRemoveRedEye } from "react-icons/md";
 import axios from "axios";
 import { format } from "date-fns";
-import { toast,Toaster } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 
 const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getItemData, getVendorData, getInvoiceData }) => {
 
   const [searchValue, setSearchValue] = useState("");
   const [filteredTableBody, setFilteredTableBody] = useState(tableBody);
 
-  const deleteToast = () => toast("Item deleted successfully",{
+  const deleteToast = () => toast("Item deleted successfully", {
     icon: <MdOutlineDelete size={20} className="text-red-500 ml-2" />,
   });
 
@@ -34,7 +34,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
     if (title === "Customer") {
       if (window.confirm("Are you sure you want to delete this customer?")) {
         try {
-          await axios.delete(`https://fundwave-qvuy.onrender.com/customer/${id}`);
+          await axios.delete(`http://localhost:3000/customer/${id}`);
           getCustomerData(); // to refrsh page and render data
           deleteToast();
         } catch (error) {
@@ -45,8 +45,8 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
     } else if (title === "Vendor") {
       if (window.confirm("Are you sure you want to delete this vendor?")) {
         try {
-          await axios.delete(`https://fundwave-qvuy.onrender.com/vendor/${id}`);
-          getVendorData();deleteToast();
+          await axios.delete(`http://localhost:3000/vendor/${id}`);
+          getVendorData(); deleteToast();
         } catch (error) {
           console.error('Error deleting item:', error);
         }
@@ -57,8 +57,8 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
   const handleDeleteItem = async (id) => {
     if (window.confirm("Are you sure you want to delete this Item?")) {
       try {
-        await axios.delete(`https://fundwave-qvuy.onrender.com/item/${id}`);
-        getItemData();deleteToast();
+        await axios.delete(`http://localhost:3000/item/${id}`);
+        getItemData(); deleteToast();
       } catch (error) {
         console.error('Error deleting item:', error);
       }
@@ -69,9 +69,9 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
   const handleDeleteInvoice = async (id) => {
     if (window.confirm("Are you sure you want to delete this Item?")) {
       try {
-        await axios.delete(`https://fundwave-qvuy.onrender.com/invoice/${id}`);
-    deleteToast();
-    getInvoiceData();
+        await axios.delete(`http://localhost:3000/invoice/${id}`);
+        deleteToast();
+        getInvoiceData();
       } catch (error) {
         console.error('Error deleting item:', error);
       }
@@ -82,7 +82,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
     <div className="text-xs">
       <h1 className="text-sm font-bold bg-[#1d5e7e] text-white py-1 text-center">{title} Master</h1>
       <Toaster position="top-right"
-  reverseOrder={false}/>
+        reverseOrder={false} />
       <div className="px-3">
         <div className="flex justify-end items-center space-x-2 mt-3">
           <input
@@ -96,7 +96,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
           />
           <button className="bg-[#1d5e7e] text-white px-3 py-1">Export</button>
           <button className="bg-[#1d5e7e] text-white px-3 py-1">Print</button>
-          <Link to={title === "Sales Invoice" ?`/sales-invoice` : `/add-new-${title.toLowerCase()}`}>
+          <Link to={title === "Sales Invoice" ? `/sales-invoice` : `/add-new-${title.toLowerCase()}`}>
             <button className="bg-[#1d5e7e] text-white px-3 py-1">Add New {title}</button>
           </Link>
         </div>
@@ -141,32 +141,32 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
                   <td className="px-2 py-1 border-r">{index + 1}</td>
                   {
                     title === "Sales Invoice" ?
-                    (
-                      <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
-                    <Link to={`/view-invoice/${item._id}`}> {/* target="_blank"*/}
-                      <MdOutlineRemoveRedEye className="text-blue-500 mr-2" />
-                    </Link>
-                    <button onClick={() => handleDeleteInvoice(item._id)}>
-                      <MdOutlineDelete className="text-red-500 ml-2" />
-                    </button>
-                  </td>
-                    ):(
-                      <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
-                    <Link to={`/edit-${title.toLowerCase()}/${item._id}`}>
-                      <MdEdit className="text-blue-500 mr-2" />
-                    </Link>
-                    <button onClick={() => handleDeleteVC(item._id)}>
-                      <MdOutlineDelete className="text-red-500 ml-2" />
-                    </button>
-                  </td>
-                    )
+                      (
+                        <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
+                          <Link to={`/view-invoice/${item._id}`}> {/* target="_blank"*/}
+                            <MdOutlineRemoveRedEye className="text-blue-500 mr-2" />
+                          </Link>
+                          <button onClick={() => handleDeleteInvoice(item._id)}>
+                            <MdOutlineDelete className="text-red-500 ml-2" />
+                          </button>
+                        </td>
+                      ) : (
+                        <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
+                          <Link to={`/edit-${title.toLowerCase()}/${item._id}`}>
+                            <MdEdit className="text-blue-500 mr-2" />
+                          </Link>
+                          <button onClick={() => handleDeleteVC(item._id)}>
+                            <MdOutlineDelete className="text-red-500 ml-2" />
+                          </button>
+                        </td>
+                      )
                   }
-                  <td className="px-2 border-r">{item.code?item.code:item.invoiceNo}</td>
+                  <td className="px-2 border-r">{item.code ? item.code : item.invoiceNo}</td>
                   <td className="px-2 border-r">{item.companyName}</td>
                   <td className="px-2 border-r">{item.contactNumber}</td>
-                  <td className="px-2 border-r">{item.email?item.email:item.gst}</td>
-                  <td className="px-2 border-r text-right">{item.city?item.city:(item.total).toFixed(2)}</td>
-                  <td className="px-2 border-r text-center">{item.gst?item.gst:format(new Date(item.createdDate), "dd MMM yyyy")}</td>
+                  <td className="px-2 border-r">{item.email ? item.email : item.gst}</td>
+                  <td className="px-2 border-r text-right">{item.city ? item.city : (item.total).toFixed(2)}</td>
+                  <td className="px-2 border-r text-center">{item.gst ? item.gst : format(new Date(item.createdDate), "dd MMM yyyy")}</td>
                   {/* <td className="px-2    ">{item.created_on_date}</td> */}
                 </tr>
               ))}

@@ -7,11 +7,11 @@ import { toast, Toaster } from "react-hot-toast";
 
 const SalesInvoice = () => {
 
-  const { customerData, getInvoiceData } = useContext(SharedContext);
+  const { customerData, getInvoiceData, itemData } = useContext(SharedContext);
   const navigate = useNavigate();
 
   const initialItem = {
-    product: "",
+    name: "",
     description: "",
     qty: 0,
     rate: 0,
@@ -28,8 +28,8 @@ const SalesInvoice = () => {
     invoiceNo: "",
     companyName: "",
     cashCredit: "",
-    createdDate: "",
-    dueDate: "",
+    createdDate: new Date().toISOString().substr(0, 10) || '',
+    dueDate: (new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000)).toISOString().substr(0, 10) || '',
     contactNumber: "",
     billingAddress: "",
     subTotal: 0,
@@ -40,62 +40,84 @@ const SalesInvoice = () => {
     total: 0,
     terms: "",
     remarks: "",
-    items: rows.map(() => ({ ...initialItem })),
+    items: rows?.map(() => ({ ...initialItem })),
   });
-
-  const [fetchedCompanyDetails, setFetchedCompanyDetails] = useState(customerData);
-
+  
+  const [fetchedData, setFetchedData] = useState({
+    companyDetails: customerData,
+    itemDetails: itemData,
+  });
+  
+  useEffect(() => {
+    setFetchedData({
+      companyDetails: customerData,
+      itemDetails: itemData,
+    });
+  }, [customerData, itemData]);
+  
   const handleInvoiceChange = (e) => {
     const { name, value } = e.target;
     setInvoice((prev) => ({ ...prev, [name]: value }));
-
-    // Filter the customer data based on the input value
-    setFetchedCompanyDetails(customerData.filter((item) =>
-      item.companyName.toLowerCase().includes(value.toLowerCase())
-    ));
+  
+    // Filter the customer data based on the input value and update fetchedData
+    setFetchedData((prevData) => ({
+      ...prevData,
+      companyDetails: customerData.filter((item) =>
+        item.companyName.toLowerCase().includes(value.toLowerCase())
+      ),
+    }));
   };
+
+    // Define the useEffect hook to update totals when rows change ** Face final total inccoret then i use this
+  useEffect(() => {
+    // Update invoice totals whenever rows change
+    updateInvoiceTotals();
+  }, [rows]); 
 
   const handleItemChange = (e, rowIndex, field) => {
     const { value } = e.target;
-
+  
     // Create a copy of the rows state array to work with
     const updatedRows = [...rows];
-
+  
     // Access the specific item being updated
     const updatedItem = { ...updatedRows[rowIndex] };
-
+  
     // Update the field of the item based on the input value
-    updatedItem[field] = field === "product" || field === "description" ? value : parseFloat(value);
-
+    updatedItem[field] = field === "name" || field === "description" ? value : parseFloat(value);
+  
     // Update taxable value and total if applicable
     if (field === "qty" || field === "rate" || field === "discount" || field === "taxCode") {
       const qty = parseFloat(updatedItem.qty || 0);
       const rate = parseFloat(updatedItem.rate || 0);
       const discount = parseFloat(updatedItem.discount || 0);
       const taxCode = parseFloat(updatedItem.taxCode || 0);
-
+  
       const taxableValue = qty * rate - discount;
       const taxAmount = (taxableValue * taxCode) / 100;
       const total = taxableValue + taxAmount;
-
+  
       updatedItem.taxableValue = taxableValue;
       updatedItem.total = total;
     }
-
+  
     // Update the specific item in the copy of the rows state array
     updatedRows[rowIndex] = updatedItem;
-
+  
     // Update the rows state with the modified array
     setRows(updatedRows);
-    setInvoice((prevInvoice) => {
-      const updatedItems = [...prevInvoice.items];
-      updatedItems[rowIndex] = updatedItem;
-      return { ...prevInvoice, items: updatedItems };
-    });
-    // Update invoice totals
+   
     updateInvoiceTotals();
+  // Filter the item data based on the input value and update fetchedData
+  setFetchedData((prevData) => ({
+    ...prevData,
+    itemDetails: itemData.filter((item) =>
+      item.name.toLowerCase().includes(value.toLowerCase())
+    ),
+  }));
+    // Update invoice totals
   };
-
+  
   const updateInvoiceTotals = () => {
     let subTotal = 0;
     let discountTotal = 0;
@@ -141,7 +163,7 @@ const SalesInvoice = () => {
   const handleInvoiceSubmit = async () => {
     console.log(invoice);
     try {
-      const response = await axios.post('https://fundwave-qvuy.onrender.com/invoice/store', invoice);
+      const response = await axios.post('http://localhost:3000/invoice/store', invoice);
       console.log('Response:', response?.data);
       toast.success("Invoice Created successfully.");
       // getComputedStyle("/sales-invoice-master");
@@ -153,15 +175,16 @@ const SalesInvoice = () => {
     }
   };
 
-  const [click, setClick] = useState(false);
+  const [clickCompanyFiled, setClickCompanyFiled] = useState(false);
+  const [clickItemFiled, setClickItemFiled] = useState(false);
 
-
-  const handleOptionClick = (selectedCompanyName) => {
-    const selectedCompany = fetchedCompanyDetails.find(
+  const handleCompanyFieldClick = (selectedCompanyName) => {
+    const selectedCompany = fetchedData.companyDetails.find(
       (company) => company.companyName === selectedCompanyName
     );
-  
+
     if (selectedCompany) {
+      updateCompanyDetails([selectedCompany]);
       // Update the invoice state with the selected company's details
       setInvoice((prevData) => ({
         ...prevData,
@@ -171,8 +194,64 @@ const SalesInvoice = () => {
         billingAddress: selectedCompany.billingAddress || "",
       }));
     }
-    setClick(false);
+    setClickCompanyFiled(false);
   }
+
+  // Update company details
+  const updateCompanyDetails = (newCompanyData) => {
+    setFetchedData((prevData) => ({
+      ...prevData,
+      companyDetails: newCompanyData,
+    }));
+  };
+  
+  // Update item details
+  const updateItemDetails = (newItemData) => {
+    setFetchedData((prevData) => ({
+      ...prevData,
+      itemDetails: newItemData,
+    }));
+  };
+
+  const handleItemFieldClick = (selectedItemName, rowIndex) => { // Add rowIndex parameter
+    const selectedItem = fetchedData.itemDetails.find(
+      (item) => item.name === selectedItemName
+    );
+
+    if (selectedItem) {
+      updateItemDetails([selectedItem]);
+      // Create a copy of the rows state array to work with
+      const updatedRows = [...rows];
+
+      // Update the specific item in the copy of the rows state array
+      updatedRows[rowIndex] = {
+        ...updatedRows[rowIndex],
+        name: selectedItem.name,
+        description: selectedItem.description || "",
+        rate: selectedItem.rate || 0, // Set a default value if rate is not available
+        taxCode: selectedItem.taxCode || 0, // Set a default value if taxCode is not available
+      };
+
+      // Update the rows state with the modified array
+      setRows(updatedRows);
+      setInvoice((prevInvoice) => {
+        const updatedItems = [...prevInvoice.items];
+        updatedItems[rowIndex] = {
+          ...updatedItems[rowIndex],
+          name: selectedItem.name,
+          description: selectedItem.description || "",
+          rate: selectedItem.rate || 0,
+          taxCode: selectedItem.taxCode || 0,
+        };
+        return { ...prevInvoice, items: updatedItems };
+      });
+
+      // Update invoice totals
+      updateInvoiceTotals();
+    }
+
+    setClickItemFiled(false); // Move this inside the if block
+  };
 
   return (
     <div className="h-[98%] flex flex-col border-2 gap-y-3 min-h-full text-xs ">
@@ -196,23 +275,21 @@ const SalesInvoice = () => {
                 id="companyName"
                 className="border ps-2 border-gray-300 ms-auto w-full"
                 value={invoice.companyName}
-                onClick={() => setClick(true)}
-                onBlur={() => setTimeout(() => setClick(false), 200)}
+                onClick={() => setClickCompanyFiled(true)}
+                onBlur={() => setTimeout(() => setClickCompanyFiled(false), 200)}
                 onChange={handleInvoiceChange}
               />
-              {click && (
+              {clickCompanyFiled && (
                 <div className="absolute z-10 bg-white border border-gray-300  w-[110%] mt-1">
-                  {fetchedCompanyDetails
+                  {fetchedData.companyDetails
                     ?.map((value, index) => {
                       return (
-                        <div
-                          key={index}
+                        <div key={index}
                           className="cursor-pointer border-b border-gray-400 p-2 hover:bg-gray-300"
-                          onClick={() => handleOptionClick(value.companyName)}
+                          onClick={() => handleCompanyFieldClick(value.companyName)}
                         >
-                         <span className="border-r pr-2 border-gray-600">{value.code}</span>
-                         <span className="font-semibold ms-2">{value.companyName}</span>
-                         
+                          <span className="border-r pr-2 border-gray-600">{value.code}</span>
+                          <span className="font-semibold ms-2">{value.companyName}</span>
                         </div>
                       );
 
@@ -238,27 +315,27 @@ const SalesInvoice = () => {
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Created Date</label>
             <input
-          autoComplete="off"
-          defaultValue={new Date().toISOString().substr(0, 10)} // Set today's date as default
-          onChange={handleInvoiceChange}
-          type="date"
-          name="createdDate"
-          id="createdDate"
-          className="border ps-2 border-gray-300 ms-auto w-7/12"
-        />
+              autoComplete="off"
+              onChange={handleInvoiceChange}
+              type="date"
+              value={invoice.createdDate}
+              name="createdDate"
+              id="createdDate"
+              className="border ps-2 border-gray-300 ms-auto w-7/12"
+            />
           </div>
 
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Due Date</label>
             <input
-          autoComplete="off"
-          defaultValue={(new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000)).toISOString().substr(0, 10)} // Set 30 days from today as default
-          onChange={handleInvoiceChange}
-          type="date"
-          name="dueDate"
-          id="dueDate"
-          className="border ps-2 border-gray-300 ms-auto w-7/12"
-        />
+              autoComplete="off"
+              onChange={handleInvoiceChange}
+              type="date"
+              name="dueDate"
+              value={invoice.dueDate}
+              id="dueDate"
+              className="border ps-2 border-gray-300 ms-auto w-7/12"
+            />
 
           </div>
         </div>
@@ -302,37 +379,56 @@ const SalesInvoice = () => {
                   </button>
                 </td>
                 <td className="text-left">
-                  {/* <select onChange={(e) => handleItemChange(e, index, "product")} name="product" id={`product-${index}`} className="border border-gray-300 ms-auto w-full ps-2">
-                    <option value="product1">Product 1</option>
-                    <option value="product2">Product 2</option>
-                    <option value="product3">Product 3</option>
-                  </select> */}
-                  <input autoComplete="off" value={item.product || ""} onChange={(e) => handleItemChange(e, index, "product")} type="text" name="product" id={`product-${index}`} className="ps-2 border border-gray-300 ms-auto w-full" />
+                  <input
+                    autoComplete="off"
+                    type="text"
+                    name="name"
+                    id={`name-${index}`}
+                    className="ps-2 border border-gray-300 ms-auto w-full"
+                    value={rows[index].name || ""}
+                    onClick={() => setClickItemFiled(true)}
+                    onBlur={() => setTimeout(() => setClickItemFiled(false), 200)}
+                    onChange={(e) => handleItemChange(e, index, "name")}
+                  />
+                  {clickItemFiled && (
+                    <div className="absolute z-10 bg-white border border-gray-300 mt-1">
+                      {fetchedData.itemDetails
+                        ?.map((value, i) => (
+                          <div
+                            key={i}
+                            className="cursor-pointer border-b border-gray-400 p-2 hover:bg-gray-300"
+                            onClick={() => handleItemFieldClick(value.name, index)} // Pass i here
+                          >
+                            <span className="font-semibold ms-2">{value.name}</span>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                  {/* </div> */}
                 </td>
                 <td className="text-left">
-                  <input autoComplete="off" value={item.description || ""} onChange={(e) => handleItemChange(e, index, "description")} type="text" name="description" id={`description-${index}`} className="border ps-2 border-gray-300 ms-auto w-full" />
+                  <input autoComplete="off" value={rows[index].description || ""} onChange={(e) => handleItemChange(e, index, "description")} type="text" name="description" id={`description-${index}`} className="border ps-2 border-gray-300 ms-auto w-full text-[11px]" />
                 </td>
                 <td>
-                  <input autoComplete="off" onChange={(e) => handleItemChange(e, index, "qty")} type="number" name="qty" id="qty" className="border text-right pr-1 ps-2 border-gray-300 ms-auto w-full" />
+                  <input autoComplete="off" value={rows[index].qty || ""} onChange={(e) => handleItemChange(e, index, "qty")} type="number" name="qty" id="qty" className="border text-right pr-1 ps-2 border-gray-300 ms-auto w-full" />
                 </td>
                 <td>
-                  <input autoComplete="off" onChange={(e) => handleItemChange(e, index, "rate")} type="number" name="rate" id="rate" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
+                  <input autoComplete="off" value={rows[index].rate ||0} onChange={(e) => handleItemChange(e, index, "rate")} type="number" name="rate" id="rate" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
                 <td>
-                  <input autoComplete="off" onChange={(e) => { handleItemChange(e, index, "discount") }} type="number" name="discount" id="discount" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
+                  <input autoComplete="off" value={rows[index].discount || 0} onChange={(e) => { handleItemChange(e, index, "discount") }} type="number" name="discount" id="discount" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
                 <td>
-                  <input autoComplete="off" onChange={(e) => handleItemChange(e, index, "taxCode")} type="number" name="taxCode" id="taxCode" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
+                  <input autoComplete="off" value={rows[index].taxCode || 0} onChange={(e) => {handleItemChange(e, index, "taxCode");console.log(rows[index].qty)}} type="number" name="taxCode" id="taxCode" className="border text-right pr-1 border-gray-300 ms-auto w-full ps-2" />
                 </td>
                 <td>
                   <div className="text-right border pr-1 bg-white border-gray-300 ms-auto w-full ps-2">
-                    {(item.taxableValue).toFixed(2) || 0}
+                    {(item.taxableValue)?.toFixed(2) || 0}
                   </div>
-
                 </td>
                 <td>
                   <div className="text-right pr-1 border bg-white border-gray-300 ms-auto w-full ps-2">
-                    {(item.total).toFixed(2) || 0}
+                    {(item.total)?.toFixed(2) || 0}
                   </div>
                 </td>
               </tr>

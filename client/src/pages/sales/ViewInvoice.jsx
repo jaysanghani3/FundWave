@@ -12,7 +12,7 @@ const ViewInvoice = () => {
 
     const getInvoiceData = async () => {
         try {
-            const response = await axios.get(`https://fundwave-qvuy.onrender.com/invoice/${invoiceId}`);
+            const response = await axios.get(`http://localhost:3000/invoice/${invoiceId}`);
             setInvoiceData(response.data);
         } catch (error) {
             console.error('Error fetching invoice data:', error);
