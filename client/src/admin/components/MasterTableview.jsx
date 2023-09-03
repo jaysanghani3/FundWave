@@ -10,7 +10,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
   const [searchValue, setSearchValue] = useState("");
   const [filteredTableBody, setFilteredTableBody] = useState(tableBody);
 
-  const deleteToast = () => toast("Item deleted successfully", {
+  const deleteToast = () => toast("Deleted successfully", {
     icon: <MdOutlineDelete size={20} className="text-red-500 ml-2" />,
   });
 
@@ -103,7 +103,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
 
         <table className="table-auto w-full mt-3">
           <thead>
-            <tr className="bg-[#1d5e7e] text-white">
+            <tr className="bg-[#1d5e7e] text-white font-semibold text-sm">
               {tableHeader.map((item, index) => (
                 <td key={index} className={`px-2 py-1 border-r ${item.width}`}>
                   {item.name}
@@ -138,7 +138,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
               ))
               : filteredTableBody.map((item, index) => (
                 <tr key={index} className="bg-white border hover:bg-gray-200">
-                  <td className="px-2 py-1 border-r">{index + 1}</td>
+                  <td className="px-2 py-1 border-r text-center">{index + 1}</td>
                   {
                     title === "Sales Invoice" ?
                       (
@@ -164,9 +164,9 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
                   <td className="px-2 border-r">{item.code ? item.code : item.invoiceNo}</td>
                   <td className="px-2 border-r">{item.companyName}</td>
                   <td className="px-2 border-r">{item.contactNumber}</td>
-                  <td className="px-2 border-r">{item.email ? item.email : item.gst}</td>
-                  <td className="px-2 border-r text-right">{item.city ? item.city : (item.total).toFixed(2)}</td>
-                  <td className="px-2 border-r text-center">{item.gst ? item.gst : format(new Date(item.createdDate), "dd MMM yyyy")}</td>
+                  <td className="px-2 border-r ">{item.gst }</td>
+                  <td className={`px-3 border-r ${item.city ? ``:`text-right font-bold`}`}>{item.city ? item.city : (item.total).toFixed(2)}</td>
+                  <td className="px-2 border-r ">{item.email ? item.email : format(new Date(item.createdDate), "dd MMM yyyy")}</td>
                   {/* <td className="px-2    ">{item.created_on_date}</td> */}
                 </tr>
               ))}

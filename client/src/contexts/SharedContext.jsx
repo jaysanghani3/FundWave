@@ -163,9 +163,9 @@ export function SharedContextProvider({ children }) {
     { name: "Code", width: "" },
     { name: "Name", width: "w-4/12" },
     { name: "Phone", width: "" },
-    { name: "Email", width: "" },
-    { name: "City", width: "" },
     { name: "GST no", width: "" },
+    { name: "City", width: "" },
+    { name: "Email", width: "" },
     // { name: "Created on", width: "" },
   ];
 
