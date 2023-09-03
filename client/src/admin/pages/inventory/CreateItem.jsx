@@ -2,7 +2,7 @@ import React, { useState,  useContext, useEffect } from "react";
 import ImageUpload from "../../components/ImageUpload";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import SharedContext from "../../contexts/SharedContext";
+import SharedContext from "../../../contexts/SharedContext";
 import { toast, Toaster } from "react-hot-toast";
 const CreateItem = () => {
   const {  getItemData } = useContext(SharedContext);

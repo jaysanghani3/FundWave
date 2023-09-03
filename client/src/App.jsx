@@ -1,13 +1,28 @@
-import FundWave from "./FundWave";
+import React, { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { SharedContextProvider } from "./contexts/SharedContext";
-import RegistrationForm from "./pages/RegLog/RegistrationForm";
-import LoginPage from "./pages/RegLog/LoginPage";
+import FundWave from "./admin/FundWave";
+import Employee from "./employee/Employee";
+import LoginPage from "./LoginPage";
+
 export default function App() {
+
+  const user = localStorage.getItem('token');
+  const [userStatusCode, setUserStatusCode] = useState(null); 
+  
+  const handleLogin = (status) => {
+    setUserStatusCode(status);
+    console.log(status);
+  };
+  console.log(user);
   return (
     <SharedContextProvider>
       <BrowserRouter>
-        <FundWave />
+      {user ? 
+          userStatusCode === 221 ?  <FundWave/>  :  <Employee/>  
+          :
+          <LoginPage onLogin={handleLogin}/> 
+      }
       </BrowserRouter>
     </SharedContextProvider>
   );

@@ -1,8 +1,8 @@
-// models/registration.js
+// models/user.js
 const mongoose = require('mongoose');
 
-const registrationSchema = new mongoose.Schema({
-  userName: {
+const userSchema = new mongoose.Schema({
+  name: {
     type: String,
     required: true,
   },
@@ -35,8 +35,12 @@ const registrationSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-const Registration = mongoose.model('Registration', registrationSchema);
+const User = mongoose.model('User', userSchema);
 
-module.exports = Registration;
+module.exports = User;

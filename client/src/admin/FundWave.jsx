@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import SalesInvoice from "./pages/sales/SalesInvoice";
@@ -7,24 +7,21 @@ import ViewInvoice from "./pages/sales/ViewInvoice.jsx";
 import PurchaseBill from "./pages/purchases/PurchaseBill";
 import AddNewCustomer from "./pages/sales/AddNewCustomer";
 import Dashboard from "./pages/Dashboard";
-import logo from "./assets/logo.png";
+import logo from "../assets/logo.png";
 import CustomerMaster from "./pages/sales/CustomerMaster";
 import VendorMaster from "./pages/purchases/VendorMaster";
 import PageNotFound from "./pages/PageNotFound";
 import ItemMasters from "./pages/inventory/ItemMasters";
 import AddNewVendor from "./pages/purchases/AddNewVendor";
 import CreateItem from "./pages/inventory/CreateItem";
-import LoginPage from "./pages/RegLog/LoginPage";
-import ProtectedRoute from "./ProtectedRoute";
-import RegisterPage from "./pages/RegLog/RegistrationForm";
+import LoginPage from "../LoginPage";
+import ProtectedRoute from "../ProtectedRoute";
 import Expenses from "./pages/purchases/Expenses";
+import AddNewEmployee from "./pages/employee/AddNewEmployee";
+import EmployeeMaster from "./pages/employee/EmployeeMaster";
+
+
 const FundWave = () => {
-
-  const user = localStorage.getItem('token');
-
-  const handleLogin = (username) => {
-    setUser(username);
-  };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -34,7 +31,7 @@ const FundWave = () => {
   return (
 
     <div className="min-h-screen bg-slate-50 overflow-hidden not-print">
-      {user ? (
+      
         <>
           <header className="sticky z-50 top-0 bg-[#1D5B79] h-[7vh] flex justify-between items-center px-3 py-2">
             <div className="flex items-center">
@@ -76,9 +73,10 @@ const FundWave = () => {
                 <Route path="/edit-vendor/:vendorId" element={<ProtectedRoute element={AddNewVendor} />} />
                 <Route path="/edit-item/:itemId" element={<ProtectedRoute element={CreateItem} />} />
                 <Route path="/view-invoice/:invoiceId" element={<ProtectedRoute element={ViewInvoice} />} />
+                <Route path="/add-new-employee" element={<ProtectedRoute element={AddNewEmployee} />} />
+                <Route path="employee-master" element={<ProtectedRoute element={EmployeeMaster} />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<RegisterPage />} />
-                <Route path="*" element={<PageNotFound />} />
+                <Route path="*" element={<Dashboard />} />
               </Routes>
             </div>
           </div>
@@ -87,9 +85,6 @@ const FundWave = () => {
             <span className="text-xs">© 2023 FundWave. All rights reserved.</span>
           </footer>
         </>
-      ) : (
-        <LoginPage onLogin={handleLogin} />
-      )}
     </div>
   );
 };

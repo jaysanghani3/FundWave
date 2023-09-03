@@ -1,5 +1,6 @@
 import { createContext } from "react";
-import { TbFileInvoice, TbReportAnalytics } from "react-icons/tb";
+import { TbFileInvoice } from "react-icons/tb";
+import { FaUsers } from "react-icons/fa";
 import { PiHandCoinsBold } from "react-icons/pi";
 import { MdOutlineInventory2 } from "react-icons/md";
 import axios from "axios";
@@ -48,7 +49,6 @@ export function SharedContextProvider({ children }) {
     setExpenseData(response?.data);
   }
 
-
   const sidebarMenus = [
     {
       menuName: "Dashboard",
@@ -81,11 +81,13 @@ export function SharedContextProvider({ children }) {
         // { name: "Stock Master", link: "/stock-master" },
       ],
     },
-    // {
-    //   menuName: "Reports",
-    //   icon: <TbReportAnalytics className="w-8 h-8 sm:w-4 sm:h-4 text-white" />,
-    //   subMenus: [{ name: "All Report", link: "/all-report" }],
-    // },
+    {
+      menuName: "Employee",
+      icon: <FaUsers className="w-8 h-8 sm:w-4 sm:h-4 text-white" />,
+      subMenus: [
+        { name: "Add Employee", link: "/add-new-employee" },
+        { name: "Employee Master", link: "/employee-master" }],
+    },
   ];
 
   const fields = [

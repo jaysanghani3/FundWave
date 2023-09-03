@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FcSalesPerformance } from "react-icons/fc";
 import { GiPayMoney, GiReceiveMoney, GiProfit, GiExpense, GiTakeMyMoney } from "react-icons/gi";
-import SharedContext from "../contexts/SharedContext";
+import SharedContext from "../../contexts/SharedContext";
 
 const Dashboard = () => {
 
   const { dashboardTable, customerData, vendorData, itemData } = React.useContext(SharedContext);
 
-  let totalInvoicesAmount = 0;
+  let totalInvoicesAmount = 0;  
   let totalPurchaseAmount = 0;
   let totalExpensesAmount = 100;
   let totalReceivableAmount = 0;

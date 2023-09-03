@@ -1,61 +1,39 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Toaster, toast } from 'react-hot-toast';
-import logo from '../../assets/logo.png'; // Replace with your logo path
-import mii from '../../assets/make_in_india.png'; // Replace with your Made In India logo path
+import logo from './assets/logo.png'; // Replace with your logo path
+import mii from './assets/make_in_india.png'; // Replace with your Made In India logo path
 import { BsFacebook, BsWhatsapp, BsInstagram, BsGithub, BsLinkedin } from 'react-icons/bs'; // Import icons
 import { NavLink, useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const LoginPage = ({ onLogin }) => {
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
-    const handleLogin = async (e) => {
-        e.preventDefault();
 
+    const handleLogin = async (e) => {
+        
+        e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/registration/login', {
-                email,
-                password,
-            });
+            const res = await axios.post('http://localhost:3000/user/login', { email, password });
             toast.success("Login successfully.");
-            localStorage.setItem('token', "Login Successful");
-            console.log(response);
-            navigate('/');
-            window.location.reload()
+            localStorage.setItem('token', email);
+            onLogin(res.status);
+            // navigate('/');
+            // window.location.reload()
         }
         catch (error) {
-            if (error.response.status === 422) {
-                toast.error("Invalid email or password !");
+            if (error.response.status === 401) {
+                toast.error(error.response.data.message);
+                setPassword('');
+                setEmail('');
             }
-            else {
-                if (error.response && error.response.data && error.response.data.errors) {
-                    const errors = error.response.data.errors;
-                    toast.error(errors);
-                }
-                else {
-                    console.error('Login error:', error);
-                }
-            }
+            else
+                console.error('Login error:', error);
         }
-
-        console.log(email, password)
     };
-
-    // const handleLogin = (e) => {
-    //     e.preventDefault();
-    //     // console.log(e.target.username);
-    //     if (e.target.username.value === "jay" && e.target.password.value === "123") {
-    //       onLogin(e.target.username.value);
-    //     } else {
-    //       alert("Invalid credentials");
-    //       e.target.username.value = "";
-    //       e.target.password.value = "";
-    //       // setUsername("");
-    //       // setPassword("");
-    //     }
-    //   }
 
     return (
         <div className="flex items-center justify-center h-screen bg-gradient-to-tr from-[#FDF4EE] to-[#EAF9F2]">
@@ -101,7 +79,7 @@ const LoginPage = () => {
                     </div>
 
                     <div className="flex items-center m-4">
-                        <NavLink to="/register">
+                        <NavLink to="/signup">
                             <span className="text-xs">Don't have an account?</span>
                         </NavLink>
                     </div>

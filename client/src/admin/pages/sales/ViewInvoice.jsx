@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { format } from "date-fns";
 import axios from 'axios';
-import logo from "../../assets/logo.png";
+import logo from "../../../assets/logo.png";
 import "../../print-styles.css"
+
 const ViewInvoice = () => {
 
     const { invoiceId } = useParams();

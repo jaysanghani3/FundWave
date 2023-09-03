@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { MdOutlineDelete } from "react-icons/md";
-import SharedContext from "../contexts/SharedContext";
+import SharedContext from "../../contexts/SharedContext";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";

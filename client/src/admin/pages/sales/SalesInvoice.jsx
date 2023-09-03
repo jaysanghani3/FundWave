@@ -1,4 +1,4 @@
-import SharedContext from "../../contexts/SharedContext"
+import SharedContext from "../../../contexts/SharedContext"
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { MdOutlineDelete } from "react-icons/md";
 import axios from "axios";

@@ -1,8 +1,8 @@
 import React, { useEffect,useContext, useState } from 'react';
-import noData from '../../assets/no-data-6.png';
+import noData from '../../../assets/no-data-6.png';
 import axios from 'axios';
 import { toast, Toaster } from "react-hot-toast";
-import  SharedContext from '../../contexts/SharedContext';
+import  SharedContext from '../../../contexts/SharedContext';
 import { format } from "date-fns";
 import { MdOutlineDelete, MdEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
