@@ -4,6 +4,7 @@ import { MdOutlineDelete } from "react-icons/md";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
+import { is } from "date-fns/locale";
 
 const SalesInvoice = () => {
 
@@ -81,55 +82,55 @@ const SalesInvoice = () => {
     updateInvoiceTotals();
   }, [rows]);
 
-    const handleItemChange = (e, rowIndex, field) => {
-      const { value } = e.target;
+  const handleItemChange = (e, rowIndex, field) => {
+    const { value } = e.target;
 
-      // Create a copy of the rows state array to work with
-      const updatedRows = [...rows];
+    // Create a copy of the rows state array to work with
+    const updatedRows = [...rows];
 
-      // Access the specific item being updated
-      const updatedItem = { ...updatedRows[rowIndex] };
+    // Access the specific item being updated
+    const updatedItem = { ...updatedRows[rowIndex] };
 
-      // Update the field of the item based on the input value
-      updatedItem[field] = field === "name" || field === "description" ? value : parseFloat(value);
+    // Update the field of the item based on the input value
+    updatedItem[field] = field === "name" || field === "description" ? value : parseFloat(value);
 
-      // Update taxable value and total if applicable
-      if (field === "qty" || field === "rate" || field === "discount" || field === "taxCode") {
-        const qty = parseFloat(updatedItem.qty || 0);
-        const rate = parseFloat(updatedItem.rate || 0);
-        const discount = parseFloat(updatedItem.discount || 0);
-        const taxCode = parseFloat(updatedItem.taxCode || 0);
+    // Update taxable value and total if applicable
+    if (field === "qty" || field === "rate" || field === "discount" || field === "taxCode") {
+      const qty = parseFloat(updatedItem.qty || 0);
+      const rate = parseFloat(updatedItem.rate || 0);
+      const discount = parseFloat(updatedItem.discount || 0);
+      const taxCode = parseFloat(updatedItem.taxCode || 0);
 
-        const taxableValue = qty * rate - discount;
-        const taxAmount = (taxableValue * taxCode) / 100;
-        const total = taxableValue + taxAmount;
+      const taxableValue = qty * rate - discount;
+      const taxAmount = (taxableValue * taxCode) / 100;
+      const total = taxableValue + taxAmount;
 
-        updatedItem.taxableValue = taxableValue;
-        updatedItem.total = total;
-      }
+      updatedItem.taxableValue = taxableValue;
+      updatedItem.total = total;
+    }
 
-      // Update the specific item in the copy of the rows state array
-      updatedRows[rowIndex] = updatedItem;
+    // Update the specific item in the copy of the rows state array
+    updatedRows[rowIndex] = updatedItem;
 
-      // Update the rows state with the modified array
-      setRows(updatedRows);
-      const updatedInvoiceItems = [...invoice.items];
-updatedInvoiceItems[rowIndex] = { ...updatedItem };
+    // Update the rows state with the modified array
+    setRows(updatedRows);
+    const updatedInvoiceItems = [...invoice.items];
+    updatedInvoiceItems[rowIndex] = { ...updatedItem };
 
-setInvoice((prevInvoice) => ({
-  ...prevInvoice,
-  items: updatedInvoiceItems,
-}));
-      updateInvoiceTotals();
-      // Filter the item data based on the input value and update fetchedData
-      setFetchedData((prevData) => ({
-        ...prevData,
-        itemDetails: itemData.filter((item) =>
-          item.name.toLowerCase().includes(value.toLowerCase())
-        ),
-      }));
-      // Update invoice totals
-    };
+    setInvoice((prevInvoice) => ({
+      ...prevInvoice,
+      items: updatedInvoiceItems,
+    }));
+    updateInvoiceTotals();
+    // Filter the item data based on the input value and update fetchedData
+    setFetchedData((prevData) => ({
+      ...prevData,
+      itemDetails: itemData.filter((item) =>
+        item.name.toLowerCase().includes(value.toLowerCase())
+      ),
+    }));
+    // Update invoice totals
+  };
 
   const updateInvoiceTotals = () => {
     let subTotal = 0;
@@ -162,7 +163,7 @@ setInvoice((prevInvoice) => ({
   const addRow = () => {
     const updatedRows = [...rows, { ...initialItem }]; // Add a new item to the rows state
     setRows(updatedRows);
-    
+
     setInvoice((prevInvoice) => ({
       ...prevInvoice,
       items: [...prevInvoice.items, { ...initialItem }],
@@ -192,7 +193,6 @@ setInvoice((prevInvoice) => ({
   };
 
   const [clickCompanyFiled, setClickCompanyFiled] = useState(false);
-  const [clickItemFiled, setClickItemFiled] = useState(false);
 
   const handleCompanyFieldClick = (selectedCompanyName) => {
     const selectedCompany = fetchedData.companyDetails.find(
@@ -228,8 +228,22 @@ setInvoice((prevInvoice) => ({
       itemDetails: newItemData,
     }));
   };
+  const [isOpen, setIsOpen] = useState([]); // Array to track suggestion box state
 
-  const handleItemFieldClick = (selectedItemName, rowIndex) => { // Add rowIndex parameter
+  const handleItemFieldClick = (index) => {
+    const updatedOpenState = [...isOpen];
+    updatedOpenState[index] = true;
+    setIsOpen(updatedOpenState);
+  };
+
+  const handleItemFieldBlur = (index) => {
+    const updatedOpenState = [...isOpen];
+    updatedOpenState[index] = false;
+    setTimeout(() => setIsOpen(updatedOpenState), 200);
+  };
+
+  const handleItemFieldSelect = (selectedItemName, rowIndex) => {
+    // Handle item selection here
     const selectedItem = fetchedData.itemDetails.find(
       (item) => item.name === selectedItemName
     );
@@ -266,10 +280,15 @@ setInvoice((prevInvoice) => ({
       updateInvoiceTotals();
     }
 
-    setClickItemFiled(false); // Move this inside the if block
+    // Close the suggestion box
+    const updatedOpenState = [...isOpen];
+    updatedOpenState[rowIndex] = false;
+    setIsOpen(updatedOpenState);
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e, index) => {
+    console.log(isOpen);
+
     if (clickCompanyFiled) {
       const suggestions = fetchedData.companyDetails || [];
       const selectedIndex = suggestions.findIndex((value) => value.companyName === invoice.companyName);
@@ -295,40 +314,36 @@ setInvoice((prevInvoice) => ({
         }));
       }
     }
-
-    else if (clickItemFiled) {
+    else if (isOpen[index]) {
       const suggestions = fetchedData.itemDetails || [];
-      const selectedIndex = suggestions.findIndex((value) => value.name === rows.name);
+      const selectedIndex = suggestions.findIndex((value) => value?.name === rows[index]?.name);
       if (e.key === 'Tab' || e.key === 'Enter') {
         e.preventDefault();
         if (selectedIndex !== -1) {
-          handleCompanyFieldClick(suggestions[selectedIndex].companyName);
+          handleItemFieldSelect(suggestions[selectedIndex].name, index);
         }
       }
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         const newIndex = (selectedIndex + 1) % suggestions.length;
-        setRows((prevRows) => ({
-          ...prevRows,
-          name: suggestions[newIndex].name,
-        }));
+        const updatedRows = [...rows];
+        updatedRows[index].name = suggestions[newIndex].name;
+        setRows(updatedRows);
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         const newIndex = (selectedIndex - 1 + suggestions.length) % suggestions.length;
-        setRows((prevRows) => ({
-          ...prevRows,
-          name: suggestions[newIndex].name,
-        }));
+        const updatedRows = [...rows];
+        updatedRows[index].name = suggestions[newIndex].name;
+        setRows(updatedRows);
       }
     }
-
 
   };
 
   return (
     <div className="h-[98%] flex flex-col border-2 gap-y-3 min-h-full text-xs ">
       <h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">Create New Sales Invoice</h1>
-      <Toaster />
+      <Toaster toastOptions={ { duration: 2000 } } />
       <div className="grid grid-cols-3 gap-6 border border-gray-300 p-2 mx-2">
 
         <div className="flex flex-col gap-y-1 border-l-2 border-blue-100">
@@ -456,6 +471,7 @@ setInvoice((prevInvoice) => ({
                   </button>
                 </td>
                 <td className="text-left">
+
                   <input
                     autoComplete="off"
                     type="text"
@@ -463,29 +479,28 @@ setInvoice((prevInvoice) => ({
                     id={`name-${index}`}
                     className="ps-2 border border-gray-300 ms-auto w-full"
                     value={rows[index].name || ""}
-                    onClick={() => setClickItemFiled(true)}
-                    onFocus={() => setClickItemFiled(true)}
-                    // onKeyDown={handleKeyDown}
-                    onBlur={() => setTimeout(() => setClickItemFiled(false), 200)}
+                    onClick={() => handleItemFieldClick(index)} // Pass the index of the clicked row
+                    onFocus={() => handleItemFieldClick(index)} // Pass the index of the focused row
+                    onBlur={() => handleItemFieldBlur(index)} // Pass the index of the blurred row
                     onChange={(e) => handleItemChange(e, index, "name")}
-                    ref={(input) => (itemInputsRefs.current[index] = input)} // Save refs for each item input
-                    tabIndex={4 + index } // Set the tab index accordingly
+                    onKeyDown={(e) => handleKeyDown(e, index)}
+                    ref={(input) => (itemInputsRefs.current[index] = input)}
+                    tabIndex={4 + index}
                   />
-                  {clickItemFiled && (
+                  
+                  {isOpen[index] && (
                     <div className="absolute z-10 bg-white border border-gray-300 mt-1">
-                      {fetchedData.itemDetails
-                        ?.map((value, i) => (
-                          <div
-                            key={i}
-                            className="cursor-pointer border-b border-gray-400 p-2 hover:bg-gray-300"
-                            onClick={() => handleItemFieldClick(value.name, index)} // Pass i here
-                          >
-                            <span className="font-semibold ms-2">{value.name}</span>
-                          </div>
-                        ))}
+                      {fetchedData.itemDetails?.map((value, i) => (
+                        <div
+                          key={i}
+                          className="cursor-pointer border-b border-gray-400 p-2 hover:bg-gray-300"
+                          onClick={() => handleItemFieldSelect(value.name, index)}
+                        >
+                          <span className="font-semibold ms-2">{value.name}</span>
+                        </div>
+                      ))}
                     </div>
                   )}
-                  {/* </div> */}
                 </td>
                 <td className="text-left">
                   <input autoComplete="off" value={rows[index].description || ""} onChange={(e) => handleItemChange(e, index, "description")} type="text" name="description" id={`description-${index}`} className="border ps-2 border-gray-300 ms-auto w-full text-[11px]" />
@@ -493,7 +508,7 @@ setInvoice((prevInvoice) => ({
                 <td>
                   <input autoComplete="off" value={rows[index].qty || ""} onChange={(e) => handleItemChange(e, index, "qty")} type="number" name="qty" id="qty" className="border text-right pr-1 ps-2 border-gray-300 ms-auto w-full"
                     ref={qtyRef}
-                    tabIndex={5 + index }
+                    tabIndex={5 + index}
                   />
                 </td>
                 <td>

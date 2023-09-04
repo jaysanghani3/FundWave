@@ -12,13 +12,13 @@ export default function App() {
   
   const handleLogin = (status) => {
     setUserStatusCode(status);
-    console.log(status);
   };
-  console.log(user);
+
   return (
     <SharedContextProvider>
       <BrowserRouter>
-      {user ? 
+      {
+        user ? 
           userStatusCode === 221 ?  <FundWave/>  :  <Employee/>  
           :
           <LoginPage onLogin={handleLogin}/> 
