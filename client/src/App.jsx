@@ -14,15 +14,13 @@ export default function App() {
     setUserStatusCode(status);
   };
 
-  // console.log(import.meta.env.REACT_APP_API_BASE_URL);
   return (
     <SharedContextProvider>
       <BrowserRouter>
       {
-        user ? 
-          userStatusCode === 221 ?  <FundWave/>  :  <Employee/>  
-          :
-          <LoginPage onLogin={handleLogin}/> 
+        user && 
+          userStatusCode === 221 ? <FundWave/> :  
+          userStatusCode === 222 ? <Employee/> :<LoginPage onLogin={handleLogin}/>  
       }
       </BrowserRouter>
     </SharedContextProvider>

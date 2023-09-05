@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+const dotenv = require('dotenv').config({path:'./config.env'});;
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -14,14 +14,13 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-dotenv.config({path:'./config.env'});
+// dotenv.config({path:'./config.env'});
 require('./db/connection');
 
 const PORT = process.env.PORT;
 app.get('/', (req, res) => {
     res.send('Hello from server');
-}
-);
+});
 app.use('/customer', customerRoutes);
 app.use('/vendor', vendorRoutes);
 app.use('/item', itemRoutes);

@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 exports.createUser = async (req, res) => {
   try {
@@ -70,30 +71,30 @@ exports.deleteUserById = async (req, res) => {
 exports.login = async (req, res) => {
   
   const { email, password } = req.body;
+  
   try {
     // Use the User model to find the user by email
     const user = await User.findOne({ email });
-
+    const isMatch = await bcrypt.compare(password, user.password);
+ 
     if (!user) {
       return res.status(401).json({ message: "Incorrect Email !!!" });
     }
     
-    if (user.password !== password) {
+    else if (!isMatch) {
       return res.status(401).json({ message: "Incorrect Password !!!" });
     }
 
-    if (user.isAdmin !== true) {
-      return res.status(222).json({ message: "You are not an Admin !!!" });
+    else if (user.isAdmin !== true) {
+      return res.status(222).json({ message: "Employee Login successful" });
     }
 
-    if(user.isAdmin === true && user.password === password && user.email === email)
+    else if(user.isAdmin === true && isMatch && user.email === email)
     {
-      return res.status(221).json({ message: "Login successful" });
+      return res.status(221).json({ message: "Admin Login successful" });
     }
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "An error occurred" });
-  }
-  // console.log(req.body);
-  // res.json({ message: 'Login successful' });
+  } 
 };

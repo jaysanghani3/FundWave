@@ -1,5 +1,6 @@
 // models/user.js
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -40,6 +41,16 @@ const userSchema = new mongoose.Schema({
     default: false,
   },
 });
+
+// hash password before saving user to database
+userSchema.pre('save', async function (next) {
+  if (this.isModified('password')) {
+    this.password = bcrypt.hashSync(this.password, 12);
+    this.confirmPassword = bcrypt.hashSync(this.password, 12);
+  }
+  next();
+}
+);
 
 const User = mongoose.model('User', userSchema);
 

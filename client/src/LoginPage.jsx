@@ -21,6 +21,10 @@ const LoginPage = ({ onLogin }) => {
             toast.success("Login successfully.");
             localStorage.setItem('token', email);
             onLogin(res.status);
+            if (res.status === 221)
+                navigate('/');
+            else if (res.status === 222)
+                navigate('/emp/sales-invoice');
             // navigate('/');
             // window.location.reload()
         }
