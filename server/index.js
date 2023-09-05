@@ -18,7 +18,10 @@ dotenv.config({path:'./config.env'});
 require('./db/connection');
 
 const PORT = process.env.PORT;
-
+app.get('/', (req, res) => {
+    res.send('Hello from server');
+}
+);
 app.use('/customer', customerRoutes);
 app.use('/vendor', vendorRoutes);
 app.use('/item', itemRoutes);
