@@ -22,7 +22,7 @@ import EmployeeMaster from "./pages/employee/EmployeeMaster";
 
 
 const FundWave = () => {
-
+  
   const handleLogout = () => {
     localStorage.removeItem('token');
     window.location.reload();

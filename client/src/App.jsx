@@ -14,6 +14,7 @@ export default function App() {
     setUserStatusCode(status);
   };
 
+  // console.log(import.meta.env.REACT_APP_API_BASE_URL);
   return (
     <SharedContextProvider>
       <BrowserRouter>

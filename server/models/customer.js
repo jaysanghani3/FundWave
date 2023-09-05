@@ -75,9 +75,11 @@ const customerSchema = new mongoose.Schema({
   },
   totalInvoicesAmount: {
     type: Number,
+    default: 0,
   },
   totalReceivableAmount: {
     type: Number,
+    default: 0,
   },
   invoicesList:[
     {
