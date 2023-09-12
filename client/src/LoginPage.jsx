@@ -4,14 +4,11 @@ import { Toaster, toast } from 'react-hot-toast';
 import logo from './assets/logo.png'; // Replace with your logo path
 import mii from './assets/make_in_india.png'; // Replace with your Made In India logo path
 import { BsFacebook, BsWhatsapp, BsInstagram, BsGithub, BsLinkedin } from 'react-icons/bs'; // Import icons
-import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
     
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         
@@ -21,12 +18,10 @@ const LoginPage = () => {
             toast.success("Login successfully.");
             localStorage.setItem('token', res.data.user);
             if (res.data.user === 'admin'){
-                window.location.reload();
-                navigate('/');
+                window.location.href = '/'
             }
             else if (res.data.user === 'employee'){
-                window.location.reload();
-                navigate('/emp/sales-invoice');
+                window.location.href = '/emp/sales-invoice';
             }
         }
         catch (error) {

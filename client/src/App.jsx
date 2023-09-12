@@ -7,15 +7,7 @@ import LoginPage from "./LoginPage";
 
 export default function App() {
 
-  const [user,setUser] = useState(localStorage.getItem('token'));
-
-  useEffect(() => {  
-    setUser(localStorage.getItem('token'));
-    // window.location.reload();
-    console.log(user);
-  },[user]);
-
-
+  const user = localStorage.getItem('token');
 
   return (
     <SharedContextProvider>

@@ -10,7 +10,7 @@ const Employee = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    window.location.reload();
+    window.location.href = '/login';
   };
 
   const Sidebar = [
