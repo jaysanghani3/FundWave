@@ -1,13 +1,16 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 exports.createUser = async (req, res) => {
   try {
     const user = new User(req.body);
+    if (user.password !== user.confirmPassword) {
+      return res.status(400).json({ error: 'Passwords do not match' });
+    }
     await user.save();
     res.status(201).json({ message: "User created successfully", user });
-  } 
-  catch (error) {
+  } catch (error) {
     if (error.name === "MongoServerError" && error.code === 11000) {
       // Duplicate email
       return res.status(422).send({ success: false, message: "Email address already registered!" });
@@ -69,32 +72,34 @@ exports.deleteUserById = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  
   const { email, password } = req.body;
-  
+
   try {
     // Use the User model to find the user by email
     const user = await User.findOne({ email });
     const isMatch = await bcrypt.compare(password, user.password);
- 
+
     if (!user) {
       return res.status(401).json({ message: "Incorrect Email !!!" });
-    }
-    
-    else if (!isMatch) {
+    } else if (!isMatch) {
       return res.status(401).json({ message: "Incorrect Password !!!" });
-    }
-
-    else if (user.isAdmin !== true) {
-      return res.status(222).json({ message: "Employee Login successful" });
-    }
-
-    else if(user.isAdmin === true && isMatch && user.email === email)
-    {
-      return res.status(221).json({ message: "Admin Login successful" });
+    } else if (user.isAdmin !== true && isMatch && user.email === email) {
+      const token = await user.generateAuthToken();
+      res.cookie("jwt", token, {
+        expires: new Date(Date.now() + 2592000000),
+        httpOnly: true,
+      });
+      return res.status(222).json({ user:'employee'  });
+    } else if (user.isAdmin === true && isMatch && user.email === email) {
+      const token = await user.generateAuthToken();
+      res.cookie("jwt", token, {
+        expires: new Date(Date.now() + 25892000000),
+        httpOnly: true,
+      });
+      return res.status(221).json({ user: 'admin' });
     }
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "An error occurred" });
-  } 
+  }
 };

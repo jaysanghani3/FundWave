@@ -4,9 +4,9 @@ import { Toaster, toast } from 'react-hot-toast';
 import logo from './assets/logo.png'; // Replace with your logo path
 import mii from './assets/make_in_india.png'; // Replace with your Made In India logo path
 import { BsFacebook, BsWhatsapp, BsInstagram, BsGithub, BsLinkedin } from 'react-icons/bs'; // Import icons
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const LoginPage = ({ onLogin }) => {
+const LoginPage = () => {
     
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,14 +19,15 @@ const LoginPage = ({ onLogin }) => {
         try {
             const res = await axios.post('http://localhost:3000/user/login', { email, password });
             toast.success("Login successfully.");
-            localStorage.setItem('token', email);
-            onLogin(res.status);
-            if (res.status === 221)
+            localStorage.setItem('token', res.data.user);
+            if (res.data.user === 'admin'){
+                window.location.reload();
                 navigate('/');
-            else if (res.status === 222)
+            }
+            else if (res.data.user === 'employee'){
+                window.location.reload();
                 navigate('/emp/sales-invoice');
-            // navigate('/');
-            // window.location.reload()
+            }
         }
         catch (error) {
             if (error.response.status === 401) {
@@ -80,12 +81,6 @@ const LoginPage = ({ onLogin }) => {
 
                     <div className="flex items-center m-4">
                         <button className="text-xs text-[#1D5B79]">Forgot Password?</button>
-                    </div>
-
-                    <div className="flex items-center m-4">
-                        <NavLink to="/signup">
-                            <span className="text-xs">Don't have an account?</span>
-                        </NavLink>
                     </div>
 
                     <div className="flex items-center m-4">

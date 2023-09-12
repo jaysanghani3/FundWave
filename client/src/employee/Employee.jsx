@@ -60,7 +60,7 @@ const Employee = () => {
             {/* <Route path="/expenses/:expensesId" element={<ProtectedRoute element={Expenses} />} /> */}
             <Route path="/emp/view-invoice/:invoiceId" element={<ProtectedRoute element={ViewInvoice} />} />
 
-            <Route path="*" element={"Hello"} />
+            <Route path="*" element={<ProtectedRoute element={SalesInvoice} />} />
           </Routes>
         </div>
       </div>

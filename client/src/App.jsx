@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { SharedContextProvider } from "./contexts/SharedContext";
 import FundWave from "./admin/FundWave";
@@ -7,20 +7,23 @@ import LoginPage from "./LoginPage";
 
 export default function App() {
 
-  const user = localStorage.getItem('token');
-  const [userStatusCode, setUserStatusCode] = useState(null); 
-  
-  const handleLogin = (status) => {
-    setUserStatusCode(status);
-  };
+  const [user,setUser] = useState(localStorage.getItem('token'));
+
+  useEffect(() => {  
+    setUser(localStorage.getItem('token'));
+    // window.location.reload();
+    console.log(user);
+  },[user]);
+
+
 
   return (
     <SharedContextProvider>
       <BrowserRouter>
       {
-        user && 
-          userStatusCode === 221 ? <FundWave/> :  
-          userStatusCode === 222 ? <Employee/> :<LoginPage onLogin={handleLogin}/>  
+        !user ? <LoginPage /> :
+          user === 'admin' ? <FundWave/> :  
+          user === 'employee' ? <Employee/> :<LoginPage />  
       }
       </BrowserRouter>
     </SharedContextProvider>

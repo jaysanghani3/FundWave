@@ -69,6 +69,7 @@ const customerSchema = new mongoose.Schema({
   updatedOnDate: {
     type: Date,
     required: false,
+    default: Date.now,
   },
   notes: {
     type: String,

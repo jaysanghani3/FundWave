@@ -54,7 +54,9 @@ const Expenses = () => {
 
   const handleDeleteExpense = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:3000/expense/delete/${id}`);
+      console.log(id);
+      const res = await axios.delete(`http://localhost:3000/expense/${id}`);
+      console.log(id);
       console.log(res);
       toast.success(res.data.message);
       window.location.reload();
@@ -107,7 +109,7 @@ const Expenses = () => {
 
           <div className='flex justify-end items-center space-x-2 mt-3'>
             <button type="submit"
-              className="bg-blue-500 text-white px-4 py-2 text-xs rounded hover:bg-blue-600">
+              className="bg-[#1d5e7e] text-white px-4 py-2 text-xs rounded hover:bg-[#1d5e7ee7]">
               Add Expense
             </button>
           </div>
