@@ -72,31 +72,38 @@ const Expenses = () => {
       <Toaster />
       <div className="p-3 mt-4">
         <form onSubmit={handleSubmit}>
-          <div className="flex justify-between">
+          <div className="flex justify-around items-center">
+            <label htmlFor="name">Expense Name</label>
             <input
               type="text"
               id="name"
               name="name"
               value={expense.name}
               onChange={handleChange}
-              className="border p-2 rounded"
+              className="border rounded"
             />
+
+            <label htmlFor="details">Expense Details</label>
             <input
               type="text"
               id="details"
               name="details"
               value={expense.details}
               onChange={handleChange}
-              className="border p-2 rounded"
+              className="border rounded"
             />
+
+            <label htmlFor="amount">Expense Amount</label>
             <input
               type="number"
               id="amount"
               name="amount"
               value={expense.amount}
               onChange={handleChange}
-              className="border p-2 rounded"
+              className="border rounded"
             />
+
+            <label htmlFor="date">Expense Date</label>
             <input
               type="date"
               className="p-1 ps-2 border-gray-300 border rounded-md "

@@ -72,8 +72,8 @@ const FundWave = () => {
             <Route path="/edit-item/:itemId" element={<ProtectedRoute element={CreateItem} />} />
             <Route path="/view-invoice/:invoiceId" element={<ProtectedRoute element={ViewInvoice} />} />
             <Route path="/add-new-employee" element={<ProtectedRoute element={AddNewEmployee} />} />
+            <Route path="/edit-employee/:employeeId" element={<ProtectedRoute element={AddNewEmployee} />} />
             <Route path="employee-master" element={<ProtectedRoute element={EmployeeMaster} />} />
-            <Route path="/login" element={<LoginPage />} />
             <Route path="*" element={<Dashboard />} />
           </Routes>
         </div>

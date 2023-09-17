@@ -25,7 +25,10 @@ exports.createUser = async (req, res) => {
 
 exports.getUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    // const users = await User.find();
+    // i want to get only name and email of admin users
+
+    const users = await User.find({ isAdmin: false }); 
     res.json(users);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -81,24 +84,32 @@ exports.login = async (req, res) => {
 
     if (!user) {
       return res.status(401).json({ message: "Incorrect Email !!!" });
-    } else if (!isMatch) {
+    } 
+    
+    else if (!isMatch) {
       return res.status(401).json({ message: "Incorrect Password !!!" });
-    } else if (user.isAdmin !== true && isMatch && user.email === email) {
+    } 
+    
+    else if (user.isAdmin !== true && isMatch && user.email === email) {
       const token = await user.generateAuthToken();
       res.cookie("jwt", token, {
-        expires: new Date(Date.now() + 2592000000),
+        expires: new Date(Date.now() + 25920000),
         httpOnly: true,
       });
       return res.status(222).json({ user:'employee'  });
-    } else if (user.isAdmin === true && isMatch && user.email === email) {
+    } 
+    
+    else if (user.isAdmin === true && isMatch && user.email === email) {
       const token = await user.generateAuthToken();
       res.cookie("jwt", token, {
-        expires: new Date(Date.now() + 25892000000),
+        expires: new Date(Date.now() + 258920000),
         httpOnly: true,
       });
       return res.status(221).json({ user: 'admin' });
     }
-  } catch (error) {
+  } 
+  
+  catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "An error occurred" });
   }

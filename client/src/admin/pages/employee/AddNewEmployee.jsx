@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { Toaster, toast } from 'react-hot-toast'
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const AddNewEmployee = () => {
 
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -30,28 +31,25 @@ const AddNewEmployee = () => {
         }
       );
       toast.success("Registration successfully.");
-      // history.push('/login');
+      navigate('/employee-master');
     }
     catch (error) {
       if (error.response.status === 422) {
         toast.error("Email address already registered !");
         setError('email');
         emailRef.current.focus();
-
       }
       else {
-        if (error.response && error.response.data && error.response.data.errors) {
-          const errors = error.response.data.errors;
-          toast.error(errors);
-          console.log(errors);
+        if (password !== confirmPassword) {
+          toast.error("Password and confirm password does not match !");
           setError('password');
+          setConfirmPassword('');
           passwordRef.current.focus();
         } else {
           console.error('Employee error:', error);
         }
       }
     }
-
   };
   return (
     <>
