@@ -99,7 +99,7 @@ const AddNewEmployee = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-[#1d5e7e] text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full bg-[#1d5e7e] text-white py-2 rounded-md hover:bg-[#1d5e7ee7] focus:outline-none focus:ring focus:border-blue-300"
           >
             Register
           </button>

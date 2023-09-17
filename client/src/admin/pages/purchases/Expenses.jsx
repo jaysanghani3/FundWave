@@ -72,50 +72,47 @@ const Expenses = () => {
       <Toaster />
       <div className="p-3 mt-4">
         <form onSubmit={handleSubmit}>
-          <div className="flex justify-around items-center">
-            <label htmlFor="name">Expense Name</label>
+          <div className="flex justify-between items-center">
             <input
+              placeholder='Expense Name'
               type="text"
               id="name"
               name="name"
               value={expense.name}
               onChange={handleChange}
-              className="border rounded"
+              className="border rounded px-3 w-2/12 py-1"
             />
 
-            <label htmlFor="details">Expense Details</label>
             <input
+              placeholder='Expense Details'
               type="text"
               id="details"
               name="details"
               value={expense.details}
               onChange={handleChange}
-              className="border rounded"
+              className="border rounded px-3 w-4/12 py-1 "
             />
 
-            <label htmlFor="amount">Expense Amount</label>
             <input
+              placeholder='Expense Amount'
               type="number"
               id="amount"
               name="amount"
               value={expense.amount}
               onChange={handleChange}
-              className="border rounded"
+              className="border rounded px-3 w-2/12 py-1 "
             />
 
-            <label htmlFor="date">Expense Date</label>
             <input
+              placeholder='Expense Date'
               type="date"
-              className="p-1 ps-2 border-gray-300 border rounded-md "
-              placeholder="Expense Date"
+              className="px-3 border-gray-300 border rounded-md w-2/12 py-1"
               value={expense.date}
               onChange={handleChange}
               required
             />
-          </div>
-
-          <div className='flex justify-end items-center space-x-2 mt-3'>
-            <button type="submit"
+          
+            <button type="submit px-3 "
               className="bg-[#1d5e7e] text-white px-4 py-2 text-xs rounded hover:bg-[#1d5e7ee7]">
               Add Expense
             </button>

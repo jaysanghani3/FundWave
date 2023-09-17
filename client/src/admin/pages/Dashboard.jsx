@@ -6,11 +6,11 @@ import SharedContext from "../../contexts/SharedContext";
 
 const Dashboard = () => {
 
-  const { dashboardTable, customerData, vendorData, itemData } = React.useContext(SharedContext);
+  const { dashboardTable, customerData, vendorData, expenseData } = React.useContext(SharedContext);
 
   let totalInvoicesAmount = 0;  
   let totalPurchaseAmount = 0;
-  let totalExpensesAmount = 100;
+  let totalExpensesAmount = 0;
   let totalReceivableAmount = 0;
   let totalPayableAmount = 0;
 
@@ -22,6 +22,10 @@ const Dashboard = () => {
     totalPurchaseAmount += item.purchasesData.totalPurchaseAmount;
   }
 
+  for (const item of expenseData) {
+    totalExpensesAmount += item.amount;
+  }
+  
   const list = [
     { name: "Sales", value: "₹ " +totalInvoicesAmount.toFixed(2), color: "text-black", icon: <FcSalesPerformance size={70} /> },
     { name: "Purchase", value: "₹ "+totalPurchaseAmount.toFixed(2), color: "text-black", icon: <GiTakeMyMoney size={70} /> },
@@ -47,7 +51,7 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
         {list.map((item, index) => (
-          <div className="flex flex-row bg-white p-3 rounded-lg h-36" key={index}>
+          <div className="flex flex-row bg-white p-3 rounded-lg h-36 shadow-lg" key={index}>
             <div className={`w-5/12 ps-9 py-4 border-r ${item.color}`}>{item.icon}</div>
             <div className="flex flex-col ml-6" key={index}>
               <span className="text-[14] text-gray-700 ">{item.name}</span>
