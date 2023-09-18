@@ -78,7 +78,7 @@ const vendorSchema = new mongoose.Schema({
   },
   purchasesList:[
     {
-      purchaseBillNo: String,
+      purchaseNo: String,
       purchaseDate: Date,
       dueDate: Date,
       totalAmount: Number,

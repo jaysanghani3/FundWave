@@ -35,7 +35,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
       if (window.confirm("Are you sure you want to delete this customer?")) {
         try {
           await axios.delete(`http://localhost:3000/customer/${id}`);
-          getCustomerData(); // to refrsh page and render data
+          getCustomerData(); // to render data
           deleteToast();
         } catch (error) {
           console.error('Error deleting item:', error);
@@ -78,6 +78,18 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
     }
   };
 
+  const handleDeletePurchase = async (id) => {
+    if (window.confirm("Are you sure you want to delete this Item?")) {
+      try {
+        await axios.delete(`http://localhost:3000/purchase/${id}`);
+        deleteToast();
+        getInvoiceData();
+      } catch (error) {
+        console.error('Error deleting item:', error);
+      }
+    }
+  };
+
   return (
     <div className="text-xs">
       <h1 className="text-sm font-bold bg-[#1d5e7e] text-white py-1 text-center">{title} Master</h1>
@@ -96,7 +108,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
           />
           <button className="bg-[#1d5e7e] text-white px-3 py-1">Export</button>
           <button className="bg-[#1d5e7e] text-white px-3 py-1">Print</button>
-          <Link to={title === "Sales Invoice" ? `/sales-invoice` : `/add-new-${title.toLowerCase()}`}>
+          <Link to={title === "Sales Invoice" ? `/sales-invoice` : title === "Purchase Bill" ? `/purchase-bill` : `/add-new-${title.toLowerCase()}`}>
             <button className="bg-[#1d5e7e] text-white px-3 py-1">Add New {title}</button>
           </Link>
         </div>
@@ -150,7 +162,18 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
                             <MdOutlineDelete className="text-red-500 ml-2" />
                           </button>
                         </td>
-                      ) : (
+                      ) : 
+                      title === "Purchase Bill" ?
+                      (
+                        <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
+                          <Link to={`/view-purchase/${item._id}`}> {/* target="_blank"*/}
+                            <MdOutlineRemoveRedEye className="text-blue-500 mr-2" />
+                          </Link>
+                          <button onClick={() => handleDeletePurchase(item._id)}>
+                            <MdOutlineDelete className="text-red-500 ml-2" />
+                          </button>
+                        </td>
+                      ) :(
                         <td className="flex px-2 py-1 border-r justify-between items-center text-sm">
                           <Link to={`/edit-${title.toLowerCase()}/${item._id}`}>
                             <MdEdit className="text-blue-500 mr-2" />
@@ -161,7 +184,7 @@ const MasterTableview = ({ title, tableHeader, tableBody, getCustomerData, getIt
                         </td>
                       )
                   }
-                  <td className="px-2 border-r">{item.code ? item.code : item.invoiceNo}</td>
+                  <td className="px-2 border-r">{item.code ? item.code : item.invoiceNo ? item.invoiceNo : item.purchaseNo}</td>
                   <td className="px-2 border-r">{item.companyName}</td>
                   <td className="px-2 border-r">{item.contactNumber}</td>
                   <td className="px-2 border-r ">{item.gst }</td>

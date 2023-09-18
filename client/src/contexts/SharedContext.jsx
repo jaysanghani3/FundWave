@@ -77,6 +77,7 @@ export function SharedContextProvider({ children }) {
       subMenus: [
         { name: "Vendor", link: "/vendor" },
         { name: "Purchase Bill", link: "/purchase-bill" },
+        { name: "Purchase Master", link: "/purchase-master" },
         { name: "Expenses", link: "/expenses" },
       ],
     },
@@ -179,7 +180,7 @@ export function SharedContextProvider({ children }) {
   const invoiceHeader = [
     { name: "S.No", width: "w-7" },
     { name: "Action", width: "w-10" },
-    { name: "Invoice No.", width: "" },
+    { name: "Bill No.", width: "" },
     { name: "Customer", width: "w-4/12" },
     { name: "Contact No.", width: "" },
     { name: "GST no", width: "" },

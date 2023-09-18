@@ -5,7 +5,7 @@ const purchaseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  purchaseBillNo: {
+  purchaseNo: {
     type: String,
     required: true,
   },

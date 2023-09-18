@@ -19,7 +19,8 @@ import ProtectedRoute from "../ProtectedRoute";
 import Expenses from "./pages/purchases/Expenses";
 import AddNewEmployee from "./pages/employee/AddNewEmployee";
 import EmployeeMaster from "./pages/employee/EmployeeMaster";
-
+import PurchasesMaster from "./pages/purchases/PurchasesMaster";
+import ViewPurchase from "./pages/purchases/ViewPurchase";
 
 const FundWave = () => {
   
@@ -59,6 +60,7 @@ const FundWave = () => {
             <Route path="/sales-invoice" element={<ProtectedRoute element={SalesInvoice} />} />
             <Route path="/sales-invoice-master" element={<ProtectedRoute element={SalesInvoiceMaster} />} />
             <Route path="/purchase-bill" element={<ProtectedRoute element={PurchaseBill} />} />
+            <Route path="purchase-master" element={<ProtectedRoute element={PurchasesMaster} />} />
             <Route path="/expenses" element={<ProtectedRoute element={Expenses} />} />
             <Route path="/expenses/:expensesId" element={<ProtectedRoute element={Expenses} />} />
             <Route path="/add-new-customer" element={<ProtectedRoute element={AddNewCustomer} />} />
@@ -71,6 +73,7 @@ const FundWave = () => {
             <Route path="/edit-vendor/:vendorId" element={<ProtectedRoute element={AddNewVendor} />} />
             <Route path="/edit-item/:itemId" element={<ProtectedRoute element={CreateItem} />} />
             <Route path="/view-invoice/:invoiceId" element={<ProtectedRoute element={ViewInvoice} />} />
+            <Route path="/view-purchase/:purchaseId" element={<ProtectedRoute element={ViewPurchase} />} />
             <Route path="/add-new-employee" element={<ProtectedRoute element={AddNewEmployee} />} />
             <Route path="/edit-employee/:employeeId" element={<ProtectedRoute element={AddNewEmployee} />} />
             <Route path="employee-master" element={<ProtectedRoute element={EmployeeMaster} />} />

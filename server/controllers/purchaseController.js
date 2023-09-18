@@ -13,7 +13,7 @@ exports.createPurchase = async (req, res) => {
       {
         $push: {
           purchasesList: {
-            purchaseBillNo: purchase.purchaseNo,
+            purchaseNo: purchase.purchaseNo,
             purchaseDate: purchase.createdDate,
             dueDate: purchase.dueDate,
             totalAmount: purchase.total,
@@ -85,11 +85,12 @@ exports.deletePurchaseById = async (req, res) => {
     if (!vendor) {
       return res.status(404).json({ error: "Vendor not found for this purchase" });
     }
-
+    console.log(vendor);
     // Update vendor's purchasesList and totalPurchasesAmount
     vendor.purchasesList = vendor.purchasesList.filter(
       (inv) => inv.purchaseNo.toString() !== purchase.purchaseNo.toString()
     );
+    console.log(vendor.purchasesList);
     vendor.totalPurchasesAmount -= purchase.total;
     await vendor.save();
 

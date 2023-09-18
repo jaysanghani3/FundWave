@@ -39,6 +39,7 @@ const AddNewVendor = () => {
       console.error('Error fetching vendor data:', error);
     }
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setVendor((prev) => ({ ...prev, [name]: value }));
@@ -56,6 +57,8 @@ const AddNewVendor = () => {
         const response = await axios.post('http://localhost:3000/vendor/store', vendor);
         console.log('Response:', response.data);
         toast.success("Vendor Created successfully.");
+        getVendorData();
+        navigate("/vendor");
       }
     } catch (error) {
       console.error('Error:', error.response.data.error);

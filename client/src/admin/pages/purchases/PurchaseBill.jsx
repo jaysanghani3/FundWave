@@ -33,7 +33,7 @@ const PurchaseBill = () => {
 
   const [purchase, setPurchase] = useState({
     gst: "",
-    purchaseBillNo: "",
+    purchaseNo: "",
     companyName: "",
     cashCredit: "",
     createdDate: new Date().toISOString().substr(0, 10) || '',
@@ -183,9 +183,8 @@ const PurchaseBill = () => {
       const response = await axios.post('http://localhost:3000/purchase/store', purchase);
       console.log('Response:', response?.data);
       toast.success("Purchase Created successfully.");
-      // getComputedStyle("/sales-purchase-master");
       getPurchaseData();
-      // navigate("/sales-purchase-master");
+      navigate("/purchase-master");
     }
     catch (error) {
       console.error('Error:', error.response?.data.error);
@@ -339,6 +338,7 @@ const PurchaseBill = () => {
     }
 
   };
+
   return (
     <div className="h-[98%] flex flex-col border-2 gap-y-3 min-h-full text-xs ">
       <h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">Create New Sales Purchase</h1>
@@ -348,7 +348,7 @@ const PurchaseBill = () => {
         <div className="flex flex-col gap-y-1 border-l-2 border-blue-100">
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Purchase Bill No.</label>
-            <input autoComplete="off" value={purchase.purchaseBillNo} onChange={handlePurchaseChange} type="text" name="purchaseBillNo" id="purchaseBillNo" className="border ps-2 border-gray-300 ms-auto w-7/12" ref={purchaseNumberRef} tabIndex="1" />
+            <input autoComplete="off" value={purchase.purchaseNo} onChange={handlePurchaseChange} type="text" name="purchaseNo" id="purchaseNo" className="border ps-2 border-gray-300 ms-auto w-7/12" ref={purchaseNumberRef} tabIndex="1" />
           </div>
 
           <div className="flex flex-row">
