@@ -1,6 +1,7 @@
 const Invoice = require("../models/invoice");
 const Customer = require("../models/customer");
 const mongoose = require("mongoose");
+
 exports.createInvoice = async (req, res) => {
   try {
     const invoice = new Invoice(req.body);
@@ -66,7 +67,6 @@ exports.updateInvoiceById = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 exports.deleteInvoiceById = async (req, res) => {
   const session = await mongoose.startSession();

@@ -68,59 +68,36 @@ const vendorSchema = new mongoose.Schema({
   notes: {
     type: String,
   },
-  purchasesData: {
-    totalPurchaseCount: {
-      type: Number,
-      default: 0,
-    },
-    totalPurchaseAmount: {
-      type: Number,
-      default: 0,
-    },
+  totalPurchasesAmount: {
+    type: Number,
+    default: 0,
   },
-  salesData: {
-    totalSaleCount: {
-      type: Number,
-      default: 0,
-    },
-    totalSaleAmount: {
-      type: Number,
-      default: 0,
-    },
+  totalPayableAmount: {
+    type: Number,
+    default: 0,
   },
-  returnsData: {
-    totalReturnCount: {
-      type: Number,
-      default: 0,
+  purchasesList:[
+    {
+      purchaseBillNo: String,
+      purchaseDate: Date,
+      dueDate: Date,
+      totalAmount: Number,
+      totalPayableAmount: Number,
+      status:String,
+      paymentType:String,
     },
-    totalReturnAmount: {
-      type: Number,
-      default: 0,
-    },
+  ],
+  bankName: {
+    type: String,
   },
-  paymentsData: {
-    totalPaymentCount: {
-      type: Number,
-      default: 0,
-    },
-    totalPaymentAmount: {
-      type: Number,
-      default: 0,
-    },
+  accountNumber: {
+    type: Number,
   },
-  bankingInfo: {
-    bankName: {
-      type: String,
-    },
-    accountNumber: {
-      type: Number,
-    },
-    ifsc: {
-      type: String,
-    },
-    branch: {
-      type: String,
-    },
+  ifsc: {
+    type: String,
+  },
+  branch: {
+    type: String,
   },
 });
 

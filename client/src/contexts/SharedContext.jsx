@@ -14,6 +14,7 @@ export function SharedContextProvider({ children }) {
   const [vendorData, setVendorData] = useState([]);
   const [itemData, setItemData] = useState([]);
   const [invoiceData, setInvoiceData] = useState([]);
+  const [purchaseData, setPurchaseData] = useState([]);
   const [expenseData, setExpenseData] = useState([]);
 
   useEffect(() => {
@@ -21,6 +22,7 @@ export function SharedContextProvider({ children }) {
     getVendorData();
     getItemData();
     getInvoiceData();
+    getPurchaseData();
     getExpenseData();
   }, []);
 
@@ -42,6 +44,11 @@ export function SharedContextProvider({ children }) {
   const getInvoiceData = async () => {
     const response = await axios.get("http://localhost:3000/invoice/getall");
     setInvoiceData(response?.data);
+  }
+
+  const getPurchaseData = async () => {
+    const response = await axios.get("http://localhost:3000/purchase/getall");
+    setPurchaseData(response?.data);
   }
 
   const getExpenseData = async () => {
@@ -211,6 +218,8 @@ export function SharedContextProvider({ children }) {
     getInvoiceData,
     expenseData,
     getExpenseData,
+    purchaseData,
+    getPurchaseData,
     
 
   };

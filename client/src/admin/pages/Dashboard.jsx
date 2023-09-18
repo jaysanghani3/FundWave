@@ -9,7 +9,7 @@ const Dashboard = () => {
   const { dashboardTable, customerData, vendorData, expenseData } = React.useContext(SharedContext);
 
   let totalInvoicesAmount = 0;  
-  let totalPurchaseAmount = 0;
+  let totalPurchasesAmount = 0;
   let totalExpensesAmount = 0;
   let totalReceivableAmount = 0;
   let totalPayableAmount = 0;
@@ -19,18 +19,18 @@ const Dashboard = () => {
     totalReceivableAmount += item.totalReceivableAmount;
   }
   for (const item of vendorData) {
-    totalPurchaseAmount += item.purchasesData.totalPurchaseAmount;
+    totalPurchasesAmount += item.totalPurchasesAmount;
+    totalPayableAmount += item.totalPayableAmount;
   }
-
   for (const item of expenseData) {
     totalExpensesAmount += item.amount;
   }
   
   const list = [
     { name: "Sales", value: "₹ " +totalInvoicesAmount.toFixed(2), color: "text-black", icon: <FcSalesPerformance size={70} /> },
-    { name: "Purchase", value: "₹ "+totalPurchaseAmount.toFixed(2), color: "text-black", icon: <GiTakeMyMoney size={70} /> },
+    { name: "Purchase", value: "₹ "+totalPurchasesAmount.toFixed(2), color: "text-black", icon: <GiTakeMyMoney size={70} /> },
     { name: "Expenses", value: "₹ "+totalExpensesAmount.toFixed(2), color: "text-red-500", icon: <GiExpense size={70} /> },
-    { name: "Net Profit", value: "₹ "+(totalInvoicesAmount - totalPurchaseAmount - totalExpensesAmount).toFixed(2), color: "text-green-500", icon: <GiProfit size={70} /> },
+    { name: "Net Profit", value: "₹ "+(totalInvoicesAmount - totalPurchasesAmount - totalExpensesAmount).toFixed(2), color: "text-green-500", icon: <GiProfit size={70} /> },
     { name: "Receivable", value: "₹ "+totalReceivableAmount, color: "text-black", icon: <GiReceiveMoney size={70} /> },
     { name: "Payable", value: "₹ "+totalPayableAmount, color: "text-black", icon: <GiPayMoney size={70} /> },
   ];

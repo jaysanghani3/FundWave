@@ -7,6 +7,7 @@ const customerRoutes = require('./routes/customerRoutes');
 const vendorRoutes = require('./routes/vendorRoutes');
 const itemRoutes = require('./routes/itemRoutes');
 const invoiceRoutes = require('./routes/invoiceRoutes');
+const purchaseRoutes = require('./routes/purchaseRoutes');
 const userRoutes = require('./routes/userRoutes');
 const expenseRoutes = require('./routes/expenseRoutes');
 
@@ -24,6 +25,7 @@ app.get('/', (req, res) => {
 app.use('/customer', customerRoutes);
 app.use('/vendor', vendorRoutes);
 app.use('/item', itemRoutes);
+app.use('/purchase', purchaseRoutes);
 app.use('/invoice', invoiceRoutes);
 app.use('/user', userRoutes);
 app.use('/expense', expenseRoutes);
