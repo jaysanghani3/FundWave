@@ -49,15 +49,12 @@ exports.getByItemCompanyName = async (req, res) => {
     try {
         const items = await Item.find({ companyName: { $regex: req.params.companyName, $options: "i" }}).exec();
 
-        console.log('Item not found');
         if (!items) {
 
             return res.status(404).json({ error: 'Item not found' });
         }
         res.json(items);
     } catch (error) {
-        console.log('Item not found');
-
         res.status(500).json({ error: error.message });
     }
 };

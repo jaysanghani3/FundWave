@@ -50,15 +50,12 @@ exports.getByCustomerCompanyName = async (req, res) => {
     try {
         const customers = await Customer.find({ companyName: { $regex: req.params.companyName, $options: "i" }}).exec();
 
-        console.log('Customer not found');
         if (!customers) {
 
             return res.status(404).json({ error: 'Customer not found' });
         }
         res.json(customers);
     } catch (error) {
-        console.log('Customer not found');
-
         res.status(500).json({ error: error.message });
     }
 };

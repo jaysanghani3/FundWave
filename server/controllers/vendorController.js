@@ -49,15 +49,12 @@ exports.getByVendorCompanyName = async (req, res) => {
     try {
         const vendors = await Vendor.find({ companyName: { $regex: req.params.companyName, $options: "i" }}).exec();
 
-        console.log('Vendor not found');
         if (!vendors) {
 
             return res.status(404).json({ error: 'Vendor not found' });
         }
         res.json(vendors);
     } catch (error) {
-        console.log('Vendor not found');
-
         res.status(500).json({ error: error.message });
     }
 };

@@ -50,15 +50,12 @@ exports.getByExpenseCompanyName = async (req, res) => {
     try {
         const expenses = await Expense.find({ companyName: { $regex: req.params.companyName, $options: "i" }}).exec();
 
-        console.log('Expense not found');
         if (!expenses) {
 
             return res.status(404).json({ error: 'Expense not found' });
         }
         res.json(expenses);
     } catch (error) {
-        console.log('Expense not found');
-
         res.status(500).json({ error: error.message });
     }
 };

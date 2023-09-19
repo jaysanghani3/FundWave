@@ -4,7 +4,6 @@ import { MdOutlineDelete } from "react-icons/md";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
-import { is } from "date-fns/locale";
 
 const SalesInvoice = () => {
 

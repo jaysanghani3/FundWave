@@ -25,7 +25,6 @@ exports.createInvoice = async (req, res) => {
         },
       }
     );
-    console.log(totalInvoiceAmount);
     res.status(201).json({ message: "Invoice created successfully", invoice });
   } catch (error) {
     res.status(500).json({ error: error.message });
