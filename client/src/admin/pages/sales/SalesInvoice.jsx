@@ -67,12 +67,12 @@ const SalesInvoice = () => {
     setInvoice((prev) => ({ ...prev, [name]: value }));
 
     // Filter the customer data based on the input value and update fetchedData
-    setFetchedData((prevData) => ({
-      ...prevData,
-      companyDetails: customerData.filter((item) =>
-        item.companyName.toLowerCase().includes(value.toLowerCase())
-      ),
-    }));
+    // setFetchedData((prevData) => ({
+    //   ...prevData,
+    //   companyDetails: customerData.filter((item) =>
+    //     item.companyName.toLowerCase().includes(value.toLowerCase())
+    //   ),
+    // }));
   };
 
   // Define the useEffect hook to update totals when rows change ** Face final total inccoret then i use this
@@ -193,13 +193,37 @@ const SalesInvoice = () => {
 
   const [clickCompanyFiled, setClickCompanyFiled] = useState(false);
 
-  const handleCompanyFieldClick = (selectedCompanyName) => {
+  // const handleCompanyFieldClick = (selectedCompanyName) => {
+  //   const selectedCompany = fetchedData.companyDetails.find(
+  //     (company) => company.companyName === selectedCompanyName
+  //   );
+
+  //   if (selectedCompany) {
+  //     updateCompanyDetails([selectedCompany]);
+  //     // Update the invoice state with the selected company's details
+  //     setInvoice((prevData) => ({
+  //       ...prevData,
+  //       companyName: selectedCompany.companyName,
+  //       gst: selectedCompany.gst || "",
+  //       contactNumber: selectedCompany.contactNumber || "",
+  //       billingAddress: selectedCompany.billingAddress || "",
+  //     }));
+  //   }
+  //   setClickCompanyFiled(false);
+  // }
+  const handleSelectChange = (e) => {
+    const selectedCompanyName = e.target.value;
+
+    // Find the selected company from fetchedData
     const selectedCompany = fetchedData.companyDetails.find(
       (company) => company.companyName === selectedCompanyName
     );
 
     if (selectedCompany) {
-      updateCompanyDetails([selectedCompany]);
+      // Update the company details state with the selected company
+      // For example, if you have a state called 'companyDetails', update it like this:
+      // updateCompanyDetails([selectedCompany]);
+
       // Update the invoice state with the selected company's details
       setInvoice((prevData) => ({
         ...prevData,
@@ -209,9 +233,7 @@ const SalesInvoice = () => {
         billingAddress: selectedCompany.billingAddress || "",
       }));
     }
-    setClickCompanyFiled(false);
-  }
-
+  };
   // Update company details
   const updateCompanyDetails = (newCompanyData) => {
     setFetchedData((prevData) => ({
@@ -348,50 +370,26 @@ const SalesInvoice = () => {
         <div className="flex flex-col gap-y-1 border-l-2 border-blue-100">
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Invoice No.</label>
-            <input autoComplete="off" value={invoice.invoiceNo} onChange={handleInvoiceChange} type="text" name="invoiceNo" id="invoiceNo" className="border ps-2 border-gray-300 ms-auto w-7/12" ref={invoiceNumberRef} tabIndex="1" />
-          </div>
+            <input autoComplete="off" value={(invoice.invoiceNo).toUpperCase()} onChange={handleInvoiceChange} type="text" name="invoiceNo" id="invoiceNo" className="border ps-2 border-gray-300 ms-auto w-7/12" ref={invoiceNumberRef} tabIndex="1" />
+          </div>  
 
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Company Name</label>
             <div className="relative ms-auto w-7/12">
-              <input
-                autoComplete="off"
-                type="text"
-                name="companyName"
-                id="companyName"
-                className="border ps-2 border-gray-300 ms-auto w-full"
-                value={invoice.companyName}
-                onClick={() => setClickCompanyFiled(true)}
-                onFocus={() => setClickCompanyFiled(true)}
-                onBlur={() => setTimeout(() => setClickCompanyFiled(false), 200)}
-                onKeyDown={handleKeyDown}
-                onChange={handleInvoiceChange}
-                ref={companyNameRef}
-                tabIndex="2"
-              />
-              {clickCompanyFiled && (
-                <div className="absolute z-10 bg-white border border-gray-300  w-[110%] mt-1">
-                  {fetchedData.companyDetails
-                    ?.map((value, index) => {
-                      return (
-                        <div key={index}
-                          className="cursor-pointer border-b border-gray-400 p-2 hover:bg-gray-300"
-                          onClick={() => handleCompanyFieldClick(value.companyName)}
-                        >
-                          <span className="border-r pr-2 border-gray-600">{value.code}</span>
-                          <span className="font-semibold ms-2">{value.companyName}</span>
-                        </div>
-                      );
-
-                    }
-                    )}
-                </div>
-              )}
+              <select name="companyName" id="companyName" className="border ps-1 border-gray-300 ms-auto w-full" value={invoice.companyName} onChange={handleSelectChange} tabIndex="2">
+                <option value="">Select Company</option>
+                {fetchedData.companyDetails?.map((value, index) => {
+                  return (
+                    <option key={index} value={value.companyName}>{value.companyName}</option>
+                  );
+                })}
+              </select>
             </div>
           </div>
+
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Cash/Credit</label>
-            <input autoComplete="off" value={invoice.cashCredit} onChange={handleInvoiceChange} type="text" name="cashCredit" id="cashCredit" className="border ps-2 border-gray-300 ms-auto w-7/12" ref={cashCreditRef} tabIndex="3" />
+            <input autoComplete="off" value={(invoice.cashCredit).toUpperCase()} onChange={handleInvoiceChange} type="text" name="cashCredit" id="cashCredit" className="border ps-2 border-gray-300 ms-auto w-7/12" ref={cashCreditRef} tabIndex="3" />
           </div>
 
         </div>
@@ -401,7 +399,6 @@ const SalesInvoice = () => {
             <label className="ml-5 font-medium text-gray-700">GST No.</label>
             <input autoComplete="off" value={invoice.gst} onChange={handleInvoiceChange} type="text" name="gst" id="gst" className="border ps-2 border-gray-300 ms-auto w-7/12" />
           </div>
-
 
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Created Date</label>
@@ -427,7 +424,6 @@ const SalesInvoice = () => {
               id="dueDate"
               className="border ps-2 border-gray-300 ms-auto w-7/12"
             />
-
           </div>
         </div>
 
