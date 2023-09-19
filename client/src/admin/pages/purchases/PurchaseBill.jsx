@@ -2,18 +2,16 @@ import SharedContext from "../../../contexts/SharedContext"
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { MdOutlineDelete } from "react-icons/md";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 
 const PurchaseBill = () => {
-
 
   const { vendorData, getPurchaseData, itemData } = useContext(SharedContext);
   const navigate = useNavigate();
 
   const purchaseNumberRef = useRef(null);
   const cashCreditRef = useRef(null);
-  const companyNameRef = useRef(null);
   const qtyRef = useRef(null);
   const addBtnRef = useRef(null);
   const itemInputsRefs = useRef([]);
@@ -66,14 +64,6 @@ const PurchaseBill = () => {
   const handlePurchaseChange = (e) => {
     const { name, value } = e.target;
     setPurchase((prev) => ({ ...prev, [name]: value }));
-
-    // Filter the customer data based on the input value and update fetchedData
-    setFetchedData((prevData) => ({
-      ...prevData,
-      companyDetails: vendorData.filter((item) =>
-        item.companyName.toLowerCase().includes(value.toLowerCase())
-      ),
-    }));
   };
 
   // Define the useEffect hook to update totals when rows change ** Face final total inccoret then i use this
@@ -170,10 +160,25 @@ const PurchaseBill = () => {
     }));
   };
 
-  const handleDeleteItem = () => {
+  const handleDeleteItem = (rowIndexToDelete) => {
+    // Create copies of the rows and purchase.items state arrays to work with
     const updatedRows = [...rows];
-    updatedRows.pop();
+    const updatedPurchaseItems = [...purchase.items];
+  
+    // Remove the specified row by index from both arrays
+    updatedRows.splice(rowIndexToDelete, 1);
+    updatedPurchaseItems.splice(rowIndexToDelete, 1);
+  
+    // Update the rows state with the modified array
     setRows(updatedRows);
+  
+    // Update the purchase state by replacing the items array with the modified updatedPurchaseItems array
+    setPurchase((prevPurchase) => ({
+      ...prevPurchase,
+      items: updatedPurchaseItems,
+    }));
+  
+    // Update purchase totals
     updatePurchaseTotals();
   };
 
@@ -191,15 +196,20 @@ const PurchaseBill = () => {
     }
   };
 
-  const [clickCompanyFiled, setClickCompanyFiled] = useState(false);
 
-  const handleCompanyFieldClick = (selectedCompanyName) => {
+  const handleSelectChange = (e) => {
+    const selectedCompanyName = e.target.value;
+
+    // Find the selected company from fetchedData
     const selectedCompany = fetchedData.companyDetails.find(
       (company) => company.companyName === selectedCompanyName
     );
 
     if (selectedCompany) {
-      updateCompanyDetails([selectedCompany]);
+      // Update the company details state with the selected company
+      // For example, if you have a state called 'companyDetails', update it like this:
+      // updateCompanyDetails([selectedCompany]);
+
       // Update the purchase state with the selected company's details
       setPurchase((prevData) => ({
         ...prevData,
@@ -209,15 +219,6 @@ const PurchaseBill = () => {
         billingAddress: selectedCompany.billingAddress || "",
       }));
     }
-    setClickCompanyFiled(false);
-  }
-
-  // Update company details
-  const updateCompanyDetails = (newCompanyData) => {
-    setFetchedData((prevData) => ({
-      ...prevData,
-      companyDetails: newCompanyData,
-    }));
   };
 
   // Update item details
@@ -286,34 +287,7 @@ const PurchaseBill = () => {
   };
 
   const handleKeyDown = (e, index) => {
-    console.log(isOpen);
-
-    if (clickCompanyFiled) {
-      const suggestions = fetchedData.companyDetails || [];
-      const selectedIndex = suggestions.findIndex((value) => value.companyName === purchase.companyName);
-      if (e.key === 'Tab' || e.key === 'Enter') {
-        e.preventDefault();
-        if (selectedIndex !== -1) {
-          handleCompanyFieldClick(suggestions[selectedIndex].companyName);
-        }
-      }
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        const newIndex = (selectedIndex + 1) % suggestions.length;
-        setPurchase((prevPurchase) => ({
-          ...prevPurchase,
-          companyName: suggestions[newIndex].companyName,
-        }));
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        const newIndex = (selectedIndex - 1 + suggestions.length) % suggestions.length;
-        setPurchase((prevPurchase) => ({
-          ...prevPurchase,
-          companyName: suggestions[newIndex].companyName,
-        }));
-      }
-    }
-    else if (isOpen[index]) {
+    if (isOpen[index]) {
       const suggestions = fetchedData.itemDetails || [];
       const selectedIndex = suggestions.findIndex((value) => value?.name === rows[index]?.name);
       if (e.key === 'Tab' || e.key === 'Enter') {
@@ -348,51 +322,26 @@ const PurchaseBill = () => {
         <div className="flex flex-col gap-y-1 border-l-2 border-blue-100">
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Purchase Bill No.</label>
-            <input autoComplete="off" value={purchase.purchaseNo} onChange={handlePurchaseChange} type="text" name="purchaseNo" id="purchaseNo" className="border ps-2 border-gray-300 ms-auto w-7/12" ref={purchaseNumberRef} tabIndex="1" />
+            <input autoComplete="off" value={(purchase.purchaseNo).toUpperCase()} onChange={handlePurchaseChange} type="text" name="purchaseNo" id="purchaseNo" className="border ps-2 border-gray-300 ms-auto w-7/12" ref={purchaseNumberRef} tabIndex="1" />
           </div>
 
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Company Name</label>
             <div className="relative ms-auto w-7/12">
-              <input
-                autoComplete="off"
-                type="text"
-                name="companyName"
-                id="companyName"
-                className="border ps-2 border-gray-300 ms-auto w-full"
-                value={purchase.companyName}
-                onClick={() => setClickCompanyFiled(true)}
-                onFocus={() => setClickCompanyFiled(true)}
-                onBlur={() => setTimeout(() => setClickCompanyFiled(false), 200)}
-                onKeyDown={handleKeyDown}
-                onChange={handlePurchaseChange}
-                ref={companyNameRef}
-                tabIndex="2"
-              />
-              {clickCompanyFiled && (
-                <div className="absolute z-10 bg-white border border-gray-300  w-[110%] mt-1">
-                  {fetchedData.companyDetails
-                    ?.map((value, index) => {
-                      return (
-                        <div key={index}
-                          className="cursor-pointer border-b border-gray-400 p-2 hover:bg-gray-300"
-                          onClick={() => handleCompanyFieldClick(value.companyName)}
-                        >
-                          <span className="border-r pr-2 border-gray-600">{value.code}</span>
-                          <span className="font-semibold ms-2">{value.companyName}</span>
-                        </div>
-                      );
-
-                    }
-                    )}
-                </div>
-              )}
+              <select name="companyName" id="companyName" className="border ps-1 border-gray-300 ms-auto w-full" value={purchase.companyName} onChange={handleSelectChange} tabIndex="2">
+                <option value="">Select Company</option>
+                {fetchedData.companyDetails?.map((value, index) => {
+                  return (
+                    <option key={index} value={value.companyName}>{value.companyName}</option>
+                  );
+                })}
+              </select>
             </div>
           </div>
 
           <div className="flex flex-row">
             <label className="ml-5 font-medium text-gray-700">Cash/Credit</label>
-            <input autoComplete="off" value={purchase.cashCredit} onChange={handlePurchaseChange} type="text" name="cashCredit" id="cashCredit" className="border ps-2 border-gray-300 ms-auto w-7/12" ref={cashCreditRef} tabIndex="3" />
+            <input autoComplete="off" value={(purchase.cashCredit).toUpperCase()} onChange={handlePurchaseChange} type="text" name="cashCredit" id="cashCredit" className="border ps-2 border-gray-300 ms-auto w-7/12" ref={cashCreditRef} tabIndex="3" />
           </div>
 
         </div>
@@ -466,7 +415,7 @@ const PurchaseBill = () => {
               <tr key={index} className="bg-transparent hover:bg-gray-50">
                 <td className="text-center">{index + 1}</td>
                 <td className="text-red-400 text-sm text-center">
-                  <button type="button" onClick={() => handleDeleteItem()} className="focus:outline-none p-1">
+                  <button type="button" onClick={() => handleDeleteItem(index)} className="focus:outline-none p-1">
                     <MdOutlineDelete size={17} />
                   </button>
                 </td>

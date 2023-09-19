@@ -2,7 +2,7 @@ import SharedContext from "../../../contexts/SharedContext"
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { MdOutlineDelete } from "react-icons/md";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { toast, Toaster } from "react-hot-toast";
 
 const SalesInvoice = () => {
@@ -12,7 +12,6 @@ const SalesInvoice = () => {
 
   const invoiceNumberRef = useRef(null);
   const cashCreditRef = useRef(null);
-  const companyNameRef = useRef(null);
   const qtyRef = useRef(null);
   const addBtnRef = useRef(null);
   const itemInputsRefs = useRef([]);
@@ -65,14 +64,6 @@ const SalesInvoice = () => {
   const handleInvoiceChange = (e) => {
     const { name, value } = e.target;
     setInvoice((prev) => ({ ...prev, [name]: value }));
-
-    // Filter the customer data based on the input value and update fetchedData
-    // setFetchedData((prevData) => ({
-    //   ...prevData,
-    //   companyDetails: customerData.filter((item) =>
-    //     item.companyName.toLowerCase().includes(value.toLowerCase())
-    //   ),
-    // }));
   };
 
   // Define the useEffect hook to update totals when rows change ** Face final total inccoret then i use this
@@ -169,13 +160,28 @@ const SalesInvoice = () => {
     }));
   };
 
-  const handleDeleteItem = () => {
+  const handleDeleteItem = (rowIndexToDelete) => {
+    // Create copies of the rows and invoice.items state arrays to work with
     const updatedRows = [...rows];
-    updatedRows.pop();
+    const updatedInvoiceItems = [...invoice.items];
+  
+    // Remove the specified row by index from both arrays
+    updatedRows.splice(rowIndexToDelete, 1);
+    updatedInvoiceItems.splice(rowIndexToDelete, 1);
+  
+    // Update the rows state with the modified array
     setRows(updatedRows);
+  
+    // Update the invoice state by replacing the items array with the modified updatedInvoiceItems array
+    setInvoice((prevInvoice) => ({
+      ...prevInvoice,
+      items: updatedInvoiceItems,
+    }));
+  
+    // Update invoice totals
     updateInvoiceTotals();
   };
-
+  
   const handleInvoiceSubmit = async () => {
     console.log(invoice);
     try {
@@ -191,26 +197,6 @@ const SalesInvoice = () => {
     }
   };
 
-  const [clickCompanyFiled, setClickCompanyFiled] = useState(false);
-
-  // const handleCompanyFieldClick = (selectedCompanyName) => {
-  //   const selectedCompany = fetchedData.companyDetails.find(
-  //     (company) => company.companyName === selectedCompanyName
-  //   );
-
-  //   if (selectedCompany) {
-  //     updateCompanyDetails([selectedCompany]);
-  //     // Update the invoice state with the selected company's details
-  //     setInvoice((prevData) => ({
-  //       ...prevData,
-  //       companyName: selectedCompany.companyName,
-  //       gst: selectedCompany.gst || "",
-  //       contactNumber: selectedCompany.contactNumber || "",
-  //       billingAddress: selectedCompany.billingAddress || "",
-  //     }));
-  //   }
-  //   setClickCompanyFiled(false);
-  // }
   const handleSelectChange = (e) => {
     const selectedCompanyName = e.target.value;
 
@@ -233,13 +219,6 @@ const SalesInvoice = () => {
         billingAddress: selectedCompany.billingAddress || "",
       }));
     }
-  };
-  // Update company details
-  const updateCompanyDetails = (newCompanyData) => {
-    setFetchedData((prevData) => ({
-      ...prevData,
-      companyDetails: newCompanyData,
-    }));
   };
 
   // Update item details
@@ -310,32 +289,7 @@ const SalesInvoice = () => {
   const handleKeyDown = (e, index) => {
     console.log(isOpen);
 
-    if (clickCompanyFiled) {
-      const suggestions = fetchedData.companyDetails || [];
-      const selectedIndex = suggestions.findIndex((value) => value.companyName === invoice.companyName);
-      if (e.key === 'Tab' || e.key === 'Enter') {
-        e.preventDefault();
-        if (selectedIndex !== -1) {
-          handleCompanyFieldClick(suggestions[selectedIndex].companyName);
-        }
-      }
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        const newIndex = (selectedIndex + 1) % suggestions.length;
-        setInvoice((prevInvoice) => ({
-          ...prevInvoice,
-          companyName: suggestions[newIndex].companyName,
-        }));
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        const newIndex = (selectedIndex - 1 + suggestions.length) % suggestions.length;
-        setInvoice((prevInvoice) => ({
-          ...prevInvoice,
-          companyName: suggestions[newIndex].companyName,
-        }));
-      }
-    }
-    else if (isOpen[index]) {
+   if (isOpen[index]) {
       const suggestions = fetchedData.itemDetails || [];
       const selectedIndex = suggestions.findIndex((value) => value?.name === rows[index]?.name);
       if (e.key === 'Tab' || e.key === 'Enter') {
@@ -365,6 +319,7 @@ const SalesInvoice = () => {
     <div className="h-[98%] flex flex-col border-2 gap-y-3 min-h-full text-xs ">
       <h1 className="text-sm font-bold bg-[#1d5e7e] text-white px-3 py-1">Create New Sales Invoice</h1>
       <Toaster toastOptions={ { duration: 2000 } } />
+      
       <div className="grid grid-cols-3 gap-6 border border-gray-300 p-2 mx-2">
 
         <div className="flex flex-col gap-y-1 border-l-2 border-blue-100">
@@ -461,7 +416,7 @@ const SalesInvoice = () => {
               <tr key={index} className="bg-transparent hover:bg-gray-50">
                 <td className="text-center">{index + 1}</td>
                 <td className="text-red-400 text-sm text-center">
-                  <button type="button" onClick={() => handleDeleteItem()} className="focus:outline-none p-1">
+                  <button type="button" className="focus:outline-none p-1" onClick={() => handleDeleteItem(index)}>
                     <MdOutlineDelete size={17} />
                   </button>
                 </td>

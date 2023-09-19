@@ -21,6 +21,8 @@ import AddNewEmployee from "./pages/employee/AddNewEmployee";
 import EmployeeMaster from "./pages/employee/EmployeeMaster";
 import PurchasesMaster from "./pages/purchases/PurchasesMaster";
 import ViewPurchase from "./pages/purchases/ViewPurchase";
+import { Link } from "react-router-dom";
+
 
 const FundWave = () => {
   
@@ -33,10 +35,10 @@ const FundWave = () => {
 
     <div className="min-h-screen bg-slate-50 overflow-hidden not-print">
       <header className="sticky z-50 top-0 bg-[#1D5B79] h-[7vh] flex justify-between items-center px-3 py-2">
-        <div className="flex items-center">
+        <Link to='/' className="flex items-center">
           <img src={logo} alt="FundWave" className="w-8 h-8 sm:w-9 sm:h-9" />
           <span className="text-white text-xl font-bold ml-4">FundWave</span>
-        </div>
+        </Link>
         <div className="flex items-center">
           <span className="text-white text-lg mr-2 font-semibold">Jay Sanghani </span>
           <span className="text-white text-xs "> : ( 01/04/2023 - 31/03/2024 )</span>

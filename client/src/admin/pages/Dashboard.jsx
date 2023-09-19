@@ -64,7 +64,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6 text-xs">
         {
           dashboardTable.map((table, index) => (
-            <div className="bg-white p-3 rounded-lg" key={index}>
+            <div className="bg-white p-3 rounded-lg shadow-lg" key={index}>
               <span className="text-xl font-semibold">{table.name}</span>
               <div className="overflow-x-auto mt-4">
                 <table className="table-auto w-full">

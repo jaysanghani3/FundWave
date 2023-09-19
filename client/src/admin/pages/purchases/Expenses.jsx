@@ -120,7 +120,7 @@ const Expenses = () => {
         </form>
         <hr className="my-3" />
 
-        <table className="table-auto w-full mt-3">
+        <table className="table-auto w-full mt-3 text-xs">
           <thead>
             <tr className="bg-[#1d5e7e] text-white">
               <td className='px-2 py-1 border-r w-6'>#</td>
