@@ -13,18 +13,33 @@ git clone https://github.com/jaysanghani3/FundWave.git
 cd fundwave
 ```
 
-### Step 2: Install Backend Dependencies
+### Step 2: Install Backend Dependencies & Run
 In your terminal, navigate to the /server directory of the project and run the following command to install the backend dependencies:
 ```
 cd server
 npm install
+npm start
 ```
 
-### Step 3: Install Frontend Dependencies
+### Step 3: Install Frontend Dependencies & Start Project
 In your terminal, navigate to the /clinet directory of the project and run the following command to install the backend dependencies:
 ```
 cd client
 npm install
+npm run dev
 ```
 
-### Step 4: 
+## Website Login Credentials
+Once the website is up and running, you can log in using the following credentials:
+For admin
+```
+username : jay@mail.com
+password : 123
+```
+
+For admin
+```
+username : emp1@mail.com
+password : 123
+```
+Now you should be all set to run the project locally on your machine and explore its features.
