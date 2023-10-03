@@ -1,10 +1,12 @@
 # FundWave
+<p align="center">
 
 FundWave is Billing System (Invoice / Inventory / Purchase ) Based on Advanced Mern Stack (Node.js / Express.js / MongoDb / React.js ) with Tailwind.
+<br>
 
 🚀 Give a Star ⭐️ & Fork to this project ... Happy coding! 🤩
 
-
+</p>
 ## Getting started
 
 ### Step 1: Clone the repository
