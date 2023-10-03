@@ -31,15 +31,5 @@ npm run dev
 
 ## Website Login Credentials
 Once the website is up and running, you can log in using the following credentials:
-For admin
-```
-username : jay@mail.com
-password : 123
-```
-
-For admin
-```
-username : emp1@mail.com
-password : 123
-```
+Credentials are get from me.
 Now you should be all set to run the project locally on your machine and explore its features.
