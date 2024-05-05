@@ -13,7 +13,7 @@ const ViewPurchase = () => {
 
     const getPurchaseData = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/purchase/${purchaseId}`);
+            const response = await axios.get(`https://fundwave-jaysanghani3s-projects.vercel.app/purchase/${purchaseId}`);
             setPurchaseData(response.data);
         } catch (error) {
             console.error('Error fetching purchase data:', error);

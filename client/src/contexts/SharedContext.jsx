@@ -27,32 +27,32 @@ export function SharedContextProvider({ children }) {
   }, []);
 
   const getCustomerData = async () => {
-    const response = await axios.get("http://localhost:3000/customer/getall");
+    const response = await axios.get("https://fundwave-jaysanghani3s-projects.vercel.app/customer/getall");
     setCustomerData(response?.data);
   };
 
   const getVendorData = async () => {
-    const response = await axios.get("http://localhost:3000/vendor/getall");
+    const response = await axios.get("https://fundwave-jaysanghani3s-projects.vercel.app/vendor/getall");
     setVendorData(response?.data);
   };
 
   const getItemData = async () => {
-    const response = await axios.get("http://localhost:3000/item/getall");
+    const response = await axios.get("https://fundwave-jaysanghani3s-projects.vercel.app/item/getall");
     setItemData(response?.data);
   };
 
   const getInvoiceData = async () => {
-    const response = await axios.get("http://localhost:3000/invoice/getall");
+    const response = await axios.get("https://fundwave-jaysanghani3s-projects.vercel.app/invoice/getall");
     setInvoiceData(response?.data);
   }
 
   const getPurchaseData = async () => {
-    const response = await axios.get("http://localhost:3000/purchase/getall");
+    const response = await axios.get("https://fundwave-jaysanghani3s-projects.vercel.app/purchase/getall");
     setPurchaseData(response?.data);
   }
 
   const getExpenseData = async () => {
-    const response = await axios.get("http://localhost:3000/expense/getall");
+    const response = await axios.get("https://fundwave-jaysanghani3s-projects.vercel.app/expense/getall");
     setExpenseData(response?.data);
   }
 

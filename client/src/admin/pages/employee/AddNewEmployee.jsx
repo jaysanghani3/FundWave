@@ -21,7 +21,7 @@ const AddNewEmployee = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:3000/user/store',
+        'https://fundwave-jaysanghani3s-projects.vercel.app/user/store',
         {
           name,
           email,
