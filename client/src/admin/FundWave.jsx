@@ -10,11 +10,9 @@ import Dashboard from "./pages/Dashboard";
 import logo from "../assets/logo.png";
 import CustomerMaster from "./pages/sales/CustomerMaster";
 import VendorMaster from "./pages/purchases/VendorMaster";
-import PageNotFound from "./pages/PageNotFound";
 import ItemMasters from "./pages/inventory/ItemMasters";
 import AddNewVendor from "./pages/purchases/AddNewVendor";
 import CreateItem from "./pages/inventory/CreateItem";
-import LoginPage from "../LoginPage";
 import ProtectedRoute from "../ProtectedRoute";
 import Expenses from "./pages/purchases/Expenses";
 import AddNewEmployee from "./pages/employee/AddNewEmployee";
@@ -45,8 +43,6 @@ const FundWave = () => {
         </div>
 
         <div className="flex items-center">
-          {/* <span className="text-white text-sm font-medium">Help</span> */}
-          {/* <span className="text-white text-sm font-medium ml-4">Profile</span> */}
           <button className="text-white text-sm font-medium ml-4" onClick={handleLogout}>Logout</button>
         </div>
       </header>

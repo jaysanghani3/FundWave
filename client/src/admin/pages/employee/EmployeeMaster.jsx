@@ -21,7 +21,7 @@ const EmployeeMaster = () => {
   ];
   useEffect(() => {
     const getEmployeeData = async () => {
-      const response = await axios.get("https://fundwave-jaysanghani3s-projects.vercel.app/user/getall");
+      const response = await axios.get("https://fundwave-api.vercel.app/user/getall");
       setEmployeeData(response?.data);
     };
     getEmployeeData();
@@ -46,7 +46,7 @@ const EmployeeMaster = () => {
   const handleDeleteEmployee = async (id) => {
     if (window.confirm("Are you sure you want to delete this employee?")) {
       try {
-        await axios.delete(`https://fundwave-jaysanghani3s-projects.vercel.app/user/${id}`);
+        await axios.delete(`https://fundwave-api.vercel.app/user/${id}`);
         window.location.reload();
         toast("Deleted successfully", {
           icon: <MdOutlineDelete size={20} className="text-red-500 ml-2" />,

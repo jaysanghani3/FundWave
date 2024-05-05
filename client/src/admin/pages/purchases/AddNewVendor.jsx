@@ -28,7 +28,7 @@ const AddNewVendor = () => {
 
   const fetchVendorData = async () => {
     try {
-      const response = await axios.get(`https://fundwave-jaysanghani3s-projects.vercel.app/vendor/${vendorId}`);
+      const response = await axios.get(`https://fundwave-api.vercel.app/vendor/${vendorId}`);
       const updatedVendor = fields.reduce((acc, field) => {
         acc[field.name] = response.data[field.name] || "";
         return acc;
@@ -48,13 +48,13 @@ const AddNewVendor = () => {
   const handleSave = async (e) => {
     try {
       if (vendorId) {   // Update the vendor
-        const response = await axios.put(`https://fundwave-jaysanghani3s-projects.vercel.app/vendor/${vendorId}`, vendor);
+        const response = await axios.put(`https://fundwave-api.vercel.app/vendor/${vendorId}`, vendor);
         console.log('Response:', response.data);
         getVendorData();
         toast.success("Vendor updated successfully.");
         navigate("/vendor");
       } else {        // Create a new vendor
-        const response = await axios.post('https://fundwave-jaysanghani3s-projects.vercel.app/vendor/store', vendor);
+        const response = await axios.post('https://fundwave-api.vercel.app/vendor/store', vendor);
         console.log('Response:', response.data);
         toast.success("Vendor Created successfully.");
         getVendorData();

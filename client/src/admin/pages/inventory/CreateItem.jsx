@@ -41,7 +41,7 @@ const CreateItem = () => {
 
   const fetchItemData = async () => {
     try {
-      const response = await axios.get(`https://fundwave-jaysanghani3s-projects.vercel.app/item/${itemId}`);
+      const response = await axios.get(`https://fundwave-api.vercel.app/item/${itemId}`);
       // const updatedItem = fields.reduce((acc, field) => {
       //   acc[field.name] = response.data[field.name] || "";
       //   return acc;
@@ -88,14 +88,14 @@ const CreateItem = () => {
     try {
       if (itemId) {
         // Update the item
-        const response = await axios.put(`https://fundwave-jaysanghani3s-projects.vercel.app/item/${itemId}`, item);
+        const response = await axios.put(`https://fundwave-api.vercel.app/item/${itemId}`, item);
         console.log('Response:', response.data);
         toast.success("Item updated successfully.");
         getItemData();
         navigate("/item-master");
       } else {
         // Create a new item
-        const response = await axios.post('https://fundwave-jaysanghani3s-projects.vercel.app/item/store', item);
+        const response = await axios.post('https://fundwave-api.vercel.app/item/store', item);
         console.log('Response:', response.data);
         toast.success("Item saved successfully.");
       }

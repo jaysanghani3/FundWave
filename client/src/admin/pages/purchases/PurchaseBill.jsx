@@ -185,7 +185,7 @@ const PurchaseBill = () => {
   const handlePurchaseSubmit = async () => {
     console.log(purchase);
     try {
-      const response = await axios.post('https://fundwave-jaysanghani3s-projects.vercel.app/purchase/store', purchase);
+      const response = await axios.post('https://fundwave-api.vercel.app/purchase/store', purchase);
       console.log('Response:', response?.data);
       toast.success("Purchase Created successfully.");
       getPurchaseData();

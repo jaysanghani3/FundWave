@@ -31,7 +31,7 @@ const Expenses = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://fundwave-jaysanghani3s-projects.vercel.app/expense/store', expense);
+      const res = await axios.post('https://fundwave-api.vercel.app/expense/store', expense);
       console.log(res);
         toast.success(res.data.message);
         setExpense({
@@ -55,7 +55,7 @@ const Expenses = () => {
   const handleDeleteExpense = async (id) => {
     try {
       console.log(id);
-      const res = await axios.delete(`https://fundwave-jaysanghani3s-projects.vercel.app/expense/${id}`);
+      const res = await axios.delete(`https://fundwave-api.vercel.app/expense/${id}`);
       console.log(id);
       console.log(res);
       toast.success(res.data.message);

@@ -4,17 +4,20 @@ import { Toaster, toast } from 'react-hot-toast';
 import logo from './assets/logo.png'; // Replace with your logo path
 import mii from './assets/make_in_india.png'; // Replace with your Made In India logo path
 import { BsFacebook, BsWhatsapp, BsInstagram, BsGithub, BsLinkedin } from 'react-icons/bs'; // Import icons
+import Loader from './Loader'; 
 
 const LoginPage = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const [loading, setLoading] = useState(false);
     const handleLogin = async (e) => {
 
         e.preventDefault();
         try {
-            const res = await axios.post('https://fundwave-jaysanghani3s-projects.vercel.app/user/login', { email, password });
+            setLoading(true);
+            const res = await axios.post('https://fundwave-api.vercel.app/user/login', { email, password });
+            console.log(res.data, res.status,"res")
             toast.success("Login successfully.");
             localStorage.setItem('token', res.data.user);
             if (res.data.user === 'admin') {
@@ -23,6 +26,7 @@ const LoginPage = () => {
             else if (res.data.user === 'employee') {
                 window.location.href = '/emp/sales-invoice';
             }
+            setLoading(false);
         }
         catch (error) {
             if (error.response.status === 401) {
@@ -32,12 +36,14 @@ const LoginPage = () => {
             }
             else
                 console.error('Login error:', error);
+            setLoading(false);
         }
     };
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-tr from-[#FDF4EE] to-[#EAF9F2]">
               <Toaster />
+            {loading && <Loader />}
             <div className="p-3 border rounded-md shadow-2xl w-full max-w-xl bg-white">
                 <div className="border rounded-md">
                     <div className="flex items-center justify-between m-4">

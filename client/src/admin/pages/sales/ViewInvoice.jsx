@@ -13,7 +13,7 @@ const ViewInvoice = () => {
 
     const getInvoiceData = async () => {
         try {
-            const response = await axios.get(`https://fundwave-jaysanghani3s-projects.vercel.app/invoice/${invoiceId}`);
+            const response = await axios.get(`https://fundwave-api.vercel.app/invoice/${invoiceId}`);
             setInvoiceData(response.data);
         } catch (error) {
             console.error('Error fetching invoice data:', error);

@@ -185,7 +185,7 @@ const SalesInvoice = () => {
   const handleInvoiceSubmit = async () => {
     console.log(invoice);
     try {
-      const response = await axios.post('https://fundwave-jaysanghani3s-projects.vercel.app/invoice/store', invoice);
+      const response = await axios.post('https://fundwave-api.vercel.app/invoice/store', invoice);
       console.log('Response:', response?.data);
       toast.success("Invoice Created successfully.");
       // getComputedStyle("/sales-invoice-master");

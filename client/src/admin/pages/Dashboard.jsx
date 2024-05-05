@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { FcSalesPerformance } from "react-icons/fc";
 import { GiPayMoney, GiReceiveMoney, GiProfit, GiExpense, GiTakeMyMoney } from "react-icons/gi";
 import SharedContext from "../../contexts/SharedContext";
+import Loader from "../../Loader";
 
 const Dashboard = () => {
 
-  const { dashboardTable, customerData, vendorData, expenseData } = React.useContext(SharedContext);
-
+  const { dashboardTable, customerData, vendorData, expenseData, loading } = React.useContext(SharedContext);
   let totalInvoicesAmount = 0;  
   let totalPurchasesAmount = 0;
   let totalExpensesAmount = 0;
@@ -37,6 +37,7 @@ const Dashboard = () => {
 
   return (
     <div className="mx-auto">
+      {loading && <Loader />}
       <div className="flex flex-row items-center">
         <Link to="/sales-invoice">
           <button className="bg-[#1D5B79] text-sm text-white px-4 py-2 rounded-md font-semibold me-3">Sales Invoice</button>

@@ -139,7 +139,7 @@ const CommonInvoiceForm = ({ title, formFields }) => {
     console.log(invoice);
     try {
       if (title === "Sales Invoice") {
-        const response = await axios.post('https://fundwave-jaysanghani3s-projects.vercel.app/invoice/store', invoice);
+        const response = await axios.post('https://fundwave-api.vercel.app/invoice/store', invoice);
         console.log('Response:', response?.data);
         toast.success("Invoice Created successfully.");
         // getComputedStyle("/sales-invoice-master");
