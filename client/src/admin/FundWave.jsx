@@ -20,13 +20,14 @@ import EmployeeMaster from "./pages/employee/EmployeeMaster";
 import PurchasesMaster from "./pages/purchases/PurchasesMaster";
 import ViewPurchase from "./pages/purchases/ViewPurchase";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 const FundWave = () => {
-  
+  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem('token');
-    window.location.href = '/login';
+    navigate("/login");
+    window.location.reload();
   };
 
   return (

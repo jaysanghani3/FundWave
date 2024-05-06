@@ -8,8 +8,8 @@ import Loader from './Loader';
 
 const LoginPage = () => {
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('jay@mail.com');
+    const [password, setPassword] = useState('123');
     const [loading, setLoading] = useState(false);
     const handleLogin = async (e) => {
 
@@ -59,7 +59,7 @@ const LoginPage = () => {
                         <div className="m-4 text-xs">
                             <input
                                 className="w-full border p-2 rounded-md"
-                                placeholder="Email"
+                                placeholder="jay@mail.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -68,7 +68,7 @@ const LoginPage = () => {
                             <input
                                 type="password"
                                 className="w-full border p-2 rounded-md"
-                                placeholder="Password"
+                                placeholder="123"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
